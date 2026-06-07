@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    /* All styles from previous version – kept intact */
+    /* All styles – unchanged (same as previous, omitted for brevity, but included in final) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body.light { --bg-gradient: radial-gradient(ellipse at 20% 30%, #eef2f9, #d0d8e8); --card-bg: rgba(255,255,255,0.85); --text-color: #1e2a3a; --header-bg: rgba(245,248,255,0.9); --accent: #FF8C42; --border-light: #e0e0e0; --plan-card-bg: linear-gradient(135deg,#fff,#f8f9fa); }
     body.dark { --bg-gradient: radial-gradient(ellipse at 20% 30%, #0a0c1a, #020408); --card-bg: rgba(12,18,32,0.7); --text-color: #f0f0f0; --header-bg: rgba(5,8,20,0.9); --accent: #FFD966; --border-light: #2a2f4a; --plan-card-bg: linear-gradient(135deg,#1e2a3a,#0f1225); }
@@ -19,7 +20,7 @@
     nav a { background: rgba(20,30,55,0.8); padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; text-decoration: none; color: white; cursor: pointer; }
     .btn { border: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; }
     .btn-gold { background: linear-gradient(115deg, #FFD966, #FF8C00); color: #0a0a14; font-weight: 700; box-shadow: 0 4px 12px rgba(255,140,0,0.3); }
-    .hero { padding: 40px 20px; text-align: center; background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(20,10,45,0.85)), url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?fit=crop&w=1600&q=80'); background-size: cover; }
+    .hero { padding: 40px 20px; text-align: center; background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(20,10,45,0.85)), url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?fit=crop&w=1600&q=80'); background-size: cover; background-position: center; }
     .hero h1 { font-size: clamp(1.8rem,6vw,2.5rem); font-weight: 800; background: linear-gradient(135deg,#fff5cf,#7bc5ff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
     .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
     .badge { background: rgba(0,198,255,0.2); backdrop-filter: blur(4px); padding: 5px 12px; border-radius: 80px; font-size: 0.7rem; border: 1px solid #00e1ff80; }
@@ -220,11 +221,13 @@
     { q: "How long does the code work?", a: "Weekly 7d, Monthly 30d, Quarterly 90d, Yearly 365d." }
   ];
   
+  // ========== UPDATED FREE PICKS (removed "1UP 2UP", now just "1X2") ==========
   let freePicks = [
-    { match:"Portugal vs Chile", pick:"Home 2UP", odds:"1.30", conf:"63%" },
-    { match:"Belgium vs Tunisia", pick:"Home 2UP", odds:"1.33", conf:"55%" },
-    { match:"Switzerland vs Australia", pick:"Home 1UP", odds:"1.47", conf:"50%" }
+    { match: "Croatia vs Slovenia", pick: "Home", odds: "1.40", conf: "1X2" },
+    { match: "Liechtenstein vs Cyprus", pick: "Away", odds: "1.28", conf: "1X2" },
+    { match: "Ecuador vs Guatemala", pick: "Home", odds: "1.19", conf: "1X2" }
   ];
+  
   let correctScorePicks = [
     { match:"Nevesinje vs Vlasenica", score:"2-1", odds:"8.50" },
     { match:"Al Talaba vs Al Karma", score:"1-1", odds:"9.00" }
@@ -245,7 +248,7 @@
   let selectedVipPlan = { days:30, amount:3199, name:"Monthly" };
   let selectedDailyPlan = { days:1, amount:500, name:"Daily 5 Odds" };
   
-  // Load / Save
+  // Load / Save functions (unchanged)
   function loadData() {
     if(localStorage.getItem('vip_passwords')) vipPasswords = JSON.parse(localStorage.getItem('vip_passwords'));
     if(localStorage.getItem('daily_passwords')) dailyPasswords = JSON.parse(localStorage.getItem('daily_passwords'));
@@ -301,7 +304,7 @@
     console.log("All data saved.");
   }
   
-  // Render public UI
+  // Render public UI (unchanged except free picks now show "1X2")
   function renderVIPPlans() {
     const container = document.getElementById('vipPlansContainer');
     if(!container) return;
@@ -348,6 +351,7 @@
     });
   }
   function renderPredictions() {
+    // Free picks – now showing "1X2" instead of the long string
     document.getElementById('freePicksGrid').innerHTML = freePicks.map(p => `<div class="prediction-item"><div class="match-info"><div class="match-teams">${p.match}</div></div><div class="pred-details"><span class="prediction-badge">${p.pick}</span><span class="odds-value">${p.odds}</span><span class="ai-confidence">${p.conf}</span></div></div>`).join('');
     document.getElementById('correctScoreGrid').innerHTML = correctScorePicks.map(p => `<div class="score-card"><span>${p.match}</span><span class="score-value">${p.score}</span><span class="odds-value">${p.odds}</span></div>`).join('');
     document.getElementById('bttsGrid').innerHTML = bttsPicks.map(p => `<div class="prediction-item"><div class="match-info"><div class="match-teams">${p.match}</div></div><div class="pred-details"><span class="prediction-badge">${p.pick}</span><span class="odds-value">${p.odds}</span><span class="ai-confidence">${p.conf}</span></div></div>`).join('');
@@ -433,7 +437,7 @@
   }
   function copyTillNumber() { navigator.clipboard.writeText("6076817"); alert("Till copied!"); }
   
-  // Admin panel functions
+  // Admin panel functions (unchanged – they already use the freePicks array with updated conf)
   function renderAdminEditors() {
     // VIP passwords editor
     let vipHtml = vipPasswords.map((p,i) => `
@@ -658,7 +662,7 @@
   function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('prime_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); }
   document.getElementById('themeToggle').onclick = toggleTheme;
   
-  // Admin button detection – MUST be after DOM is ready
+  // Admin button detection
   window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const isAdmin = urlParams.get('admin') === 'prime2025';
@@ -690,3 +694,4 @@
 <footer class="footer">© PRIME BET AI — VIP Zone & Daily 5 Odds. 18+ only.</footer>
 </body>
 </html>
+```
