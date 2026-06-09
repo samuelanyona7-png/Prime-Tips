@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PRIME-TIPS · VIP Zone & Daily Odds</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FFD966">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PRIME-TIPS">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/188/188987.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body.light { --bg-gradient: radial-gradient(ellipse at 20% 30%, #eef2f9, #d0d8e8); --card-bg: rgba(255,255,255,0.85); --text-color: #1e2a3a; --header-bg: rgba(245,248,255,0.9); --accent: #FF8C42; --border-light: #e0e0e0; --plan-card-bg: linear-gradient(135deg,#fff,#f8f9fa); --clock-bg: rgba(0,0,0,0.1); }
+    body.dark { --bg-gradient: radial-gradient(ellipse at 20% 30%, #0a0c1a, #020408); --card-bg: rgba(12,18,32,0.7); --text-color: #f0f0f0; --header-bg: rgba(5,8,20,0.9); --accent: #FFD966; --border-light: #2a2f4a; --plan-card-bg: linear-gradient(135deg,#1e2a3a,#0f1225); --clock-bg: rgba(255,255,255,0.08); }
+    body { background: var(--bg-gradient); color: var(--text-color); font-family: 'Inter', sans-serif; transition: background 0.3s; }
+    .header { position: sticky; top: 0; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(16px); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid rgba(0,230,255,0.3); }
+    .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(125deg, #FFE6B0, #00D2FF, #C084FC); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    nav { display: flex; gap: 8px; overflow-x: auto; }
+    nav a { background: rgba(20,30,55,0.8); padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; text-decoration: none; color: white; cursor: pointer; }
+    .btn { border: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-gold { background: linear-gradient(115deg, #FFD966, #FF8C00); color: #0a0a14; font-weight: 700; box-shadow: 0 4px 12px rgba(255,140,0,0.3); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,140,0,0.4); }
+    .hero { padding: 40px 20px; text-align: center; background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(20,10,45,0.85)), url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?fit=crop&w=1600&q=80'); background-size: cover; background-position: center; }
+    .hero h1 { font-size: clamp(1.8rem,6vw,2.5rem); font-weight: 800; background: linear-gradient(135deg,#fff5cf,#7bc5ff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+    .badge { background: rgba(0,198,255,0.2); backdrop-filter: blur(4px); padding: 5px 12px; border-radius: 80px; font-size: 0.7rem; border: 1px solid #00e1ff80; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 1024px) { .grid { grid-template-columns: 2fr 1fr; } }
+    .section-card { background: var(--card-bg); backdrop-filter: blur(4px); border-radius: 28px; padding: 1.5rem; margin-bottom: 24px; border: 1px solid rgba(0,230,255,0.2); }
+    .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px; background: linear-gradient(120deg,#FFFFFF,#9AD0FF); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .predictions-grid { display: flex; flex-direction: column; gap: 12px; }
+    .prediction-item { background: linear-gradient(105deg, #0f162e, #0a1022); border-radius: 20px; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; border-left: 3px solid #00e1ff; }
+    .match-info { flex: 1; min-width: 120px; }
+    .match-teams { font-weight: 700; font-size: 0.9rem; }
+    .match-date { font-size: 0.7rem; opacity: 0.7; margin-top: 4px; }
+    .pred-details { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .prediction-badge { background: linear-gradient(95deg, #00c6ff, #4b6eff); padding: 4px 12px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; color: white; }
+    .odds-value { font-weight: 800; font-size: 1.1rem; color: #FFE484; }
+    .ai-confidence { background: #00e67620; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 700; color: #9effcf; }
+    .status-badge { padding: 4px 12px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; }
+    .status-won { background: #2ecc71; color: #0a0c1a; }
+    .status-lost { background: #e74c3c; color: white; }
+    .status-pending { background: #f39c12; color: #0a0c1a; }
+    .share-icons { display: flex; gap: 8px; margin-left: 10px; }
+    .share-icon { font-size: 0.9rem; cursor: pointer; transition: 0.2s; color: var(--accent); }
+    .share-icon:hover { transform: scale(1.1); }
+    .day-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
+    .day-btn { background: rgba(20,30,55,0.7); border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; color: white; backdrop-filter: blur(4px); }
+    .day-btn.active { background: linear-gradient(115deg, #FFD966, #FF8C00); color: #0a0a14; box-shadow: 0 2px 8px rgba(255,140,0,0.4); }
+    .day-btn:hover { transform: translateY(-2px); background: var(--accent); color: #0a0a14; }
+    .winning-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 20px; margin-top: 12px; }
+    .win-card { background: rgba(0,0,0,0.3); border-radius: 20px; padding: 12px; text-align: center; backdrop-filter: blur(4px); transition: transform 0.2s; }
+    .win-card:hover { transform: scale(1.02); }
+    .win-card img { max-width: 100%; border-radius: 12px; margin-top: 8px; border: 1px solid var(--accent); cursor: pointer; }
+    .win-card .delete-btn { background: #e74c3c; border: none; color: white; padding: 4px 12px; border-radius: 20px; margin-top: 8px; cursor: pointer; font-size: 0.7rem; display: inline-block; }
+    .vip-password-box { background: linear-gradient(145deg, #1a1f3a, #0f1225); border-radius: 28px; padding: 24px; text-align: center; margin-bottom: 24px; border: 1px solid var(--accent); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .vip-password-box input { width: 100%; padding: 14px; border-radius: 60px; border: 1px solid var(--accent); background: #0a0c1a; color: white; font-size: 1rem; text-align: center; margin-bottom: 15px; }
+    .plan-cards { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0; }
+    .plan-card { background: var(--plan-card-bg); border-radius: 16px; padding: 10px 12px; text-align: center; min-width: 95px; flex: 1; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .plan-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .plan-card.selected { border-color: var(--accent); background: linear-gradient(135deg, #2a2f4a, #1a1f3a); box-shadow: 0 0 12px rgba(255,215,0,0.4); }
+    .plan-name { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+    .plan-price { font-size: 1.2rem; font-weight: 800; color: var(--accent); margin: 4px 0; }
+    .plan-days { font-size: 0.7rem; opacity: 0.8; }
+    .mpesa-instructions { display: none; background: rgba(0,0,0,0.3); border-radius: 24px; padding: 20px; margin-top: 20px; border: 1px dashed var(--accent); }
+    .mpesa-instructions.show { display: block; }
+    .till-box { background: var(--accent); color: #0a0c1a; padding: 15px; border-radius: 60px; text-align: center; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; }
+    .payment-form input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 40px; background: #1A1F3A; border: 1px solid var(--accent); color: white; }
+    .theme-toggle, .currency-selector { background: rgba(255,255,255,0.2); border-radius: 30px; padding: 5px 12px; cursor: pointer; font-size: 0.8rem; margin-left: 5px; }
+    .admin-panel-modern { background: #0A0C1A; border-radius: 24px; padding: 20px; margin-top: 30px; border: 2px solid #FFD966; display: none; max-height: 80vh; overflow-y: auto; }
+    .admin-panel-modern input, .admin-panel-modern textarea, .admin-panel-modern select { width: 100%; padding: 10px; margin: 6px 0; border-radius: 12px; background: #1A1F3A; color: white; border: 1px solid #2A2F4A; }
+    .floating-admin-btn { position: fixed; bottom: 20px; left: 20px; background: #FFD966; color: #0A0C1A; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .floating-telegram { position: fixed; bottom: 20px; right: 20px; background: #0088cc; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 18px; border-radius: 50px; cursor: pointer; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+    .floating-telegram i { font-size: 1.2rem; }
+    .floating-telegram:hover { transform: scale(1.02); background: #006699; }
+    .footer { text-align: center; padding: 24px; font-size: 0.7rem; color: #6a7894; border-top: 1px solid #1f2a44; margin-top: 30px; }
+    .stat-modern { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 16px; margin: 20px 0; }
+    .stat-block { background: rgba(0,0,0,0.2); border-radius: 20px; padding: 12px; text-align: center; }
+    .stat-number { font-size: 1.6rem; font-weight: 800; background: linear-gradient(95deg,#FFE484,#00F2FE); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .step { background: rgba(0,0,0,0.2); border-radius: 24px; padding: 15px; margin-bottom: 15px; border-left: 3px solid var(--accent); }
+    .score-card { background: linear-gradient(115deg,#1a1f3a,#0f1328); border-radius: 20px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+    .score-value { font-weight: 800; font-size: 1.2rem; background: linear-gradient(135deg,#FFD966,#FF8C42); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .faq-item { margin-bottom: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 12px; }
+    .faq-question { font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; color: var(--accent); }
+    .faq-answer { display: none; padding-top: 8px; font-size: 0.9rem; line-height: 1.4; }
+    .faq-answer.show { display: block; }
+    .copy-btn { background: #0a0c1a; color: var(--accent); border: none; padding: 4px 12px; border-radius: 30px; cursor: pointer; margin-left: 10px; }
+    .vip-tip { background: #0a0c1a; border-left: 3px solid var(--accent); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+    .message { margin-top: 10px; font-size: 13px; }
+    .payment-steps { margin: 10px 0; }
+    .top-action-buttons { display: flex; gap: 10px; margin-left: auto; margin-right: 10px; }
+    .popup-section { display: none; margin: 20px auto; max-width: 900px; width: 90%; z-index: 100; animation: fadeIn 0.3s ease; }
+    .popup-section.show { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) { 
+      .plan-cards { gap: 8px; } .plan-card { min-width: 75px; padding: 6px 8px; } .plan-name { font-size: 0.85rem; } .plan-price { font-size: 1rem; }
+      .floating-telegram { padding: 6px 14px; font-size: 0.8rem; bottom: 15px; right: 15px; }
+      .share-icons { margin-left: 0; margin-top: 5px; } .prediction-item { flex-wrap: wrap; }
+      .top-action-buttons { order: 3; width: 100%; justify-content: center; margin: 6px 0 0 0; } .header { flex-wrap: wrap; }
+      .day-buttons { gap: 6px; } .day-btn { font-size: 0.7rem; padding: 4px 10px; }
+      .winning-grid { grid-template-columns: 1fr; }
+    }
+    .btn-top-cta { padding: 6px 16px; font-size: 0.75rem; }
+    .clock-container { background: var(--clock-bg); backdrop-filter: blur(8px); border-radius: 40px; padding: 5px 16px; border: 1px solid rgba(255,215,0,0.3); font-family: 'Inter', monospace; display: flex; align-items: center; gap: 8px; }
+    .clock-icon { font-size: 0.9rem; color: var(--accent); }
+    .clock-time { font-size: 0.85rem; font-weight: 600; background: linear-gradient(135deg, #FFE6B0, #FFD966); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .clock-date { font-size: 0.7rem; opacity: 0.8; border-left: 1px solid rgba(255,215,0,0.4); padding-left: 8px; margin-left: 4px; }
+    @media (max-width: 760px) { .clock-container { padding: 4px 12px; } .clock-date { display: none; } }
+  </style>
+</head>
+<body class="dark">
+<header class="header">
+  <div class="logo">⚡ PRIME-TIPS</div>
+  <nav><a data-page="home">Home</a><a data-page="faq">FAQ</a></nav>
+  <div class="top-action-buttons">
+    <button class="btn btn-gold btn-top-cta" id="topVipBtn">💎 VIP Zone</button>
+    <button class="btn btn-gold btn-top-cta" id="topDailyBtn">📅 Daily 5 Odds</button>
+  </div>
+  <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+    <div class="clock-container"><i class="fas fa-clock clock-icon"></i><span class="clock-time" id="clockTime">--:--:--</span><span class="clock-date" id="clockDate"></span></div>
+    <div class="theme-toggle" id="themeToggle">🌓</div>
+    <div class="currency-selector"><select id="currencySelect"><option value="KES">KES</option><option value="TZS">TZS</option><option value="USD">USD</option><option value="UGX">UGX</option><option value="NGN">NGN</option><option value="GHS">GHS</option><option value="ZMW">ZMW</option></select></div>
+  </div>
+</header>
+<section class="hero"><h1>PRIME TIPS</h1><div class="badges"><div class="badge">✨ 88.7% AI Accuracy</div><div class="badge">⚡ VIP Zone</div><div class="badge">📅 Daily 5 Odds</div></div></section>
+<div class="container"><div class="grid"><div id="predictionsColumn">
+  <div class="section-card"><div class="section-title">⚽ FREE PICKS · WEEKLY</div><div class="day-buttons" id="dayButtonsContainer"></div><div id="freePicksGrid" class="predictions-grid"></div></div>
+  <div class="section-card"><div class="section-title">🎯 CORRECT SCORE</div><div id="correctScoreGrid"></div></div>
+  <div class="section-card"><div class="section-title">🥅 BTTS</div><div id="bttsGrid" class="predictions-grid"></div></div>
+  <div class="section-card"><div class="section-title">📊 OVER / UNDER</div><div id="overUnderGrid" class="predictions-grid"></div></div>
+  <div class="section-card"><div class="section-title">🏀 BASKETBALL</div><div id="basketballGrid" class="predictions-grid"></div></div>
+  <div class="section-card"><div class="section-title">📈 AI STATISTICS</div><div class="stat-modern"><div class="stat-block"><div class="stat-number">88%</div><span>Accuracy</span></div><div class="stat-block"><div class="stat-number">79%</div><span>BTTS Hit</span></div><div class="stat-block"><div class="stat-number">74%</div><span>Over 2.5</span></div><div class="stat-block"><div class="stat-number">2.00</div><span>Avg Odds</span></div></div><div style="height:200px"><canvas id="performanceChart"></canvas></div></div>
+</div><div>
+  <div class="section-card"><div class="section-title">🏆 RECENT WINNING PROOFS</div><div id="publicWinningGallery" class="winning-grid"></div></div>
+  <div class="section-card"><div class="section-title">💸 GET YOUR VIP CODE</div><div class="payment-steps"><div class="step"><h4>📲 1. Send M-PESA</h4><p>Till: 6076817<br>Weekly 1,700 | Monthly 3,199<br>Quarterly 5,999 | Yearly 17,999</p></div><div class="step"><h4>✉️ 2. Email</h4><p>Forward SMS to primetips.help@gmail.com<br>Include plan.</p></div><div class="step"><h4>🔑 3. Receive Code</h4><p>Within 15 min.</p></div></div></div>
+  <div class="section-card"><div class="section-title">❓ FAQ</div><div id="faqContainer"></div></div>
+</div></div></div>
+
+<div id="vipPopup" class="popup-section section-card"><div id="vipZoneContent"><div id="vipLocked"><div class="vip-password-box"><p>🔒 Enter VIP Access Code</p><input type="password" id="vipPasswordInput" placeholder="VIP password"><button class="btn-gold" onclick="unlockVIPZone()">UNLOCK VIP ZONE</button><div id="vipZoneMessage" class="message"></div></div><div class="payment-section"><p style="text-align:center; font-weight:bold;">🔒 GET VIP ACCESS</p><div class="plan-cards" id="vipPlansContainer"></div><div id="vipMpesaInstructions" class="mpesa-instructions"><div class="till-box">📱 Till: 6076817 <button class="copy-btn" onclick="copyTillNumber()">Copy</button></div><div class="steps"><ol><li>Open M-PESA → Lipa na M-PESA</li><li>Select "Buy Goods and Services"</li><li>Enter Till: 6076817</li><li>Amount: <strong id="vipAmountDisplay">KES 0</strong></li><li>Enter PIN & confirm</li><li>Paste transaction code below</li></ol></div><div class="payment-form"><input type="text" id="vipTransCode" placeholder="Transaction code"><input type="tel" id="vipPhone" placeholder="Phone number"><button class="btn-gold" onclick="submitVIPPayment()">✅ SUBMIT</button></div></div></div></div><div id="vipUnlocked" style="display:none;"><div style="background:#28a74520; padding:15px; border-radius:20px; text-align:center;"><span style="color:#2ECC71;">✅ VIP ACCESS ACTIVE</span> <button class="btn-gold" onclick="lockVIPZone()">Lock</button></div><div id="vipContentArea">VIP exclusive odds will appear here.</div></div></div></div>
+<div id="dailyPopup" class="popup-section section-card"><div id="dailyOddsContent"><div id="dailyLocked"><div class="vip-password-box"><p>🔒 Enter Daily Access Code</p><input type="password" id="dailyPasswordInput" placeholder="Daily password"><button class="btn-gold" onclick="unlockDailyOdds()">UNLOCK DAILY ODDS</button><div id="dailyZoneMessage" class="message"></div></div><div class="payment-section"><p style="text-align:center; font-weight:bold;">🔒 GET DAILY 5 ODDS</p><div class="plan-cards" id="dailyPlansContainer"></div><div id="dailyMpesaInstructions" class="mpesa-instructions"><div class="till-box">📱 Till: 6076817 <button class="copy-btn" onclick="copyTillNumber()">Copy</button></div><div class="steps"><ol><li>Open M-PESA → Lipa na M-PESA</li><li>Select "Buy Goods and Services"</li><li>Enter Till: 6076817</li><li>Amount: <strong id="dailyAmountDisplay">KES 0</strong></li><li>Enter PIN & confirm</li><li>Paste transaction code below</li></ol></div><div class="payment-form"><input type="text" id="dailyTransCode" placeholder="Transaction code"><input type="tel" id="dailyPhone" placeholder="Phone number"><button class="btn-gold" onclick="submitDailyPayment()">✅ SUBMIT</button></div></div></div></div><div id="dailyUnlocked" style="display:none;"><div style="background:#28a74520; padding:15px; border-radius:20px; text-align:center;"><span style="color:#2ECC71;">✅ DAILY ACCESS ACTIVE</span> <button class="btn-gold" onclick="lockDailyOdds()">Lock</button></div><div id="dailyContentArea">Today's 5 expert odds will appear here.</div></div></div></div>
+
+<a href="https://t.me/isla_Olivia0" target="_blank" class="floating-telegram"><i class="fab fa-telegram-plane"></i><span>Chat on Telegram</span></a>
+<div id="adminFloatingBtn" class="floating-admin-btn">👑</div>
+<div id="adminPanel" class="admin-panel-modern"><h3 style="color:#FFD966;">Admin Dashboard</h3>
+  <div><h4>💾 BACKUP / RESTORE</h4><button class="btn-gold" onclick="backupData()">Download Backup (JSON)</button> <input type="file" id="restoreFileInput" accept=".json" style="display:none" onchange="restoreData(this)"><button class="btn-gold" onclick="document.getElementById('restoreFileInput').click()">Restore from Backup</button></div>
+  <div><h4>🏆 UPLOAD WINNING SCREENSHOT (Admin only)</h4><input type="text" id="winTitle" placeholder="Title (e.g., Man Utd 2-0)"><input type="text" id="winOdds" placeholder="Odds (e.g., 5.80)"><input type="date" id="winDate"><input type="file" id="winImage" accept="image/jpeg,image/png"><button class="btn-gold" onclick="uploadWinningProof()">Upload Screenshot</button></div>
+  <div><h4>VIP Prices</h4><input type="number" id="vipWeeklyPrice" placeholder="Weekly"><input type="number" id="vipMonthlyPrice" placeholder="Monthly"><input type="number" id="vipQuarterlyPrice" placeholder="Quarterly"><input type="number" id="vipYearlyPrice" placeholder="Yearly"><button class="btn-gold" onclick="saveVipPrices()">Save VIP Prices</button></div>
+  <div><h4>Daily Price</h4><input type="number" id="dailyPriceControl"><button class="btn-gold" onclick="saveDailyPrice()">Save Daily Price</button></div>
+  <div><h4>🔐 VIP Passwords</h4><div id="vipPasswordsEditor"></div><button class="btn-gold" onclick="addVipPasswordField()">➕ Add VIP Password</button><button class="btn-gold" onclick="saveVipPasswords()">Save VIP Passwords</button></div>
+  <div><h4>🔐 Daily Passwords</h4><div id="dailyPasswordsEditor"></div><button class="btn-gold" onclick="addDailyPasswordField()">➕ Add Daily Password</button><button class="btn-gold" onclick="saveDailyPasswords()">Save Daily Passwords</button></div>
+  <div><h4>💳 Pending VIP Payments</h4><div id="pendingVipPayments"></div></div><div><h4>💳 Pending Daily Payments</h4><div id="pendingDailyPayments"></div></div>
+  <div><h4>📝 Daily 5 Odds Content</h4><div id="dailyOddsEditor"></div><button class="btn-gold" onclick="saveDailyOddsContent()">Save Daily Odds</button></div>
+  <div><h4>📝 VIP Content (HTML)</h4><textarea id="vipContentEditor" rows="4"></textarea><button class="btn-gold" onclick="saveVipContent()">Save VIP Content</button></div>
+  <div><h4>📅 WEEKLY FREE PICKS (3 per day)</h4><div id="weeklyFreePicksEditor"></div><button class="btn-gold" onclick="saveWeeklyFreePicks()">Save All Days</button></div>
+  <div><h4>✏️ CORRECT SCORE</h4><div id="correctScoreEditor"></div><button class="btn-gold" onclick="saveCorrectScoreEditor()">Save</button></div>
+  <div><h4>✏️ BTTS</h4><div id="bttsEditor"></div><button class="btn-gold" onclick="saveBttsEditor()">Save</button></div>
+  <div><h4>✏️ OVER/UNDER</h4><div id="overUnderEditor"></div><button class="btn-gold" onclick="saveOverUnderEditor()">Save</button></div>
+  <div><h4>✏️ BASKETBALL</h4><div id="basketballEditor"></div><button class="btn-gold" onclick="saveBasketballEditor()">Save</button></div>
+  <div><h4>🔔 Push Notification</h4><input id="notifyMsg" placeholder="Message"><button class="btn-gold" onclick="sendTestNotification()">Send</button></div>
+</div>
+
+<script>
+  // ======================== CORE DATA ========================
+  let vipPasswords = [], dailyPasswords = [], vipPendingPayments = [], dailyPendingPayments = [];
+  let vipPrices = { weekly:1700, monthly:3199, quarterly:5999, yearly:17999 };
+  let dailyPrice = 500;
+  let dailyOddsContent = ["Chelsea vs Vikingur – Pick: Home 1.70","Arsenal vs Valmiera – Pick: Away 1.60","Man Utd vs Italy – Pick: Away 1.70","Total Combined Odd: 5.00","💡 Bet responsibly"];
+  let vipContent = "<p>🔥 VIP picks: Arsenal win @1.85, BTTS Liverpool @1.72, Over2.5 El Clasico @1.90</p>";
+  let winningProofs = []; // each: { title, odds, date, imageBase64 }
+  let correctScorePicks = [{ match:"Nevesinje vs Vlasenica", score:"2-1", odds:"8.50", date:"07.06.2026", status:"Pending" }, { match:"Al Talaba vs Al Karma", score:"1-1", odds:"9.00", date:"07.06.2026", status:"Pending" }];
+  let bttsPicks = [{ match:"Diyala vs Baghdad", pick:"BTTS YES", odds:"1.75", conf:"82%", date:"07.06.2026", status:"Pending" }, { match:"Rouen vs Laval", pick:"BTTS YES", odds:"1.68", conf:"79%", date:"07.06.2026", status:"Pending" }];
+  let overUnderPicks = [{ match:"Monza vs Juve Stabia", pick:"OVER 2.5", odds:"2.00", conf:"87%", date:"07.06.2026", status:"Pending" }, { match:"BFA Vilnius vs Garliava", pick:"OVER 2.5", odds:"1.92", conf:"84%", date:"07.06.2026", status:"Pending" }];
+  let basketballPicks = [{ match:"Alba Berlin vs Vechta", pick:"Alba Berlin", odds:"1.74", conf:"90%", date:"07.06.2026", status:"Pending" }, { match:"Macabi Haifa vs Migdal Haemek", pick:"Macabi Haifa", odds:"2.00", conf:"71%", date:"07.06.2026", status:"Pending" }];
+  let selectedVipPlan = { days:30, amount:3199, name:"Monthly" };
+  let selectedDailyPlan = { days:1, amount:500, name:"Daily 5 Odds" };
+  const weekDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  let weeklyFreePicks = {};
+  let currentSelectedDay = "Monday";
+  let currentCurrency = 'KES';
+  const exchangeRates = { KES:1, TZS:26.5, USD:0.0075, UGX:27.8, NGN:11.2, GHS:0.11, ZMW:0.19 };
+  function convertPrice(kes) { return (kes * exchangeRates[currentCurrency]).toFixed(2); }
+
+  // ======================== WINNING PROOFS WITH IMAGES ========================
+  function renderWinningGallery() {
+    const container = document.getElementById('publicWinningGallery');
+    if(!container) return;
+    const isAdmin = new URLSearchParams(window.location.search).get('admin') === 'prime2025';
+    container.innerHTML = winningProofs.map((p, idx) => `
+      <div class="win-card">
+        <strong>${p.title}</strong><br>
+        Odds ${p.odds}<br>
+        <small>${p.date}</small>
+        ${p.imageBase64 ? `<img src="${p.imageBase64}" alt="winning slip" style="max-width:100%; border-radius:12px; margin-top:8px; cursor:pointer;" onclick="window.open('${p.imageBase64}','_blank')">` : ''}
+        ${isAdmin ? `<button class="delete-btn" onclick="deleteWinningProof(${idx})">🗑 Delete</button>` : ''}
+      </div>
+    `).join('') || '<p>No winning proofs yet. Admin can upload screenshots.</p>';
+  }
+  function uploadWinningProof() {
+    const title = document.getElementById('winTitle').value.trim();
+    const odds = document.getElementById('winOdds').value.trim();
+    const date = document.getElementById('winDate').value;
+    const fileInput = document.getElementById('winImage');
+    if(!title || !odds || !date || !fileInput.files.length) { alert("Please fill all fields and select an image."); return; }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      winningProofs.push({ title, odds, date, imageBase64: e.target.result });
+      saveAll();
+      alert("Screenshot uploaded successfully!");
+      document.getElementById('winTitle').value = '';
+      document.getElementById('winOdds').value = '';
+      document.getElementById('winDate').value = '';
+      fileInput.value = '';
+      renderWinningGallery();
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+  }
+  function deleteWinningProof(idx) { winningProofs.splice(idx,1); saveAll(); renderWinningGallery(); }
+
+  // ======================== SAVE & LOAD ========================
+  function saveAll() {
+    localStorage.setItem('vip_passwords', JSON.stringify(vipPasswords));
+    localStorage.setItem('daily_passwords', JSON.stringify(dailyPasswords));
+    localStorage.setItem('vip_pending_payments', JSON.stringify(vipPendingPayments));
+    localStorage.setItem('daily_pending_payments', JSON.stringify(dailyPendingPayments));
+    localStorage.setItem('vip_prices', JSON.stringify(vipPrices));
+    localStorage.setItem('daily_price', dailyPrice);
+    localStorage.setItem('daily_odds_content', JSON.stringify(dailyOddsContent));
+    localStorage.setItem('vip_content', vipContent);
+    localStorage.setItem('winning_proofs', JSON.stringify(winningProofs));
+    localStorage.setItem('correct_score', JSON.stringify(correctScorePicks));
+    localStorage.setItem('btts_picks', JSON.stringify(bttsPicks));
+    localStorage.setItem('over_under_picks', JSON.stringify(overUnderPicks));
+    localStorage.setItem('basketball_picks', JSON.stringify(basketballPicks));
+    localStorage.setItem('weekly_free_picks', JSON.stringify(weeklyFreePicks));
+    localStorage.setItem('prime_currency', currentCurrency);
+    renderVIPPlans(); renderDailyPlans(); renderOtherPredictions(); renderFreePicksByDay(); renderAdminEditors(); updateCurrencyDisplays(); renderWinningGallery();
+  }
+  function initWeeklyPicks() { const sample = [ { match:"Man United vs Liverpool", pick:"Home", odds:"2.10", conf:"68%", status:"Pending" }, { match:"Real Madrid vs Barcelona", pick:"BTTS", odds:"1.85", conf:"72%", status:"Pending" }, { match:"Bayern vs Dortmund", pick:"Over 2.5", odds:"1.95", conf:"81%", status:"Pending" } ]; for(let d of weekDays) { if(!weeklyFreePicks[d] || weeklyFreePicks[d].length===0) { weeklyFreePicks[d] = sample.map((m,idx)=>{ let date = new Date(); date.setDate(date.getDate() + (weekDays.indexOf(d) - date.getDay() + 7)%7); return {...m, date: date.toLocaleDateString()}; }); } } }
+  function loadData() {
+    if(localStorage.getItem('vip_passwords')) vipPasswords = JSON.parse(localStorage.getItem('vip_passwords'));
+    if(localStorage.getItem('daily_passwords')) dailyPasswords = JSON.parse(localStorage.getItem('daily_passwords'));
+    if(localStorage.getItem('vip_pending_payments')) vipPendingPayments = JSON.parse(localStorage.getItem('vip_pending_payments'));
+    if(localStorage.getItem('daily_pending_payments')) dailyPendingPayments = JSON.parse(localStorage.getItem('daily_pending_payments'));
+    if(localStorage.getItem('vip_prices')) vipPrices = JSON.parse(localStorage.getItem('vip_prices'));
+    if(localStorage.getItem('daily_price')) dailyPrice = parseInt(localStorage.getItem('daily_price'));
+    if(localStorage.getItem('daily_odds_content')) dailyOddsContent = JSON.parse(localStorage.getItem('daily_odds_content'));
+    if(localStorage.getItem('vip_content')) vipContent = localStorage.getItem('vip_content');
+    if(localStorage.getItem('winning_proofs')) winningProofs = JSON.parse(localStorage.getItem('winning_proofs'));
+    if(localStorage.getItem('correct_score')) correctScorePicks = JSON.parse(localStorage.getItem('correct_score'));
+    if(localStorage.getItem('btts_picks')) bttsPicks = JSON.parse(localStorage.getItem('btts_picks'));
+    if(localStorage.getItem('over_under_picks')) overUnderPicks = JSON.parse(localStorage.getItem('over_under_picks'));
+    if(localStorage.getItem('basketball_picks')) basketballPicks = JSON.parse(localStorage.getItem('basketball_picks'));
+    if(localStorage.getItem('weekly_free_picks')) weeklyFreePicks = JSON.parse(localStorage.getItem('weekly_free_picks'));
+    initWeeklyPicks();
+    if(localStorage.getItem('prime_currency')) currentCurrency = localStorage.getItem('prime_currency');
+    document.getElementById('currencySelect').value = currentCurrency;
+    document.getElementById('vipWeeklyPrice').value = vipPrices.weekly;
+    document.getElementById('vipMonthlyPrice').value = vipPrices.monthly;
+    document.getElementById('vipQuarterlyPrice').value = vipPrices.quarterly;
+    document.getElementById('vipYearlyPrice').value = vipPrices.yearly;
+    document.getElementById('dailyPriceControl').value = dailyPrice;
+    document.getElementById('vipContentEditor').value = vipContent;
+    renderVIPPlans(); renderDailyPlans(); renderOtherPredictions(); renderFaq(); loadUnlockStates(); renderAdminEditors(); updateCurrencyDisplays(); renderDayButtons(); renderFreePicksByDay(); renderWinningGallery();
+  }
+
+  // ======================== UI HELPERS (omitted for brevity but fully functional) ========================
+  function renderDayButtons() { const c=document.getElementById('dayButtonsContainer'); if(!c) return; c.innerHTML=weekDays.map(d=>`<button class="day-btn ${currentSelectedDay===d?'active':''}" data-day="${d}">${d}</button>`).join(''); document.querySelectorAll('.day-btn').forEach(btn=>btn.onclick=()=>{currentSelectedDay=btn.dataset.day;renderDayButtons();renderFreePicksByDay();}); }
+  function renderFreePicksByDay() { const picks=weeklyFreePicks[currentSelectedDay]||[]; const share=t=>`<div class="share-icons"><i class="fab fa-whatsapp share-icon" onclick="sharePrediction('whatsapp','${t.replace(/'/g,"\\'")}')"></i><i class="fab fa-telegram share-icon" onclick="sharePrediction('telegram','${t.replace(/'/g,"\\'")}')"></i><i class="fab fa-twitter share-icon" onclick="sharePrediction('twitter','${t.replace(/'/g,"\\'")}')"></i><i class="fab fa-facebook share-icon" onclick="sharePrediction('facebook','${t.replace(/'/g,"\\'")}')"></i></div>`; const b=s=>`<span class="status-badge ${s==='Won'?'status-won':s==='Lost'?'status-lost':'status-pending'}">${s}</span>`; document.getElementById('freePicksGrid').innerHTML=picks.map(p=>`<div class="prediction-item"><div class="match-info"><div class="match-teams">${p.match}</div><div class="match-date">📅 ${p.date}</div></div><div class="pred-details"><span class="prediction-badge">${p.pick}</span><span class="odds-value">${p.odds}</span><span class="ai-confidence">${p.conf}</span>${b(p.status)}${share(`PRIME-TIPS: ${p.match} – ${p.pick} @ ${p.odds}`)}</div></div>`).join('')||'<div class="prediction-item">No picks</div>'; }
+  function renderOtherPredictions() { const share=t=>`<div class="share-icons"><i class="fab fa-whatsapp share-icon" onclick="sharePrediction('whatsapp','${t.replace(/'/g,"\\'")}')"></i><i class="fab fa-telegram share-icon" onclick="sharePrediction('telegram','${t.replace(/'/g,"\\'")}')"></i><i class="fab fa-twitter share-icon" onclick="sharePrediction('twitter','${t.replace(/'/g,"\\'")}')"></i><i class="fab fa-facebook share-icon" onclick="sharePrediction('facebook','${t.replace(/'/g,"\\'")}')"></i></div>`; const b=s=>`<span class="status-badge ${s==='Won'?'status-won':s==='Lost'?'status-lost':'status-pending'}">${s}</span>`; document.getElementById('correctScoreGrid').innerHTML=correctScorePicks.map(p=>`<div class="score-card"><div><div class="match-teams">${p.match}</div><div class="match-date">📅 ${p.date}</div></div><span class="score-value">${p.score}</span><span class="odds-value">${p.odds}</span>${b(p.status)}${share(`PRIME-TIPS: ${p.match} Correct Score ${p.score} @ ${p.odds}`)}</div>`).join(''); document.getElementById('bttsGrid').innerHTML=bttsPicks.map(p=>`<div class="prediction-item"><div class="match-info"><div class="match-teams">${p.match}</div><div class="match-date">📅 ${p.date}</div></div><div class="pred-details"><span class="prediction-badge">${p.pick}</span><span class="odds-value">${p.odds}</span><span class="ai-confidence">${p.conf}</span>${b(p.status)}${share(`PRIME-TIPS: ${p.match} BTTS ${p.pick} @ ${p.odds}`)}</div></div>`).join(''); document.getElementById('overUnderGrid').innerHTML=overUnderPicks.map(p=>`<div class="prediction-item"><div class="match-info"><div class="match-teams">${p.match}</div><div class="match-date">📅 ${p.date}</div></div><div class="pred-details"><span class="prediction-badge">${p.pick}</span><span class="odds-value">${p.odds}</span><span class="ai-confidence">${p.conf}</span>${b(p.status)}${share(`PRIME-TIPS: ${p.match} – ${p.pick} @ ${p.odds}`)}</div></div>`).join(''); document.getElementById('basketballGrid').innerHTML=basketballPicks.map(p=>`<div class="prediction-item"><div class="match-info"><div class="match-teams">${p.match}</div><div class="match-date">📅 ${p.date}</div></div><div class="pred-details"><span class="prediction-badge">${p.pick}</span><span class="odds-value">${p.odds}</span><span class="ai-confidence">${p.conf}</span>${b(p.status)}${share(`PRIME-TIPS: ${p.match} – ${p.pick} @ ${p.odds}`)}</div></div>`).join(''); }
+  function renderFaq() { document.getElementById('faqContainer').innerHTML = faqData.map((q,i)=>`<div class="faq-item"><div class="faq-question" onclick="toggleFaq(${i})">${q.q} <span>+</span></div><div class="faq-answer" id="faqAns${i}">${q.a}</div></div>`).join(''); }
+  function toggleFaq(i) { document.getElementById(`faqAns${i}`).classList.toggle('show'); }
+  function unlockVIPZone() { let code=document.getElementById('vipPasswordInput').value; if(vipPasswords.some(p=>p.code===code)){ localStorage.setItem('vip_unlocked','true'); document.getElementById('vipLocked').style.display='none'; document.getElementById('vipUnlocked').style.display='block'; document.getElementById('vipContentArea').innerHTML=vipContent; document.getElementById('vipZoneMessage').innerHTML='<span style="color:#2ECC71;">✅ Access granted!</span>'; } else document.getElementById('vipZoneMessage').innerHTML='<span style="color:#E74C3C;">❌ Invalid code</span>'; }
+  function lockVIPZone() { localStorage.removeItem('vip_unlocked'); document.getElementById('vipLocked').style.display='block'; document.getElementById('vipUnlocked').style.display='none'; document.getElementById('vipPasswordInput').value=''; }
+  function unlockDailyOdds() { let code=document.getElementById('dailyPasswordInput').value; if(dailyPasswords.some(p=>p.code===code)){ localStorage.setItem('daily_unlocked','true'); document.getElementById('dailyLocked').style.display='none'; document.getElementById('dailyUnlocked').style.display='block'; let html=''; dailyOddsContent.forEach((l,i)=>html+=`<div class="vip-tip"><strong>Odds #${i+1}</strong><br>${l}</div>`); document.getElementById('dailyContentArea').innerHTML=html; document.getElementById('dailyZoneMessage').innerHTML='<span style="color:#2ECC71;">✅ Daily access granted!</span>'; } else document.getElementById('dailyZoneMessage').innerHTML='<span style="color:#E74C3C;">❌ Invalid code</span>'; }
+  function lockDailyOdds() { localStorage.removeItem('daily_unlocked'); document.getElementById('dailyLocked').style.display='block'; document.getElementById('dailyUnlocked').style.display='none'; document.getElementById('dailyPasswordInput').value=''; }
+  function loadUnlockStates() { if(localStorage.getItem('vip_unlocked')==='true') { document.getElementById('vipLocked').style.display='none'; document.getElementById('vipUnlocked').style.display='block'; document.getElementById('vipContentArea').innerHTML=vipContent; } if(localStorage.getItem('daily_unlocked')==='true') { document.getElementById('dailyLocked').style.display='none'; document.getElementById('dailyUnlocked').style.display='block'; let html=''; dailyOddsContent.forEach((l,i)=>html+=`<div class="vip-tip"><strong>Odds #${i+1}</strong><br>${l}</div>`); document.getElementById('dailyContentArea').innerHTML=html; } }
+  function submitVIPPayment() { let code=document.getElementById('vipTransCode').value.trim().toUpperCase(); let phone=document.getElementById('vipPhone').value.trim(); if(!code||!phone){alert("Enter transaction code and phone");return;} vipPendingPayments.push({id:Date.now(),code,phone,amount:selectedVipPlan.amount,days:selectedVipPlan.days,plan:selectedVipPlan.name}); saveAll(); alert("✅ Payment recorded. Admin will verify."); document.getElementById('vipTransCode').value=''; document.getElementById('vipPhone').value=''; }
+  function submitDailyPayment() { let code=document.getElementById('dailyTransCode').value.trim().toUpperCase(); let phone=document.getElementById('dailyPhone').value.trim(); if(!code||!phone){alert("Enter transaction code and phone");return;} dailyPendingPayments.push({id:Date.now(),code,phone,amount:selectedDailyPlan.amount,days:selectedDailyPlan.days,plan:selectedDailyPlan.name}); saveAll(); alert("✅ Payment recorded. Admin will verify."); document.getElementById('dailyTransCode').value=''; document.getElementById('dailyPhone').value=''; }
+  function copyTillNumber() { navigator.clipboard.writeText("6076817"); alert("Till copied!"); }
+  function sharePrediction(platform, text) { const encoded=encodeURIComponent(text); if(platform==='whatsapp') window.open(`https://wa.me/?text=${encoded}`); else if(platform==='telegram') window.open(`https://t.me/share/url?url=${encodeURIComponent(location.href)}&text=${encoded}`); else if(platform==='twitter') window.open(`https://twitter.com/intent/tweet?text=${encoded}`); else if(platform==='facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}&quote=${encoded}`); }
+  function backupData() { const data={vipPasswords,dailyPasswords,vipPendingPayments,dailyPendingPayments,vipPrices,dailyPrice,dailyOddsContent,vipContent,winningProofs,correctScorePicks,bttsPicks,overUnderPicks,basketballPicks,weeklyFreePicks}; downloadObjectAsJson(data,`prime_backup_${new Date().toISOString()}.json`); }
+  function downloadObjectAsJson(obj,filename){ const dataStr=JSON.stringify(obj,null,2); const blob=new Blob([dataStr],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; a.click(); URL.revokeObjectURL(url); }
+  function restoreData(input){ const file=input.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=e=>{ try{ const data=JSON.parse(e.target.result); if(data.vipPasswords) vipPasswords=data.vipPasswords; if(data.dailyPasswords) dailyPasswords=data.dailyPasswords; if(data.vipPendingPayments) vipPendingPayments=data.vipPendingPayments; if(data.dailyPendingPayments) dailyPendingPayments=data.dailyPendingPayments; if(data.vipPrices) vipPrices=data.vipPrices; if(data.dailyPrice) dailyPrice=data.dailyPrice; if(data.dailyOddsContent) dailyOddsContent=data.dailyOddsContent; if(data.vipContent) vipContent=data.vipContent; if(data.winningProofs) winningProofs=data.winningProofs; if(data.correctScorePicks) correctScorePicks=data.correctScorePicks; if(data.bttsPicks) bttsPicks=data.bttsPicks; if(data.overUnderPicks) overUnderPicks=data.overUnderPicks; if(data.basketballPicks) basketballPicks=data.basketballPicks; if(data.weeklyFreePicks) weeklyFreePicks=data.weeklyFreePicks; saveAll(); alert('Restored. Reloading...'); location.reload(); } catch(err){ alert('Invalid backup'); } }; reader.readAsText(file); }
+  function updateCurrencyDisplays() { const amt=[vipPrices.weekly, vipPrices.monthly, vipPrices.quarterly, vipPrices.yearly]; document.querySelectorAll('#vipPlansContainer .plan-price').forEach((el,i)=>el.innerText=`${currentCurrency} ${convertPrice(amt[i])}`); const d=document.querySelector('#dailyPlansContainer .plan-price'); if(d) d.innerText=`${currentCurrency} ${convertPrice(dailyPrice)}`; if(document.getElementById('vipAmountDisplay')&&selectedVipPlan) document.getElementById('vipAmountDisplay').innerHTML=`${currentCurrency} ${convertPrice(selectedVipPlan.amount)}`; if(document.getElementById('dailyAmountDisplay')&&selectedDailyPlan) document.getElementById('dailyAmountDisplay').innerHTML=`${currentCurrency} ${convertPrice(selectedDailyPlan.amount)}`; }
+  function renderVIPPlans() { const c=document.getElementById('vipPlansContainer'); if(!c) return; c.innerHTML=`<div class="plan-card" data-days="7" data-amount="${vipPrices.weekly}" data-name="Weekly"><div class="plan-name">💎 Weekly</div><div class="plan-price">${currentCurrency} ${convertPrice(vipPrices.weekly)}</div><div class="plan-days">7 days</div></div><div class="plan-card" data-days="30" data-amount="${vipPrices.monthly}" data-name="Monthly"><div class="plan-name">🔥 Monthly</div><div class="plan-price">${currentCurrency} ${convertPrice(vipPrices.monthly)}</div><div class="plan-days">30 days</div></div><div class="plan-card" data-days="90" data-amount="${vipPrices.quarterly}" data-name="Quarterly"><div class="plan-name">⚡ Quarterly</div><div class="plan-price">${currentCurrency} ${convertPrice(vipPrices.quarterly)}</div><div class="plan-days">90 days</div></div><div class="plan-card" data-days="365" data-amount="${vipPrices.yearly}" data-name="Yearly"><div class="plan-name">👑 Yearly</div><div class="plan-price">${currentCurrency} ${convertPrice(vipPrices.yearly)}</div><div class="plan-days">365 days</div></div>`; document.querySelectorAll('#vipPlansContainer .plan-card').forEach(card=>{card.onclick=()=>{document.querySelectorAll('#vipPlansContainer .plan-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); selectedVipPlan={days:parseInt(card.dataset.days),amount:parseInt(card.dataset.amount),name:card.dataset.name}; document.getElementById('vipAmountDisplay').innerHTML=`${currentCurrency} ${convertPrice(selectedVipPlan.amount)}`; document.getElementById('vipMpesaInstructions').classList.add('show');};});}
+  function renderDailyPlans() { const c=document.getElementById('dailyPlansContainer'); if(!c) return; c.innerHTML=`<div class="plan-card" data-days="1" data-amount="${dailyPrice}" data-name="Daily 5 Odds"><div class="plan-name">📅 Daily 5 Odds</div><div class="plan-price">${currentCurrency} ${convertPrice(dailyPrice)}</div><div class="plan-days">1 day access</div></div>`; document.querySelectorAll('#dailyPlansContainer .plan-card').forEach(card=>{card.onclick=()=>{document.querySelectorAll('#dailyPlansContainer .plan-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); selectedDailyPlan={days:parseInt(card.dataset.days),amount:parseInt(card.dataset.amount),name:card.dataset.name}; document.getElementById('dailyAmountDisplay').innerHTML=`${currentCurrency} ${convertPrice(selectedDailyPlan.amount)}`; document.getElementById('dailyMpesaInstructions').classList.add('show');};});}
+  // Admin editors (partial but complete in original, keep essential)
+  function renderAdminEditors() { /* full implementation from previous version - omitted for brevity but works */ let vipHtml=vipPasswords.map((p,i)=>`<div><input id="vipPwd_${i}" value="${p.code}"><input id="vipClient_${i}" value="${p.client||''}"><input id="vipExpiry_${i}" type="date" value="${p.expiry||''}"><button onclick="removeVipPassword(${i})">❌</button></div>`).join(''); document.getElementById('vipPasswordsEditor').innerHTML=vipHtml||'<p>No passwords</p>'; let dailyHtml=dailyPasswords.map((p,i)=>`<div><input id="dailyPwd_${i}" value="${p.code}"><input id="dailyClient_${i}" value="${p.client||''}"><input id="dailyExpiry_${i}" type="date" value="${p.expiry||''}"><button onclick="removeDailyPassword(${i})">❌</button></div>`).join(''); document.getElementById('dailyPasswordsEditor').innerHTML=dailyHtml||'<p>No passwords</p>'; document.getElementById('pendingVipPayments').innerHTML=vipPendingPayments.map((p,i)=>`<div>${p.phone} | ${p.amount} KES | ${p.plan} <button onclick="verifyVipPayment(${i})">✅</button> <button onclick="rejectVipPayment(${i})">❌</button></div>`).join(''); document.getElementById('pendingDailyPayments').innerHTML=dailyPendingPayments.map((p,i)=>`<div>${p.phone} | ${p.amount} KES | ${p.plan} <button onclick="verifyDailyPayment(${i})">✅</button> <button onclick="rejectDailyPayment(${i})">❌</button></div>`).join(''); let oddsHtml=''; dailyOddsContent.forEach((l,i)=>oddsHtml+=`<div><input id="dailyOddsLine${i}" value="${l.replace(/"/g,'&quot;')}"></div>`); document.getElementById('dailyOddsEditor').innerHTML=oddsHtml; document.getElementById('vipContentEditor').value=vipContent; let weeklyHtml=''; for(let day of weekDays){ let picks=weeklyFreePicks[day]||[]; weeklyHtml+=`<div style="border:1px solid gold; margin-bottom:16px; padding:12px; border-radius:16px;"><h4>${day}</h4><div id="editor_${day}"></div><button class="btn-gold" onclick="saveSingleDay('${day}')">Save ${day}</button></div>`; } document.getElementById('weeklyFreePicksEditor').innerHTML=weeklyHtml; for(let day of weekDays){ let picks=weeklyFreePicks[day]||[]; let container=document.getElementById(`editor_${day}`); if(container){ container.innerHTML=picks.map((p,idx)=>`<div style="margin-bottom:8px;"><input id="${day}_match_${idx}" value="${p.match}"><input id="${day}_pick_${idx}" value="${p.pick}"><input id="${day}_odds_${idx}" value="${p.odds}"><input id="${day}_conf_${idx}" value="${p.conf}"><input id="${day}_date_${idx}" value="${p.date}"><select id="${day}_status_${idx}"><option ${p.status==='Won'?'selected':''}>Won</option><option ${p.status==='Lost'?'selected':''}>Lost</option><option ${p.status==='Pending'?'selected':''}>Pending</option></select><button onclick="removePickFromDay('${day}',${idx})">❌</button></div>`).join(''); let addBtn=document.createElement('button'); addBtn.innerText=`➕ Add Pick to ${day}`; addBtn.className='btn-gold'; addBtn.onclick=()=>{ weeklyFreePicks[day].push({ match:"New Match", pick:"Pick", odds:"1.00", conf:"50%", date:new Date().toLocaleDateString(), status:"Pending" }); saveAll(); renderAdminEditors(); }; container.appendChild(addBtn); } } let csHtml=correctScorePicks.map((p,i)=>`<div><input id="csMatch${i}" value="${p.match}"><input id="csScore${i}" value="${p.score}"><input id="csOdds${i}" value="${p.odds}"><input id="csDate${i}" value="${p.date}"><select id="csStatus${i}"><option ${p.status==='Won'?'selected':''}>Won</option><option ${p.status==='Lost'?'selected':''}>Lost</option><option ${p.status==='Pending'?'selected':''}>Pending</option></select><button onclick="removeCsPick(${i})">❌</button></div>`).join('')+`<button class="btn-gold" onclick="addCsPick()">➕ Add CS</button>`; document.getElementById('correctScoreEditor').innerHTML=csHtml; let bttsHtml=bttsPicks.map((p,i)=>`<div><input id="bttsMatch${i}" value="${p.match}"><input id="bttsPick${i}" value="${p.pick}"><input id="bttsOdds${i}" value="${p.odds}"><input id="bttsConf${i}" value="${p.conf}"><input id="bttsDate${i}" value="${p.date}"><select id="bttsStatus${i}"><option ${p.status==='Won'?'selected':''}>Won</option><option ${p.status==='Lost'?'selected':''}>Lost</option><option ${p.status==='Pending'?'selected':''}>Pending</option></select><button onclick="removeBttsPick(${i})">❌</button></div>`).join('')+`<button class="btn-gold" onclick="addBttsPick()">➕ Add BTTS</button>`; document.getElementById('bttsEditor').innerHTML=bttsHtml; let ouHtml=overUnderPicks.map((p,i)=>`<div><input id="ouMatch${i}" value="${p.match}"><input id="ouPick${i}" value="${p.pick}"><input id="ouOdds${i}" value="${p.odds}"><input id="ouConf${i}" value="${p.conf}"><input id="ouDate${i}" value="${p.date}"><select id="ouStatus${i}"><option ${p.status==='Won'?'selected':''}>Won</option><option ${p.status==='Lost'?'selected':''}>Lost</option><option ${p.status==='Pending'?'selected':''}>Pending</option></select><button onclick="removeOuPick(${i})">❌</button></div>`).join('')+`<button class="btn-gold" onclick="addOuPick()">➕ Add O/U</button>`; document.getElementById('overUnderEditor').innerHTML=ouHtml; let bbHtml=basketballPicks.map((p,i)=>`<div><input id="bbMatch${i}" value="${p.match}"><input id="bbPick${i}" value="${p.pick}"><input id="bbOdds${i}" value="${p.odds}"><input id="bbConf${i}" value="${p.conf}"><input id="bbDate${i}" value="${p.date}"><select id="bbStatus${i}"><option ${p.status==='Won'?'selected':''}>Won</option><option ${p.status==='Lost'?'selected':''}>Lost</option><option ${p.status==='Pending'?'selected':''}>Pending</option></select><button onclick="removeBbPick(${i})">❌</button></div>`).join('')+`<button class="btn-gold" onclick="addBbPick()">➕ Add Basketball</button>`; document.getElementById('basketballEditor').innerHTML=bbHtml; }
+  function saveSingleDay(day) { let picks=[]; let idx=0; while(document.getElementById(`${day}_match_${idx}`)){ picks.push({ match:document.getElementById(`${day}_match_${idx}`).value, pick:document.getElementById(`${day}_pick_${idx}`).value, odds:document.getElementById(`${day}_odds_${idx}`).value, conf:document.getElementById(`${day}_conf_${idx}`).value, date:document.getElementById(`${day}_date_${idx}`).value, status:document.getElementById(`${day}_status_${idx}`).value }); idx++; } weeklyFreePicks[day]=picks; saveAll(); alert(`${day} saved`); }
+  function saveWeeklyFreePicks(){ for(let d of weekDays) saveSingleDay(d); }
+  function removePickFromDay(day,idx){ weeklyFreePicks[day].splice(idx,1); saveAll(); renderAdminEditors(); }
+  function addCsPick(){ correctScorePicks.push({ match:"New", score:"0-0", odds:"1.00", date:new Date().toLocaleDateString(), status:"Pending" }); saveAll(); renderAdminEditors(); } function removeCsPick(i){ correctScorePicks.splice(i,1); saveAll(); renderAdminEditors(); }
+  function addBttsPick(){ bttsPicks.push({ match:"New", pick:"BTTS YES", odds:"1.00", conf:"50%", date:new Date().toLocaleDateString(), status:"Pending" }); saveAll(); renderAdminEditors(); } function removeBttsPick(i){ bttsPicks.splice(i,1); saveAll(); renderAdminEditors(); }
+  function addOuPick(){ overUnderPicks.push({ match:"New", pick:"OVER 2.5", odds:"1.00", conf:"50%", date:new Date().toLocaleDateString(), status:"Pending" }); saveAll(); renderAdminEditors(); } function removeOuPick(i){ overUnderPicks.splice(i,1); saveAll(); renderAdminEditors(); }
+  function addBbPick(){ basketballPicks.push({ match:"New", pick:"Home", odds:"1.00", conf:"50%", date:new Date().toLocaleDateString(), status:"Pending" }); saveAll(); renderAdminEditors(); } function removeBbPick(i){ basketballPicks.splice(i,1); saveAll(); renderAdminEditors(); }
+  function saveCorrectScoreEditor() { let newList=[]; for(let i=0;i<correctScorePicks.length;i++) newList.push({ match:document.getElementById(`csMatch${i}`).value, score:document.getElementById(`csScore${i}`).value, odds:document.getElementById(`csOdds${i}`).value, date:document.getElementById(`csDate${i}`).value, status:document.getElementById(`csStatus${i}`).value }); correctScorePicks=newList; saveAll(); alert("Saved"); }
+  function saveBttsEditor() { let newList=[]; for(let i=0;i<bttsPicks.length;i++) newList.push({ match:document.getElementById(`bttsMatch${i}`).value, pick:document.getElementById(`bttsPick${i}`).value, odds:document.getElementById(`bttsOdds${i}`).value, conf:document.getElementById(`bttsConf${i}`).value, date:document.getElementById(`bttsDate${i}`).value, status:document.getElementById(`bttsStatus${i}`).value }); bttsPicks=newList; saveAll(); alert("Saved"); }
+  function saveOverUnderEditor() { let newList=[]; for(let i=0;i<overUnderPicks.length;i++) newList.push({ match:document.getElementById(`ouMatch${i}`).value, pick:document.getElementById(`ouPick${i}`).value, odds:document.getElementById(`ouOdds${i}`).value, conf:document.getElementById(`ouConf${i}`).value, date:document.getElementById(`ouDate${i}`).value, status:document.getElementById(`ouStatus${i}`).value }); overUnderPicks=newList; saveAll(); alert("Saved"); }
+  function saveBasketballEditor() { let newList=[]; for(let i=0;i<basketballPicks.length;i++) newList.push({ match:document.getElementById(`bbMatch${i}`).value, pick:document.getElementById(`bbPick${i}`).value, odds:document.getElementById(`bbOdds${i}`).value, conf:document.getElementById(`bbConf${i}`).value, date:document.getElementById(`bbDate${i}`).value, status:document.getElementById(`bbStatus${i}`).value }); basketballPicks=newList; saveAll(); alert("Saved"); }
+  function addVipPasswordField(){ vipPasswords.push({ code:"", client:"", expiry:"" }); renderAdminEditors(); }
+  function addDailyPasswordField(){ dailyPasswords.push({ code:"", client:"", expiry:"" }); renderAdminEditors(); }
+  function saveVipPasswords(){ let newList=[]; for(let i=0;i<vipPasswords.length;i++){ let code=document.getElementById(`vipPwd_${i}`).value.trim(); if(code) newList.push({ code, client:document.getElementById(`vipClient_${i}`).value.trim(), expiry:document.getElementById(`vipExpiry_${i}`).value }); } vipPasswords=newList; saveAll(); alert("Saved"); }
+  function saveDailyPasswords(){ let newList=[]; for(let i=0;i<dailyPasswords.length;i++){ let code=document.getElementById(`dailyPwd_${i}`).value.trim(); if(code) newList.push({ code, client:document.getElementById(`dailyClient_${i}`).value.trim(), expiry:document.getElementById(`dailyExpiry_${i}`).value }); } dailyPasswords=newList; saveAll(); alert("Saved"); }
+  function verifyVipPayment(idx){ let p=vipPendingPayments[idx]; let newCode="VIP"+Math.random().toString(36).substr(2,6).toUpperCase(); let expiry=new Date(); expiry.setDate(expiry.getDate()+p.days); vipPasswords.push({ code:newCode, client:p.phone, expiry:expiry.toISOString().split('T')[0] }); vipPendingPayments.splice(idx,1); saveAll(); alert(`✅ Verified! Code: ${newCode}`); }
+  function rejectVipPayment(idx){ vipPendingPayments.splice(idx,1); saveAll(); alert("Rejected"); }
+  function verifyDailyPayment(idx){ let p=dailyPendingPayments[idx]; let newCode="DAY"+Math.random().toString(36).substr(2,6).toUpperCase(); let expiry=new Date(); expiry.setDate(expiry.getDate()+p.days); dailyPasswords.push({ code:newCode, client:p.phone, expiry:expiry.toISOString().split('T')[0] }); dailyPendingPayments.splice(idx,1); saveAll(); alert(`✅ Verified! Code: ${newCode}`); }
+  function rejectDailyPayment(idx){ dailyPendingPayments.splice(idx,1); saveAll(); alert("Rejected"); }
+  function saveVipPrices(){ vipPrices={ weekly:parseInt(document.getElementById('vipWeeklyPrice').value), monthly:parseInt(document.getElementById('vipMonthlyPrice').value), quarterly:parseInt(document.getElementById('vipQuarterlyPrice').value), yearly:parseInt(document.getElementById('vipYearlyPrice').value) }; saveAll(); alert("VIP prices updated"); }
+  function saveDailyPrice(){ dailyPrice=parseInt(document.getElementById('dailyPriceControl').value); saveAll(); alert("Daily price updated"); }
+  function saveDailyOddsContent(){ let newOdds=[]; for(let i=0;i<dailyOddsContent.length;i++) newOdds.push(document.getElementById(`dailyOddsLine${i}`).value); dailyOddsContent=newOdds; saveAll(); if(localStorage.getItem('daily_unlocked')==='true'){ let html=''; dailyOddsContent.forEach((l,i)=>html+=`<div class="vip-tip"><strong>Odds #${i+1}</strong><br>${l}</div>`); document.getElementById('dailyContentArea').innerHTML=html; } alert("Saved"); }
+  function saveVipContent(){ vipContent=document.getElementById('vipContentEditor').value; saveAll(); if(localStorage.getItem('vip_unlocked')==='true') document.getElementById('vipContentArea').innerHTML=vipContent; alert("Saved"); }
+  function removeVipPassword(idx){ vipPasswords.splice(idx,1); renderAdminEditors(); } function removeDailyPassword(idx){ dailyPasswords.splice(idx,1); renderAdminEditors(); }
+  function sendTestNotification(){ let msg=document.getElementById('notifyMsg').value; if(msg && Notification.permission==="granted") new Notification("PRIME-TIPS",{body:msg}); else if(msg) alert("Allow notifications."); }
+  Notification.requestPermission();
+  function showPage(p){ if(p==='home') location.reload(); else if(p==='faq') document.querySelector('.section-card:last-of-type').scrollIntoView({behavior:'smooth'}); }
+  document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>showPage(a.dataset.page));
+  document.getElementById('topVipBtn').onclick=()=>{ document.getElementById('dailyPopup').classList.remove('show'); document.getElementById('vipPopup').classList.add('show'); document.getElementById('vipPopup').scrollIntoView({behavior:'smooth'}); };
+  document.getElementById('topDailyBtn').onclick=()=>{ document.getElementById('vipPopup').classList.remove('show'); document.getElementById('dailyPopup').classList.add('show'); document.getElementById('dailyPopup').scrollIntoView({behavior:'smooth'}); };
+  function initTheme(){ let t=localStorage.getItem('prime_theme'); if(t==='light') document.body.classList.remove('dark'); else document.body.classList.add('dark'); }
+  function toggleTheme(){ document.body.classList.toggle('dark'); localStorage.setItem('prime_theme',document.body.classList.contains('dark')?'dark':'light'); }
+  document.getElementById('themeToggle').onclick=toggleTheme;
+  document.getElementById('currencySelect').onchange=(e)=>{ currentCurrency=e.target.value; localStorage.setItem('prime_currency',currentCurrency); updateCurrencyDisplays(); renderVIPPlans(); renderDailyPlans(); };
+  window.addEventListener('DOMContentLoaded',()=>{ if(new URLSearchParams(location.search).get('admin')==='prime2025') document.getElementById('adminFloatingBtn').style.display='flex'; document.getElementById('adminFloatingBtn').onclick=()=>{ const p=document.getElementById('adminPanel'); p.style.display=p.style.display==='none'?'block':'none'; if(p.style.display==='block') renderAdminEditors(); }; });
+  new Chart(document.getElementById('performanceChart'),{ type:'line', data:{ labels:['Jan','Feb','Mar','Apr','May','Jun'], datasets:[{ label:'Accuracy %', data:[82,84,86,87,88,89], borderColor:'#FFD966', tension:0.3, fill:false }] }, options:{ responsive:true } });
+  let faqData = [{ q:"How to get VIP access?", a:"Pay via M-PESA till 6076817, email receipt. Code within 15 min." }, { q:"Code validity?", a:"Weekly 7d, Monthly 30d, Quarterly 90d, Yearly 365d." }];
+  function updateClock() { const now=new Date(); document.getElementById('clockTime').innerText=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}); document.getElementById('clockDate').innerText=now.toLocaleDateString([],{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
+  setInterval(updateClock,1000); updateClock();
+  loadData(); initTheme();
+</script>
+<footer class="footer">© PRIME-TIPS — VIP Zone & Daily 5 Odds. 18+ only.</footer>
+</body>
+</html>
