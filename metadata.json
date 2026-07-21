@@ -1,0 +1,6 @@
+{
+  "name": "Prime Tips",
+  "description": "High accuracy AI sport prediction and daily premium tips dashboard",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
