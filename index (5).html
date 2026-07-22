@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casino & Games Hub</title>
+  <style>
+    :root {
+      --bg-dark: #0a0a1a;
+      --bg-card: #131328;
+      --gold: #ffd700;
+      --gold-soft: #c9a227;
+      --text: #f5f5f7;
+      --muted: #a0a0b8;
+      --danger: #ff4757;
+      --success: #2ed573;
+      --warning: #ffa502;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #1a1a35 0%, var(--bg-dark) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Launcher Button - Top Right Only */
+    .launcher {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border: 1px solid rgba(255,215,0,0.35);
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2a2a4a 0%, #1a1a32 100%);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,215,0,0.18), 0 6px 18px rgba(0,0,0,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .launcher:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(255,215,0,0.3), 0 10px 24px rgba(0,0,0,0.4);
+    }
+    .launcher .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--success);
+      animation: pulse 1.5s infinite;
+    }
+    .launcher .icon-only { display: none; }
+    @media (max-width: 520px) {
+      .launcher .text { display: none; }
+      .launcher .icon-only { display: inline; font-size: 18px; }
+      .launcher { padding: 12px 14px; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    /* Modal Overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .overlay.active { display: flex; }
+    .modal {
+      width: 100%;
+      max-width: 960px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: radial-gradient(circle at 50% 0%, #24244a 0%, var(--bg-card) 60%);
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 24px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 40px rgba(255,215,0,0.08);
+      padding: 28px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 26px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--gold); }
+    .modal-title {
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin: 0 0 8px;
+      background: linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold-soft) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255,215,0,0.15);
+    }
+    .modal-subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+
+    /* Section Divider */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 34px 0 18px;
+      color: var(--gold-soft);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.4), transparent);
+    }
+
+    /* Game Cards */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .game-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,215,0,0.18);
+      border-radius: 18px;
+      padding: 18px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,215,0,0.45);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35), 0 0 20px rgba(255,215,0,0.12);
+    }
+    .game-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .game-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin: 0;
+    }
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-demo { background: rgba(46,213,115,0.15); color: var(--success); border: 1px solid rgba(46,213,115,0.35); }
+    .badge-real { background: rgba(255,215,0,0.12); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+
+    /* Aviator Canvas */
+    .aviator-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(180deg, #0f1a2e 0%, #0b1120 100%);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255,215,0,0.12);
+    }
+    .aviator-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+    .multiplier-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(255,215,0,0.4);
+    }
+    .aviator-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .aviator-controls button {
+      flex: 1;
+      min-width: 110px;
+      padding: 12px 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .aviator-controls button:active { transform: scale(0.98); }
+    .btn-bet { background: linear-gradient(135deg, var(--success), #1e9c52); color: #fff; }
+    .btn-cash { background: linear-gradient(135deg, var(--warning), #d68606); color: #fff; }
+    .btn-disabled { opacity: 0.45; cursor: not-allowed; }
+    .aviator-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    .history-strip {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .history-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+    }
+    .chip-green { color: var(--success); border: 1px solid rgba(46,213,115,0.3); }
+    .chip-yellow { color: var(--warning); border: 1px solid rgba(255,165,2,0.3); }
+    .chip-red { color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
+
+    /* Real Casinos Grid */
+    .casinos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .casino-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,215,0,0.15);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .casino-tile:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,215,0,0.4);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+    }
+    .casino-tile .logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2a2a4a, #1a1a32);
+      border: 1px solid rgba(255,215,0,0.25);
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .disclaimer {
+      margin-top: 26px;
+      padding: 14px;
+      background: rgba(255,71,87,0.08);
+      border: 1px solid rgba(255,71,87,0.25);
+      border-radius: 12px;
+      color: #ff9aa3;
+      font-size: 0.85rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .home-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      text-align: center;
+    }
+    .home-content h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, var(--gold), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .home-content p { color: var(--muted); max-width: 520px; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Right Launcher -->
+  <button class="launcher" id="openModal" aria-label="Open Casino and Games">
+    <span class="pulse-dot"></span>
+    <span class="text">Casino & Games</span>
+    <span class="icon-only">🎰</span>
+  </button>
+
+  <div class="home-content">
+    <h1>Welcome to Casino Hub</h1>
+    <p>Click the Casino & Games button in the top right to explore real casinos and try the Aviator demo.</p>
+  </div>
+
+  <!-- Modal -->
+  <div class="overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
+      <h2 class="modal-title" id="modalTitle">Casino & Games</h2>
+      <p class="modal-subtitle">Real casinos open in a new tab. Aviator is a fully working demo.</p>
+
+      <!-- Play Here (Demo) -->
+      <div class="section-divider">Play Here (Demo)</div>
+      <div class="games-grid">
+        <div class="game-card">
+          <div class="game-card-header">
+            <h3 class="game-title">Aviator</h3>
+            <span class="badge badge-demo">Demo Mode</span>
+          </div>
+          <div class="aviator-canvas-wrap">
+            <canvas id="aviatorCanvas" width="600" height="180"></canvas>
+            <div class="multiplier-overlay" id="multiplier">1.00x</div>
+          </div>
+          <div class="aviator-controls">
+            <button class="btn-bet" id="betBtn">Place Bet</button>
+            <button class="btn-cash btn-disabled" id="cashBtn" disabled>Cash Out</button>
+          </div>
+          <div class="aviator-meta">
+            <span>Balance: <strong id="balance">KES 5,000</strong></span>
+            <span>Status: <strong id="status">Ready</strong></span>
+          </div>
+          <div class="history-strip" id="history"></div>
+        </div>
+      </div>
+
+      <!-- Real Casinos -->
+      <div class="section-divider">Real Casinos</div>
+      <div class="casinos-grid">
+        <a class="casino-tile" href="https://www.betway.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">BW</span>Betway</a>
+        <a class="casino-tile" href="https://www.1xbet.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">1x</span>1xBet</a>
+        <a class="casino-tile" href="https://www.sportybet.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">SB</span>SportyBet</a>
+        <a class="casino-tile" href="https://www.betika.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">BK</span>Betika</a>
+        <a class="casino-tile" href="https://www.odibets.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">OD</span>Odibets</a>
+        <a class="casino-tile" href="https://www.mozzartbet.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">MZ</span>Mozzart</a>
+        <a class="casino-tile" href="https://www.melbet.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">MB</span>Melbet</a>
+        <a class="casino-tile" href="https://www.22bet.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">22</span>22Bet</a>
+        <a class="casino-tile" href="https://www.stake.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">ST</span>Stake</a>
+        <a class="casino-tile" href="https://www.parimatch.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">PM</span>Parimatch</a>
+        <a class="casino-tile" href="https://www.bet365.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">B3</span>Bet365</a>
+        <a class="casino-tile" href="https://www.helabet.com" target="_blank" rel="noopener noreferrer nofollow"><span class="logo">HB</span>Helabet</a>
+      </div>
+
+      <div class="disclaimer">
+        18+ only. Gambling can be addictive. Please play responsibly. The Aviator demo uses virtual funds — no real money is involved. Links to real casinos open in a new tab and are not endorsements.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal
+    const openModal = document.getElementById('openModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    openModal.addEventListener('click', () => modalOverlay.classList.add('active'));
+    closeModal.addEventListener('click', () => modalOverlay.classList.remove('active'));
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    });
+
+    // Aviator Demo
+    const canvas = document.getElementById('aviatorCanvas');
+    const ctx = canvas.getContext('2d');
+    const multiplierEl = document.getElementById('multiplier');
+    const balanceEl = document.getElementById('balance');
+    const statusEl = document.getElementById('status');
+    const betBtn = document.getElementById('betBtn');
+    const cashBtn = document.getElementById('cashBtn');
+    const historyEl = document.getElementById('history');
+
+    let balance = 5000;
+    let multiplier = 1.00;
+    let running = false;
+    let crashed = false;
+    let betAmount = 100;
+    let currentBet = 0;
+    let startTime = 0;
+    let crashPoint = 1.00;
+    let flightPath = [];
+    let history = [];
+    let animationId = null;
+
+    function formatMoney(amount) {
+      return 'KES ' + amount.toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function drawBackground() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < canvas.width; i += 40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke(); }
+      for (let i = 0; i < canvas.height; i += 30) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke(); }
+    }
+
+    function drawPlane(x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(-0.35);
+      ctx.fillStyle = '#ffd700';
+      ctx.shadowColor = '#ffd700';
+      ctx.shadowBlur = 15;
+      ctx.beginPath();
+      ctx.moveTo(0, -10);
+      ctx.lineTo(14, 0);
+      ctx.lineTo(0, 10);
+      ctx.lineTo(-8, 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawTrail() {
+      if (flightPath.length < 2) return;
+      ctx.beginPath();
+      ctx.moveTo(flightPath[0].x, flightPath[0].y);
+      for (let i = 1; i < flightPath.length; i++) {
+        ctx.lineTo(flightPath[i].x, flightPath[i].y);
+      }
+      ctx.strokeStyle = 'rgba(255,215,0,0.75)';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#ffd700';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    function updateHistory() {
+      historyEl.innerHTML = '';
+      history.slice(-20).reverse().forEach(m => {
+        const chip = document.createElement('span');
+        chip.className = 'history-chip';
+        if (m >= 2.0) chip.classList.add('chip-green');
+        else if (m >= 1.5) chip.classList.add('chip-yellow');
+        else chip.classList.add('chip-red');
+        chip.textContent = m.toFixed(2) + 'x';
+        historyEl.appendChild(chip);
+      });
+    }
+
+    function startRound() {
+      if (balance < betAmount) {
+        statusEl.textContent = 'Insufficient funds';
+        return;
+      }
+      running = true;
+      crashed = false;
+      currentBet = betAmount;
+      balance -= betAmount;
+      balanceEl.textContent = formatMoney(balance);
+      multiplier = 1.00;
+      flightPath = [];
+      crashPoint = 1 + Math.pow(Math.random() * 8, 1.8);
+      if (crashPoint < 1.2) crashPoint = 1.2;
+      if (crashPoint > 50) crashPoint = 50;
+      startTime = performance.now();
+      statusEl.textContent = 'Flying...';
+      betBtn.disabled = true;
+      betBtn.classList.add('btn-disabled');
+      cashBtn.disabled = false;
+      cashBtn.classList.remove('btn-disabled');
+      cashBtn.textContent = 'Cash Out';
+      loop();
+    }
+
+    function cashOut() {
+      if (!running || crashed) return;
+      running = false;
+      const winnings = Math.floor(currentBet * multiplier);
+      balance += winnings;
+      balanceEl.textContent = formatMoney(balance);
+      statusEl.textContent = 'Cashed out at ' + multiplier.toFixed(2) + 'x';
+      history.push(multiplier);
+      updateHistory();
+      resetControls();
+    }
+
+    function crash() {
+      running = false;
+      crashed = true;
+      statusEl.textContent = 'Crashed at ' + multiplier.toFixed(2) + 'x';
+      history.push(multiplier);
+      updateHistory();
+      resetControls();
+    }
+
+    function resetControls() {
+      betBtn.disabled = false;
+      betBtn.classList.remove('btn-disabled');
+      betBtn.textContent = 'Place Bet';
+      cashBtn.disabled = true;
+      cashBtn.classList.add('btn-disabled');
+      cashBtn.textContent = 'Cash Out';
+    }
+
+    function loop() {
+      if (!running) return;
+      const now = performance.now();
+      const elapsed = (now - startTime) / 1000;
+      // Exponential growth curve
+      multiplier = Math.pow(1 + elapsed * 0.15, 1.8) + 0.02 * elapsed;
+      if (multiplier >= crashPoint) {
+        multiplier = crashPoint;
+        multiplierEl.textContent = multiplier.toFixed(2) + 'x';
+        drawFrame();
+        crash();
+        return;
+      }
+      multiplierEl.textContent = multiplier.toFixed(2) + 'x';
+      drawFrame();
+      animationId = requestAnimationFrame(loop);
+    }
+
+    function drawFrame() {
+      drawBackground();
+      // Map multiplier to x position (logarithmic-ish visual)
+      const progress = Math.min((multiplier - 1) / 4, 1);
+      const x = 40 + progress * (canvas.width - 80);
+      // Curve height: y goes up as multiplier grows
+      const y = canvas.height - 35 - Math.min((multiplier - 1) * 60, canvas.height - 70);
+      flightPath.push({ x, y });
+      if (flightPath.length > 80) flightPath.shift();
+      drawTrail();
+      drawPlane(x, y);
+    }
+
+    betBtn.addEventListener('click', startRound);
+    cashBtn.addEventListener('click', cashOut);
+
+    // Initial draw
+    drawBackground();
+    drawPlane(40, canvas.height - 35);
+    updateHistory();
+  </script>
+</body>
+</html>
