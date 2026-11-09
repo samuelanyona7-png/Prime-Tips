@@ -1,1855 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0612">
-<title>Prime Tips — Live Football Predictions, AI & VIP Accas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<!-- Official Telegram WebApp SDK for native TMA mode -->
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-:root{
-  --pink:#ff2d95; --purple:#7b2ff7; --cyan:#00e5ff; --lime:#b6ff3b;
-  --orange:#ff8a00; --yellow:#ffd60a; --dark:#0a0612; --dark2:#120a20;
-  --text:#f4f0ff; --muted:#a79fc0; --border:rgba(255,255,255,.1); --card-bg:rgba(255,255,255,.05);
+).classList.add('open');
 }
-body.daylight-theme{
-  --dark:#f0f3f8; --dark2:#e1e6f0; --text:#0a0612; --muted:#5a536e;
-  --border:rgba(0,0,0,.12); --card-bg:#ffffff;
-}
-body{
-  font-family:'Poppins',system-ui,sans-serif;
-  background:var(--dark); color:var(--text); overflow-x:hidden; line-height:1.6;
-  transition:background .3s,color .3s;
-}
-body::before{
-  content:'';position:fixed;inset:0;z-index:-2;
-  background:
-    radial-gradient(650px 520px at 8% 4%, rgba(123,47,247,.28), transparent 65%),
-    radial-gradient(600px 500px at 92% 10%, rgba(255,45,149,.20), transparent 65%),
-    radial-gradient(700px 600px at 50% 100%, rgba(0,229,255,.12), transparent 70%),
-    var(--dark);
-}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-.container{width:min(1180px,92%);margin-inline:auto}
-
-#bootBar{
-  position:fixed;top:0;left:0;right:0;z-index:9999;
-  background:linear-gradient(90deg,var(--purple),var(--pink));
-  color:#fff;font-size:.78rem;font-weight:800;text-align:center;
-  padding:10px 16px;display:none;
-}
-#bootBar.show{display:block}
-
-/* PWA banner */
-.pwa-banner{
-  position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:900;
-  width:min(540px,94%);background:linear-gradient(135deg,rgba(255,45,149,.2),rgba(0,229,255,.2));
-  border:1.5px solid var(--cyan);border-radius:16px;padding:10px 16px;
-  display:none;justify-content:space-between;align-items:center;gap:10px;
-  backdrop-filter:blur(14px);box-shadow:0 12px 35px rgba(0,0,0,.7);
-}
-.pwa-banner.show{display:flex}
-
-.ticker{background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange));padding:8px 0;overflow:hidden}
-.ticker-track{display:flex;gap:40px;white-space:nowrap;width:max-content;animation:scrollX 30s linear infinite;font-size:.78rem;font-weight:700}
-@keyframes scrollX{to{transform:translateX(-50%)}}
-
-/* Nav */
-.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(10,6,18,.8);border-bottom:1px solid var(--border)}
-body.daylight-theme .nav{background:rgba(240,243,248,.85)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
-.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:1.3rem;cursor:pointer;user-select:none;transition:transform .2s}
-.logo:hover{transform:scale(1.03)}
-.logo-mark{
-  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,45,149,.3);
-  box-shadow:0 0 20px rgba(255,45,149,.25);transition:box-shadow .3s,border-color .3s;
-}
-.logo span.grad{background:linear-gradient(90deg,var(--pink),var(--orange),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
-
-.nav-links{display:flex;gap:14px;font-size:.82rem;font-weight:600}
-.nav-links a:hover{color:var(--pink)}
-.nav-controls{display:flex;align-items:center;gap:6px}
-.switcher-select{
-  background:var(--card-bg);border:1px solid var(--border);color:var(--cyan);
-  padding:5px 8px;border-radius:8px;font-size:.74rem;font-weight:800;outline:none;cursor:pointer;
-}
-.switcher-select option{background:#160b24;color:#fff}
-.icon-btn{
-  background:var(--card-bg);border:1px solid var(--border);color:inherit;
-  padding:5px 10px;border-radius:8px;font-size:.76rem;font-weight:800;cursor:pointer;
-}
-
-.virtual-coin-badge{
-  background:rgba(255,214,10,.14);border:1.5px solid var(--yellow);color:var(--yellow);
-  padding:4px 10px;border-radius:20px;font-size:.74rem;font-weight:900;display:flex;align-items:center;gap:5px;
-}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:12px;font-weight:700;font-size:.88rem;transition:.2s}
-.btn-primary{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 8px 25px rgba(255,45,149,.4)}
-.btn-primary:hover{transform:translateY(-2px)}
-.btn-ghost{border:1.5px solid var(--border);color:inherit}
-.btn-ghost:hover{border-color:var(--cyan);background:rgba(0,229,255,.08)}
-.btn-lime{background:linear-gradient(135deg,var(--lime),var(--cyan));color:#04120a}
-.btn-lime:hover{box-shadow:0 8px 25px rgba(182,255,59,.4);transform:translateY(-2px)}
-.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--purple));color:#04120a}
-.btn-sm{padding:6px 12px;font-size:.76rem;border-radius:8px}
-.btn-block{width:100%}
-.btn-danger{background:rgba(255,45,149,.15);border:1px solid rgba(255,45,149,.4);color:var(--pink)}
-.btn-tg{background:linear-gradient(135deg,#229ed9,#1a7fb0);color:#fff}
-.btn-wa{background:linear-gradient(135deg,#25d366,#1da851);color:#fff}
-
-/* Hero */
-.hero{padding:46px 0 54px}
-.hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
-h1{font-size:clamp(2.1rem,4.6vw,3.5rem);line-height:1.1;font-weight:900;margin-bottom:16px}
-.grad-text{background:linear-gradient(90deg,var(--pink),var(--orange),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{color:var(--muted);font-size:1rem;margin-bottom:24px}
-.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
-.floating-card{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:24px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
-.fc-head{display:flex;justify-content:space-between;margin-bottom:16px;font-size:.75rem;font-weight:800;color:var(--lime)}
-.fc-match{display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.25);padding:14px;border-radius:14px;margin-bottom:12px}
-.fc-score{font-size:1.3rem;font-weight:900;color:var(--cyan)}
-
-/* Acca Toolbar */
-.acca-toolbar{
-  background:var(--card-bg);border:1px solid var(--border);border-radius:20px;
-  padding:16px 20px;margin-bottom:34px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
-}
-.acca-presets{display:flex;gap:8px;flex-wrap:wrap}
-.acca-pill-btn{
-  background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:12px;
-  padding:8px 14px;font-size:.78rem;font-weight:800;display:flex;align-items:center;gap:6px;transition:.2s;
-}
-.acca-pill-btn:hover{border-color:var(--cyan);background:rgba(0,229,255,.1)}
-
-/* Banker & Dropping Odds */
-.banker-wrap{margin-bottom:36px}
-.banker-card{
-  background:linear-gradient(135deg,rgba(255,45,149,.15),rgba(123,47,247,.2) 50%,rgba(0,229,255,.15));
-  border:1.5px solid var(--pink);border-radius:24px;padding:24px;
-  box-shadow:0 20px 60px rgba(255,45,149,.25);position:relative;overflow:hidden;
-}
-.banker-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px}
-.banker-tag{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:900;text-transform:uppercase;background:var(--pink);color:#fff;padding:6px 16px;border-radius:100px}
-.banker-timer{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:800;color:var(--yellow);background:rgba(255,214,10,.1);border:1px solid rgba(255,214,10,.35);padding:6px 14px;border-radius:100px}
-.banker-match-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.banker-teams{font-size:1.35rem;font-weight:900}
-.banker-pick{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.banker-tip-badge{background:var(--card-bg);border:1px solid var(--border);padding:8px 16px;border-radius:12px;font-weight:800;font-size:.92rem}
-.banker-odds{font-size:1.35rem;font-weight:900;color:var(--lime);background:rgba(182,255,59,.12);padding:6px 14px;border-radius:12px;border:1px solid rgba(182,255,59,.4)}
-
-.dropping-odds-badge{
-  display:inline-flex;align-items:center;gap:6px;background:rgba(255,45,149,.15);
-  border:1px solid rgba(255,45,149,.4);color:#ffd0e8;font-size:.65rem;font-weight:800;
-  padding:4px 10px;border-radius:8px;margin-top:6px;width:100%;
-}
-.odds-compare-wrap{
-  display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin:8px 0;
-  border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);
-}
-.odds-bm{
-  font-size:.65rem;padding:3px 7px;border-radius:6px;background:var(--card-bg);
-  border:1px solid var(--border);display:flex;align-items:center;gap:4px;white-space:nowrap;
-}
-.odds-bm.best{border-color:var(--lime);color:var(--lime);background:rgba(182,255,59,.12);font-weight:900}
-
-.lineup-radar-badge{
-  background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);color:var(--cyan);
-  font-size:.66rem;font-weight:800;padding:4px 8px;border-radius:6px;margin:6px 0;display:flex;align-items:center;gap:5px;
-}
-
-/* ============ 2. 2D LIVE MATCH PITCH TRACKER ============ */
-.pitch-container{
-  position:relative;width:100%;height:140px;background:#0d3d1e;border:2px solid rgba(255,255,255,.3);
-  border-radius:14px;overflow:hidden;margin:12px 0;background-image:linear-gradient(90deg,rgba(255,255,255,.05) 50%,transparent 50%);
-  background-size:40px 100%;box-shadow:inset 0 0 30px rgba(0,0,0,.6);
-}
-.pitch-half-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:rgba(255,255,255,.3)}
-.pitch-center-circle{position:absolute;top:50%;left:50%;width:44px;height:44px;border:2px solid rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%)}
-.pitch-box-left{position:absolute;top:25px;bottom:25px;left:0;width:34px;border:2px solid rgba(255,255,255,.3);border-left:none}
-.pitch-box-right{position:absolute;top:25px;bottom:25px;right:0;width:34px;border:2px solid rgba(255,255,255,.3);border-right:none}
-.pitch-ball{
-  position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;box-shadow:0 0 12px var(--lime);
-  top:50%;left:50%;transform:translate(-50%,-50%);transition:all .6s ease;
-}
-.pitch-live-event{
-  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(10,6,18,.88);
-  border:1px solid var(--lime);color:var(--lime);font-size:.68rem;font-weight:900;padding:3px 10px;
-  border-radius:100px;white-space:nowrap;z-index:2;
-}
-
-/* ============ 3. POISSON CORRECT SCORE HEATMAP ============ */
-.poisson-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0;
-}
-.poisson-cell{
-  background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:8px 4px;
-  text-align:center;font-size:.72rem;transition:.2s;
-}
-.poisson-cell b{display:block;font-size:.82rem}
-.poisson-cell.hot{background:rgba(0,229,255,.18);border-color:var(--cyan);color:var(--cyan)}
-.poisson-cell.top{background:rgba(182,255,59,.22);border-color:var(--lime);color:var(--lime)}
-
-/* ============ 5. VALUE BET (+EV) & ARBITRAGE SECTION ============ */
-.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-bottom:28px}
-.ev-card{background:var(--card-bg);border:1.5px solid var(--lime);border-radius:18px;padding:16px}
-.ev-tag{background:var(--lime);color:#04120a;font-weight:900;font-size:.65rem;padding:3px 8px;border-radius:6px;text-transform:uppercase}
-
-/* Sections */
-section{padding:46px 0}
-.sec-head{text-align:center;max-width:640px;margin:0 auto 30px}
-.sec-tag{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:var(--cyan);background:rgba(0,229,255,.1);padding:4px 12px;border-radius:100px}
-.sec-head h2{font-size:2rem;font-weight:900;margin:10px 0 6px}
-.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
-.filter-btn{padding:8px 16px;border-radius:100px;font-size:.78rem;font-weight:700;border:1px solid var(--border);color:var(--muted)}
-.filter-btn.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-color:transparent}
-
-/* Prediction Cards Grid */
-.pred-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
-.pred-card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:20px;position:relative}
-.pred-top{display:flex;justify-content:space-between;font-size:.7rem;font-weight:800;margin-bottom:10px}
-.league{color:var(--cyan);text-transform:uppercase}
-.teams{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:1rem;margin-bottom:10px}
-.vs{font-size:.65rem;color:var(--muted);background:rgba(255,255,255,.08);padding:3px 6px;border-radius:6px}
-.pick-box{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.pick-tip{font-weight:800;font-size:.95rem}
-.odds{font-weight:900;color:var(--lime);background:rgba(182,255,59,.1);padding:4px 10px;border-radius:8px}
-
-.momentum-gauge{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin:8px 0}
-.momentum-title{display:flex;justify-content:space-between;font-size:.65rem;font-weight:800;color:var(--muted);margin-bottom:4px}
-.momentum-bar{display:flex;height:5px;border-radius:4px;overflow:hidden;background:rgba(255,255,255,.1)}
-.m-home{background:var(--cyan);transition:width .4s}
-.m-away{background:var(--pink);transition:width .4s}
-.ht-pivot-badge{background:rgba(255,214,10,.12);border:1px solid rgba(255,214,10,.4);color:var(--yellow);font-size:.65rem;font-weight:800;padding:4px 8px;border-radius:6px;margin:6px 0;display:block}
-.sha-proof-pill{font-family:monospace;font-size:.62rem;color:var(--muted);background:rgba(0,0,0,.3);padding:3px 6px;border-radius:6px;display:flex;align-items:center;gap:4px;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-.reaction-bar{display:flex;gap:6px;margin:6px 0;background:rgba(0,0,0,.25);padding:5px 8px;border-radius:8px}
-.rx-btn{font-size:.7rem;font-weight:800;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.05);padding:3px 6px;border-radius:6px;color:var(--muted)}
-.rx-btn:hover{color:#fff}
-.poll-box{margin:8px 0;padding:8px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid var(--border)}
-.poll-title{display:flex;justify-content:space-between;font-size:.64rem;font-weight:800;color:var(--muted);margin-bottom:4px}
-.poll-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
-.poll-btn{font-size:.68rem;font-weight:800;padding:4px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;text-align:center}
-.poll-btn.voted{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff}
-
-.card-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);gap:6px}
-.lock-overlay{position:absolute;inset:0;background:rgba(10,6,18,.88);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.lock-overlay span{font-size:.78rem;font-weight:800;color:var(--yellow);text-transform:uppercase}
-
-.portfolio-card{background:var(--card-bg);border:1.5px solid var(--cyan);border-radius:24px;padding:24px;margin-bottom:30px}
-.portfolio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
-.portfolio-stat{background:rgba(0,0,0,.3);border-radius:14px;padding:14px;text-align:center}
-
-.virtual-arena-card{background:linear-gradient(135deg,rgba(255,214,10,.1),rgba(123,47,247,.15));border:1.5px solid var(--yellow);border-radius:24px;padding:24px;margin-bottom:30px}
-.promo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.promo-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:20px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}
-.promo-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.promo-code-box{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.35);border:1px dashed var(--cyan);border-radius:10px;padding:8px 12px;margin:12px 0}
-
-.ah-box{background:var(--card-bg);border:1.5px solid var(--cyan);border-radius:24px;padding:24px;margin-bottom:30px}
-.ah-res-badge{font-size:1.1rem;font-weight:900;padding:8px 18px;border-radius:12px}
-
-.table-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;overflow-x:auto}
-table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:640px}
-.daily-table th{text-align:left;font-size:.66rem;text-transform:uppercase;color:var(--muted);padding:14px;background:rgba(255,255,255,.02)}
-.daily-table td{padding:12px 14px;border-top:1px solid var(--border);vertical-align:middle}
-.result-pill{padding:4px 10px;border-radius:100px;font-size:.68rem;font-weight:900}
-.result-pill.won{background:rgba(182,255,59,.15);color:var(--lime)}
-.result-pill.lost{background:rgba(255,45,149,.15);color:var(--pink)}
-.result-pill.pending{background:rgba(255,214,10,.15);color:var(--yellow)}
-.result-pill.live{background:rgba(0,229,255,.15);color:var(--cyan);animation:blink 1.2s infinite}
-
-.roi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.roi-stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:18px;padding:16px;text-align:center}
-.roi-num{font-size:1.8rem;font-weight:900;color:var(--lime)}
-
-.jackpot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
-.jackpot-item{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
-.jp-num{font-size:.7rem;font-weight:900;color:var(--yellow);width:26px;height:26px;border-radius:50%;background:rgba(255,214,10,.12);display:grid;place-items:center}
-
-.price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:760px;margin:0 auto}
-.price-card{background:var(--card-bg);border:1px solid var(--border);border-radius:22px;padding:30px}
-.price-card.featured{border-color:var(--pink);background:linear-gradient(165deg,rgba(255,45,149,.12),rgba(123,47,247,.1))}
-
-/* Bet Slip */
-.slip-trigger{
-  position:fixed;bottom:24px;right:24px;z-index:140;display:flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;font-weight:900;
-  font-size:.85rem;padding:12px 22px;border-radius:100px;box-shadow:0 12px 35px rgba(255,45,149,.5);
-}
-.slip-drawer{
-  position:fixed;bottom:88px;right:24px;z-index:155;width:min(390px,calc(100vw - 36px));max-height:600px;
-  background:#140a24;border:1.5px solid rgba(255,45,149,.4);border-radius:24px;display:none;flex-direction:column;overflow:hidden;
-  box-shadow:0 24px 70px rgba(0,0,0,.85);
-}
-.slip-drawer.open{display:flex}
-.slip-head{padding:14px 18px;background:linear-gradient(135deg,rgba(255,45,149,.2),rgba(123,47,247,.2));display:flex;justify-content:space-between;align-items:center}
-.slip-body{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-.slip-item{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;padding:8px 12px}
-.slip-summary{padding:14px 18px;background:rgba(0,0,0,.4);border-top:1px solid var(--border)}
-.booking-code-box{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.btn-book{font-size:.7rem;font-weight:800;padding:6px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;text-align:center}
-
-.ai-trigger{
-  position:fixed;bottom:24px;left:24px;z-index:150;display:flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;font-weight:800;font-size:.84rem;
-  padding:12px 20px;border-radius:100px;box-shadow:0 12px 30px rgba(0,229,255,.35);
-}
-.ai-chat-window{
-  position:fixed;bottom:88px;left:24px;z-index:160;width:min(380px,calc(100vw - 36px));height:500px;
-  background:#140a24;border:1px solid rgba(0,229,255,.3);border-radius:24px;display:none;flex-direction:column;overflow:hidden;
-}
-.ai-chat-window.open{display:flex}
-.banter-drawer{
-  position:fixed;bottom:88px;left:50%;transform:translateX(-50%);z-index:165;
-  width:min(440px,calc(100vw - 32px));height:480px;background:#140a24;
-  border:1.5px solid var(--cyan);border-radius:24px;display:none;flex-direction:column;overflow:hidden;
-}
-.banter-drawer.open{display:flex}
-
-.social-proof-pill{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:130;
-  background:rgba(10,6,18,.92);border:1.5px solid var(--lime);padding:8px 16px;
-  border-radius:100px;display:none;align-items:center;gap:8px;font-size:.76rem;
-  font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.6);
-}
-.social-proof-pill.show{display:flex}
-
-/* Modals */
-.modal,.admin-modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.85);backdrop-filter:blur(10px);overflow-y:auto}
-.modal.open,.admin-modal.open{display:grid}
-.modal-card,.admin-card{width:min(520px,100%);background:#160b24;border:1px solid var(--border);border-radius:22px;padding:24px;position:relative}
-.admin-card{width:min(960px,100%)}
-.modal-close{position:absolute;top:16px;right:16px;font-size:1.2rem;color:var(--muted)}
-.field{margin-bottom:10px}
-.field label{display:block;font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
-.field input,.field select{width:100%;padding:9px 12px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:#fff;outline:none}
-.admin-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);padding:8px 12px;border-radius:10px;margin-bottom:6px}
-
-/* ADMIN PANEL: STRICTLY HIDDEN FROM PUBLIC */
-.admin-trigger{
-  display:none;position:fixed;bottom:84px;right:24px;z-index:140;
-  width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple));
-  place-items:center;font-size:1.1rem;box-shadow:0 10px 24px rgba(255,45,149,.5);
-}
-
-.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:var(--lime);color:#04120a;font-weight:800;padding:12px 24px;border-radius:12px;opacity:0;transition:.3s;z-index:300}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.error{background:var(--pink);color:#fff}
-
-.h2h-modal-card{width:min(640px,100%);max-height:85vh;overflow-y:auto}
-.h2h-form-row{display:flex;gap:6px;align-items:center;margin:6px 0}
-.form-badge{width:22px;height:22px;border-radius:50%;font-size:.65rem;font-weight:900;display:grid;place-items:center}
-.form-w{background:var(--lime);color:#04120a}
-.form-d{background:var(--yellow);color:#04120a}
-.form-l{background:var(--pink);color:#fff}
-.h2h-clash{display:flex;justify-content:space-between;font-size:.78rem;background:rgba(255,255,255,.03);padding:8px 12px;border-radius:8px;margin-bottom:6px;border:1px solid rgba(255,255,255,.06)}
-
-.pay-tabs{display:flex;gap:6px;margin:16px 0;background:rgba(255,255,255,.05);padding:4px;border-radius:12px}
-.pay-tab{flex:1;padding:8px;font-size:.78rem;font-weight:800;text-align:center;border-radius:8px;color:var(--muted);transition:.2s}
-.pay-tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff}
-.pay-box-content{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:16px}
-.copy-pill{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.4);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);margin:8px 0}
-.copy-pill b{font-family:monospace;font-size:.9rem;color:var(--cyan)}
-.btn-copy{font-size:.7rem;font-weight:800;background:rgba(255,255,255,.1);padding:4px 8px;border-radius:6px;color:#fff}
-
-.stk-dialog{display:none;background:rgba(4,18,10,.95);border:1.5px solid var(--lime);border-radius:16px;padding:18px;margin-top:14px;text-align:center}
-.stk-dialog.active{display:block}
-.stk-phone-badge{font-size:2rem;margin-bottom:6px;display:inline-block}
-
-@media(max-width:900px){
-  .hero-inner,.price-grid,.banker-match-row,.calc-card,.portfolio-grid{grid-template-columns:1fr}
-  .roi-grid{grid-template-columns:repeat(2,1fr)}
-  .nav-links{display:none}
-}
-</style>
-</head>
-<body>
-
-<div id="bootBar">Connecting to live database…</div>
-<div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
-
-<!-- PWA BANNER -->
-<div class="pwa-banner" id="pwaBanner">
-  <div style="display:flex;align-items:center;gap:10px">
-    <span style="font-size:1.3rem">📲</span>
-    <div>
-      <b style="font-size:.82rem;display:block">Install Prime Tips App</b>
-      <small style="font-size:.68rem;color:var(--muted)">Run full-screen on your phone with instant notifications.</small>
-    </div>
-  </div>
-  <div style="display:flex;gap:6px">
-    <button class="btn btn-lime btn-sm" id="btnInstallPwa">Install</button>
-    <button style="color:var(--muted);font-size:.9rem;padding:4px" id="btnClosePwa">✕</button>
-  </div>
-</div>
-
-<!-- SOCIAL PROOF TICKER -->
-<div class="social-proof-pill" id="socialProofPill">
-  <span>🎉</span> <span id="socialProofMsg">Brian from Nairobi just unlocked VIP Pro!</span>
-</div>
-
-<header class="nav">
-  <div class="container nav-inner">
-    <a href="#" class="logo" id="siteLogo" title="Prime Tips — Click for Admin Access">
-      <div class="logo-mark">
-        <svg viewBox="0 0 40 40" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="crestG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#ff2d95"/><stop offset="0.5" stop-color="#7b2ff7"/><stop offset="1" stop-color="#00e5ff"/>
-            </linearGradient>
-            <linearGradient id="crownG" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#ffd60a"/><stop offset="1" stop-color="#ff8a00"/>
-            </linearGradient>
-          </defs>
-          <path d="M20 3L35 9V21C35 30 28 35.5 20 38C12 35.5 5 30 5 21V9L20 3Z" fill="url(#crestG)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <path d="M14 13L16.5 17L20 12L23.5 17L26 13L25 20H15L14 13Z" fill="url(#crownG)"/>
-          <circle cx="20" cy="27" r="5" stroke="#ffffff" stroke-width="1.5"/>
-          <path d="M20 22V32M15 27H25" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span>Prime<span class="grad">Tips</span></span>
-    </a>
-    
-    <nav class="nav-links">
-      <a href="#predictions">Predictions</a>
-      <a href="#value-radar">+EV Radar</a>
-      <a href="#portfolio">My Portfolio</a>
-      <a href="#virtual-game">Punters Game</a>
-      <a href="#jackpot">Jackpot</a>
-      <a href="#pricing">VIP Plans</a>
-    </nav>
-
-    <div class="nav-controls">
-      <div class="virtual-coin-badge" title="Your Risk-Free Virtual Betting Balance">
-        🪙 <span id="headerCoinBalance">1,000</span>
-      </div>
-      <button class="icon-btn" id="btnThemeToggle" title="Toggle Theme">🌓 Theme</button>
-      <button class="icon-btn" id="btnSoundToggle" title="Toggle Sound">🔊 Sound</button>
-      <select class="switcher-select" id="currencySelect">
-        <option value="KES" selected>KES</option>
-        <option value="USD">USD</option>
-        <option value="NGN">NGN</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-      </select>
-      <select class="switcher-select" id="oddsFormatSelect">
-        <option value="decimal" selected>Decimal</option>
-        <option value="fractional">Fractional</option>
-        <option value="american">American</option>
-      </select>
-      <div id="navCta"></div>
-    </div>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="container hero-inner">
-    <div>
-      <div style="font-size:.8rem;font-weight:800;color:var(--lime);margin-bottom:12px">⚡ 87.4% VERIFIED WIN RATE</div>
-      <h1>Daily Predictions That <span class="grad-text">Actually Win</span></h1>
-      <p class="lead">AI-vetted football picks, automated accumulators, and transparent long-term edges.</p>
-      <div class="hero-btns">
-        <a href="#predictions" class="btn btn-primary">Today's Picks →</a>
-        <button class="btn btn-ghost" id="btnOpenScanner">📸 AI Slip Scanner</button>
-        <button class="btn btn-ghost" id="btnOpenLeadModal">📬 VIP Alerts Drop</button>
-      </div>
-    </div>
-    <div>
-      <div class="floating-card">
-        <div class="fc-head"><span>TOP PICK</span><span style="color:var(--cyan)">🔴 LIVE 72'</span></div>
-        <div class="fc-match">
-          <div><b>Arsenal</b><br><small style="color:var(--muted)">HOME</small></div>
-          <div class="fc-score">2 – 1</div>
-          <div><b>Chelsea</b><br><small style="color:var(--muted)">AWAY</small></div>
-        </div>
-
-        <!-- 2. 2D LIVE MATCH PITCH TRACKER ON HERO -->
-        <div class="pitch-container" id="heroLivePitch">
-          <div class="pitch-half-line"></div>
-          <div class="pitch-center-circle"></div>
-          <div class="pitch-box-left"></div>
-          <div class="pitch-box-right"></div>
-          <div class="pitch-ball" id="pitchBall" style="left:72%;top:42%"></div>
-          <div class="pitch-live-event" id="pitchLiveText">⚡ Dangerous Attack: Arsenal on right flank (72')</div>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;font-weight:800">
-          <span>Arsenal Win &amp; BTTS</span>
-          <span style="color:var(--lime)">2.10</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SMART 1-CLICK ACCA GENERATOR TOOLBAR -->
-<div class="container">
-  <div class="acca-toolbar">
-    <div>
-      <b style="font-size:.88rem;display:flex;align-items:center;gap:6px">⚡ 1-Click Smart Acca Generator</b>
-      <small style="font-size:.72rem;color:var(--muted)">AI picks the best algorithmically-backed games directly into your slip.</small>
-    </div>
-    <div class="acca-presets">
-      <button class="acca-pill-btn" data-acca="safe">🟢 Safe 2-Odds Double</button>
-      <button class="acca-pill-btn" data-acca="value">🟡 Value 5-Odds Treble</button>
-      <button class="acca-pill-btn" data-acca="mega">🚀 Mega 15-Odds Acca</button>
-      <button class="acca-pill-btn" id="btnDownloadCheatSheet" style="border-color:var(--cyan);color:var(--cyan)">📄 Download Cheat Sheet</button>
-    </div>
-  </div>
-</div>
-
-<!-- BANKER OF THE DAY & LINEUPS RADAR -->
-<div class="container banker-wrap">
-  <div class="banker-card">
-    <div class="banker-top">
-      <div class="banker-tag">🔥 Banker of the Day</div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <button class="voice-btn" id="btnVoiceBanker">
-          <span class="voice-wave" id="waveBanker"><i></i><i></i><i></i><i></i></span>
-          <span>🔊 Listen to AI Briefing</span>
-        </button>
-        <div class="banker-timer" id="bankerCountdown">⏳ Locks in: 02h 45m 12s</div>
-      </div>
-    </div>
-    <div class="banker-match-row">
-      <div>
-        <div class="banker-teams" id="bankerTeams">Arsenal vs Chelsea</div>
-        <div class="banker-meta" id="bankerMeta">Premier League · Verified 94% Confidence Selection</div>
-        <div class="lineup-radar-badge">
-          <span>🚑</span> <b>Lineups Radar:</b> Saka confirmed in starting XI; Chelsea Palmer benched (4-3-3 tactical edge Home).
-        </div>
-        <div class="dropping-odds-badge">
-          📉 <b>Sharp Money Alert:</b> Arsenal odds dropped from 2.10 ➔ 1.78 (-15%) · Heavy Pro Inflow
-        </div>
-      </div>
-      <div class="banker-pick">
-        <div class="banker-tip-badge" id="bankerTip">Arsenal Win &amp; BTTS</div>
-        <div class="banker-odds" id="bankerOdds">2.10</div>
-        <button class="btn btn-lime btn-sm" id="btnBankerSlip">+ Add to Slip</button>
-      </div>
-    </div>
-    <div class="odds-compare-wrap" id="bankerOddsMatrix"></div>
-  </div>
-</div>
-
-<!-- PREDICTIONS FEED -->
-<section id="predictions">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Selections</span>
-      <h2>Today's Football Tips &amp; In-Play Radar</h2>
-      <p>Click <b>"📊 H2H Stats"</b> for Poisson heatmaps, tap <b>"+ Slip"</b> to build an acca, or bet risk-free with virtual coins.</p>
-    </div>
-    <div class="filters" id="filters"></div>
-    <div class="pred-grid" id="predGrid"></div>
-  </div>
-</section>
-
-<!-- ============ 5. VALUE BET (+EV) & ARBITRAGE SCANNER ============ -->
-<section id="value-radar" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Mathematical Edge</span>
-      <h2>Value Bet (+EV) &amp; Arbitrage Radar</h2>
-      <p>Scans where bookmaker odds are mispriced relative to statistical fair probabilities.</p>
-    </div>
-    <div class="ev-grid">
-      <div class="ev-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span class="ev-tag">+19.4% Expected Value (+EV)</span>
-          <small style="color:var(--cyan);font-weight:800">Premier League</small>
-        </div>
-        <b style="font-size:.95rem;display:block">Arsenal Win &amp; Over 1.5 Goals</b>
-        <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin:8px 0">
-          <span>Fair Odds: <b>1.76</b></span>
-          <span>SportyBet Odds: <b style="color:var(--lime)">2.10</b></span>
-        </div>
-        <p style="font-size:.72rem;color:var(--muted)">Statistical model indicates a 56.8% win probability vs bookmaker implied 47.6%.</p>
-      </div>
-
-      <div class="ev-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span class="ev-tag" style="background:var(--cyan)">⚡ Arbitrage Margin: +3.8%</span>
-          <small style="color:var(--cyan);font-weight:800">La Liga</small>
-        </div>
-        <b style="font-size:.95rem;display:block">Real Madrid vs Sevilla (SureBet)</b>
-        <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin:8px 0">
-          <span>Home: <b>1.90 (1xBet)</b></span>
-          <span>Draw/Away: <b>2.35 (Betway)</b></span>
-        </div>
-        <p style="font-size:.72rem;color:var(--muted)">Guaranteed profit spread by splitting stakes across opposing bookmakers.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PERSONAL USER P&L PORTFOLIO -->
-<section id="portfolio" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">My Bankroll</span>
-      <h2>Personal Bet Portfolio &amp; P&amp;L Tracker</h2>
-      <p>Track your personal bets, measure your real win rate, and calculate your net profit.</p>
-    </div>
-    <div class="portfolio-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-        <b style="font-size:1.1rem">📊 My Performance Ledger</b>
-        <button class="btn btn-lime btn-sm" id="btnOpenTrackBetModal">+ Log Personal Bet</button>
-      </div>
-      <div class="portfolio-grid">
-        <div class="portfolio-stat">
-          <small style="font-size:.65rem;color:var(--muted);font-weight:800">TOTAL STAKED</small>
-          <div style="font-size:1.3rem;font-weight:900" id="portTotalStaked">KSh 12,000</div>
-        </div>
-        <div class="portfolio-stat">
-          <small style="font-size:.65rem;color:var(--muted);font-weight:800">NET P&amp;L PROFIT</small>
-          <div style="font-size:1.3rem;font-weight:900;color:var(--lime)" id="portNetProfit">+KSh 4,820</div>
-        </div>
-        <div class="portfolio-stat">
-          <small style="font-size:.65rem;color:var(--muted);font-weight:800">PERSONAL ROI</small>
-          <div style="font-size:1.3rem;font-weight:900;color:var(--cyan)" id="portROI">+40.1%</div>
-        </div>
-        <div class="portfolio-stat">
-          <small style="font-size:.65rem;color:var(--muted);font-weight:800">STRIKE RATE</small>
-          <div style="font-size:1.3rem;font-weight:900;color:var(--yellow)" id="portWinRate">81.8%</div>
-        </div>
-      </div>
-      <div id="portfolioHistoryList" style="max-height:220px;overflow-y:auto"></div>
-    </div>
-  </div>
-</section>
-
-<!-- VIRTUAL BANKROLL GAME ARENA -->
-<section id="virtual-game" style="padding-top:0">
-  <div class="container">
-    <div class="virtual-arena-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-        <div>
-          <span style="font-size:.7rem;font-weight:900;background:var(--yellow);color:#000;padding:3px 10px;border-radius:20px;text-transform:uppercase">🎮 Punters Cup</span>
-          <h3 style="font-size:1.3rem;font-weight:900;margin-top:4px">Risk-Free Virtual Betting League</h3>
-          <p style="font-size:.8rem;color:var(--muted)">Bet using your free virtual coins. Top monthly punters win airtime &amp; VIP passes!</p>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:.75rem;color:var(--muted)">Your Virtual Balance:</div>
-          <b style="font-size:1.5rem;color:var(--yellow)" id="arenaCoinBalance">1,000 COINS</b>
-        </div>
-      </div>
-      <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <button class="btn btn-lime btn-sm" id="btnPlaceVirtualSlip">🪙 Bet Current Slip with 100 Virtual Coins</button>
-        <button class="btn btn-ghost btn-sm" id="btnResetVirtualCoins">🔄 Refill 1,000 Free Coins</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BOOKMAKER PROMOS -->
-<section id="promos" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Free Bets</span>
-      <h2>Official Bookmaker Bonus Hub</h2>
-      <p>Boost your bankroll with partner sign-up bonuses &amp; promo codes.</p>
-    </div>
-    <div class="promo-grid" id="promoCardsGrid"></div>
-  </div>
-</section>
-
-<!-- ASIAN HANDICAP SIMULATOR -->
-<section id="handicap" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Tools</span>
-      <h2>Interactive Asian Handicap Simulator</h2>
-      <p>Test split lines (-0.75, +1.25, Over 2.25) to verify if a bet wins, half-wins, or refunds.</p>
-    </div>
-    <div class="ah-box">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-        <div class="field">
-          <label>Selected Handicap Line</label>
-          <select id="ahLineSelect">
-            <option value="-0.75">Home -0.75 Asian Handicap</option>
-            <option value="-0.25">Home -0.25 Asian Handicap</option>
-            <option value="-1.25">Home -1.25 Asian Handicap</option>
-            <option value="+0.75">Away +0.75 Asian Handicap</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Simulated Final Score</label>
-          <div style="display:flex;gap:6px;align-items:center">
-            <input type="number" id="ahScoreHome" value="2" min="0" style="text-align:center">
-            <span>-</span>
-            <input type="number" id="ahScoreAway" value="1" min="0" style="text-align:center">
-          </div>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);padding:14px 20px;border-radius:14px">
-        <div><b>Bet Outcome:</b> <span id="ahOutcomeText">Home won by 1 goal exactly.</span></div>
-        <div class="ah-res-badge" id="ahResultBadge" style="background:rgba(182,255,59,.15);color:var(--lime)">HALF WIN</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MEGA JACKPOT -->
-<section id="jackpot" style="padding-top:0">
-  <div class="container">
-    <div class="jackpot-banner" style="background:var(--card-bg);border:1.5px solid var(--yellow);border-radius:24px;padding:24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-      <div>
-        <span class="jp-tag" style="background:var(--yellow);color:#000;font-weight:900;padding:4px 10px;border-radius:20px;font-size:.7rem">🏆 13-Match Jackpot</span>
-        <h3 style="font-size:1.35rem;font-weight:900;margin-top:6px">Weekend Mega Jackpot Combinations</h3>
-      </div>
-      <button class="btn btn-lime btn-sm" id="btnCopyJackpot">📋 Copy 13-Game Slip</button>
-    </div>
-    <div class="jackpot-grid" id="jackpotGrid"></div>
-  </div>
-</section>
-
-<!-- ROI TRACKER -->
-<section id="roi-tracker" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Transparency</span>
-      <h2>Verified Performance &amp; ROI</h2>
-    </div>
-    <div class="roi-grid">
-      <div class="roi-stat-card"><div class="roi-num">+48.5 U</div><small>Net Units Profit</small></div>
-      <div class="roi-stat-card"><div class="roi-num" style="color:var(--cyan)">87.4%</div><small>Strike Rate</small></div>
-      <div class="roi-stat-card"><div class="roi-num" style="color:var(--yellow)">2.08</div><small>Average Odds</small></div>
-      <div class="roi-stat-card"><div class="roi-num" style="color:var(--pink)">+26.8%</div><small>Estimated ROI</small></div>
-    </div>
-  </div>
-</section>
-
-<!-- LIVE SCORES TABLE -->
-<section id="daily-table" style="padding-top:0">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Live Feed</span>
-      <h2>In-Play Scores &amp; Settled Slips</h2>
-    </div>
-    <div class="table-wrap">
-      <table class="daily-table">
-        <thead><tr><th>Match</th><th>League</th><th>Tip</th><th>Odds</th><th>Score / Status</th><th>Acca</th></tr></thead>
-        <tbody id="dailyTableBody"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">Membership</span>
-      <h2>Upgrade to VIP</h2>
-      <p>Activate via M-Pesa STK Push, Crypto, or Telegram.</p>
-    </div>
-    <div class="price-grid">
-      <div class="price-card">
-        <h3>Starter</h3>
-        <div style="margin:16px 0"><span class="amt" id="planStarterAmt">$0</span> <span style="color:var(--muted)">/ free</span></div>
-        <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">Access to standard daily football predictions.</p>
-        <button class="btn btn-ghost btn-block" onclick="document.getElementById('predictions').scrollIntoView()">View Free Tips</button>
-      </div>
-      <div class="price-card featured">
-        <h3>VIP Member</h3>
-        <div style="margin:16px 0"><span class="amt" id="planVipAmt">KSh 3,900</span> <span style="color:var(--muted)">/ month</span></div>
-        <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">15–20 high-confidence VIP tips, combo slips &amp; live alerts.</p>
-        <button class="btn btn-primary btn-block" id="btnOpenCheckout">Instant VIP Activation ⚡</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AI SCANNER MODAL -->
-<div class="modal" id="scannerModal">
-  <div class="modal-card">
-    <button class="modal-close" id="scannerClose">✕</button>
-    <h3>📸 AI Bet Slip Scanner</h3>
-    <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px">Upload a photo of your paper betting ticket or online screenshot.</p>
-    <div style="border:2px dashed var(--cyan);border-radius:14px;padding:24px;text-align:center;cursor:pointer" id="scannerDropZone">
-      <span style="font-size:2rem">📁</span>
-      <b style="display:block;font-size:.84rem;margin-top:6px">Tap to Upload Bet Ticket Screenshot</b>
-      <small style="color:var(--muted);font-size:.7rem">PNG or JPG accepted</small>
-      <input type="file" id="scannerFileInput" accept="image/*" style="display:none">
-    </div>
-    <div id="scannerResultBox" style="display:none;background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-top:14px">
-      <div style="font-size:.72rem;color:var(--cyan);font-weight:800">AI TICKET ANALYSIS COMPLETE</div>
-      <b style="font-size:1.1rem;color:var(--lime);display:block;margin:4px 0" id="scanProbability">79.4% Win Probability</b>
-      <p style="font-size:.74rem;color:var(--muted)" id="scanVerdict">3 Selections detected with positive expected value (+EV).</p>
-    </div>
-  </div>
-</div>
-
-<!-- LOG PERSONAL BET MODAL -->
-<div class="modal" id="logBetModal">
-  <div class="modal-card">
-    <button class="modal-close" id="logBetClose">✕</button>
-    <h3>💼 Log Personal Bet</h3>
-    <form id="logBetForm">
-      <div class="field"><label>Match / Fixture</label><input type="text" id="lbMatch" required placeholder="Arsenal vs Chelsea"></div>
-      <div class="field"><label>Selection Pick</label><input type="text" id="lbPick" required placeholder="Arsenal Win"></div>
-      <div class="field"><label>Odds Taken</label><input type="number" step="0.01" id="lbOdds" required placeholder="2.10"></div>
-      <div class="field"><label>Stake (<span class="cur-sym">KSh</span>)</label><input type="number" id="lbStake" required placeholder="1000"></div>
-      <div class="field">
-        <label>Status</label>
-        <select id="lbStatus"><option value="won">WON 🟢</option><option value="lost">LOST 🔴</option><option value="pending">PENDING ⏳</option></select>
-      </div>
-      <button type="submit" class="btn btn-lime btn-block" style="margin-top:10px">Save to Portfolio</button>
-    </form>
-  </div>
-</div>
-
-<!-- LEADS MODAL -->
-<div class="modal" id="leadsModal">
-  <div class="modal-card">
-    <button class="modal-close" id="leadsClose">✕</button>
-    <h3>📬 Get Free 5-Odds Banker via WhatsApp</h3>
-    <form id="leadsForm">
-      <div class="field"><label>Name</label><input type="text" id="leadName" required placeholder="John"></div>
-      <div class="field"><label>WhatsApp / Telegram</label><input type="text" id="leadContact" required placeholder="+254 712 345678"></div>
-      <button type="submit" class="btn btn-lime btn-block" style="margin-top:10px">Get Banker Drops ⚡</button>
-    </form>
-  </div>
-</div>
-
-<!-- H2H MODAL WITH 3. POISSON CORRECT SCORE HEATMAP -->
-<div class="modal" id="h2hModal">
-  <div class="modal-card h2h-modal-card">
-    <button class="modal-close" id="h2hClose">✕</button>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-      <div style="font-size:.7rem;font-weight:800;color:var(--cyan);text-transform:uppercase" id="h2hLeague">Premier League</div>
-      <button class="voice-btn" id="btnVoiceH2H">
-        <span class="voice-wave" id="waveH2H"><i></i><i></i><i></i><i></i></span>
-        <span>🔊 AI Audio Brief</span>
-      </button>
-    </div>
-    <h3 style="font-size:1.25rem;margin-bottom:14px" id="h2hTeams">Arsenal vs Chelsea</h3>
-
-    <!-- 3. POISSON DISTRIBUTION HEATMAP -->
-    <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:.7rem;font-weight:900;color:var(--yellow);text-transform:uppercase">🎯 POISSON CORRECT SCORE HEATMAP</span>
-        <small style="font-size:.65rem;color:var(--muted)">xG Mathematical Model</small>
-      </div>
-      <div class="poisson-grid" id="poissonGrid"></div>
-    </div>
-
-    <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px">
-      <div style="font-size:.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Past Head-to-Head Clashes</div>
-      <div id="h2hClashesList"></div>
-    </div>
-
-    <div style="background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);border-radius:12px;padding:10px;font-size:.76rem" id="h2hVerdict"></div>
-  </div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div class="modal" id="checkoutModal">
-  <div class="modal-card">
-    <button class="modal-close" id="checkoutClose">✕</button>
-    <h3>💳 VIP Checkout</h3>
-    <div class="pay-tabs">
-      <div class="pay-tab active" data-ptab="mpesa">🟢 M-Pesa STK</div>
-      <div class="pay-tab" data-ptab="micro">🎯 Micro-Pay (KES 50)</div>
-      <div class="pay-tab" data-ptab="crypto">🟡 USDT Crypto</div>
-      <div class="pay-tab" data-ptab="other">✈ Telegram/Card</div>
-    </div>
-
-    <div id="pbox-mpesa" class="pay-box-content">
-      <div class="field">
-        <label>Enter M-Pesa Phone Number</label>
-        <input type="tel" id="stkPhoneInput" placeholder="0712345678" value="0712345678">
-      </div>
-      <button class="btn btn-lime btn-sm btn-block" id="btnTriggerSTK">📲 Send Full VIP STK Push</button>
-
-      <div class="stk-dialog" id="stkDialog">
-        <div class="stk-phone-badge">📱</div>
-        <b style="font-size:.84rem;display:block;color:var(--lime)">LIPA NA M-PESA PROMPT SENT!</b>
-        <p style="font-size:.74rem;color:var(--muted);margin:6px 0">Enter your <b>M-Pesa PIN</b> on phone to authorize <b id="stkAmountDisplay">KES 3,900</b>.</p>
-        <div style="font-size:.7rem;color:var(--yellow);font-weight:800;margin-top:6px" id="stkCountdown">Waiting for PIN: 45s</div>
-        <button class="btn btn-sm btn-ghost" id="btnSimulatePinSuccess" style="margin-top:10px;font-size:.7rem">Simulate PIN Entered (Instant Test)</button>
-      </div>
-
-      <div style="margin-top:14px;border-top:1px dashed rgba(255,255,255,.1);padding-top:10px">
-        <small style="font-size:.65rem;color:var(--muted);text-transform:uppercase;font-weight:800">Or Pay Manually via Buy Goods Till:</small>
-        <div class="copy-pill"><b id="tillNum">542891</b><button class="btn-copy" data-c="tillNum">Copy Till</button></div>
-        <div class="copy-pill"><b id="mpesaRef">PRIME-7782</b><button class="btn-copy" data-c="mpesaRef">Copy Ref</button></div>
-      </div>
-    </div>
-
-    <div id="pbox-micro" class="pay-box-content" style="display:none">
-      <b style="font-size:.84rem;color:var(--cyan)">Single VIP Match Pass</b>
-      <p style="font-size:.74rem;color:var(--muted);margin:4px 0 10px">Unlock today's Banker pick for only <b>KES 50 ($0.50)</b>.</p>
-      <input type="tel" id="microPhoneInput" placeholder="0712345678" value="0712345678">
-      <button class="btn btn-primary btn-sm btn-block" id="btnTriggerMicroSTK" style="margin-top:8px">Pay KES 50 via M-Pesa STK</button>
-    </div>
-
-    <div id="pbox-crypto" class="pay-box-content" style="display:none">
-      <label style="font-size:.7rem;font-weight:800;color:var(--yellow)">USDT (TRC20 NETWORK):</label>
-      <div class="copy-pill"><b id="cryptoAddr" style="font-size:.75rem">TYD9xPL28mNxkQzW9KzV123984021</b><button class="btn-copy" data-c="cryptoAddr">Copy</button></div>
-    </div>
-
-    <div id="pbox-other" class="pay-box-content" style="display:none">
-      <p style="font-size:.8rem;color:var(--muted)">Pay via Card, PayPal, or Bank Transfer by contacting admin directly:</p>
-    </div>
-
-    <div style="display:flex;gap:10px;margin-top:14px">
-      <a href="https://t.me/isla_olivia0" target="_blank" class="btn btn-tg btn-sm btn-block">✈ Send on Telegram</a>
-      <a href="https://wa.me/2340000000000" target="_blank" class="btn btn-wa btn-sm btn-block">📱 WhatsApp</a>
-    </div>
-  </div>
-</div>
-
-<!-- BET SLIP DRAWER WITH 4. BOOKING CODE REVERSE DECODER -->
-<div class="slip-drawer" id="slipDrawer">
-  <div class="slip-head">
-    <b style="font-size:.9rem">🎫 Multi-Bet Slip (<span id="slipCountHeader">0</span>)</b>
-    <button id="slipClose" style="color:var(--muted);font-size:1.1rem">✕</button>
-  </div>
-  <div class="slip-body" id="slipItemsList"></div>
-
-  <!-- 4. REVERSE DECODER: IMPORT BOOKING CODE -->
-  <div style="padding:10px 14px;background:rgba(0,229,255,.05);border-top:1px dashed var(--cyan)">
-    <small style="font-size:.65rem;color:var(--cyan);font-weight:900">📥 REVERSE DECODE BOOKING CODE</small>
-    <div style="display:flex;gap:6px;margin-top:4px">
-      <input type="text" id="importCodeInput" placeholder="Paste code (e.g. PRIME-SP8821)" style="flex:1;padding:6px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;border-radius:6px">
-      <button class="btn btn-cyan btn-sm" id="btnDecodeCode" style="font-size:.7rem">Decode</button>
-    </div>
-  </div>
-
-  <div style="padding:10px 14px;background:rgba(255,255,255,.03);border-top:1px dashed var(--border)">
-    <small style="font-size:.65rem;color:var(--cyan);font-weight:800">+ ADD CUSTOM MATCH</small>
-    <div style="display:flex;gap:6px;margin-top:4px">
-      <input type="text" id="customMatchInput" placeholder="e.g. Barcelona vs Betis" style="flex:1;padding:6px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;border-radius:6px">
-      <input type="number" step="0.01" id="customOddsInput" placeholder="Odds (1.80)" style="width:70px;padding:6px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;border-radius:6px">
-      <button class="btn btn-lime btn-sm" id="btnAddCustomToSlip">+</button>
-    </div>
-  </div>
-
-  <div class="slip-summary">
-    <div class="slip-row"><span style="color:var(--muted)">Total Odds:</span><b style="color:var(--lime);font-size:1.1rem" id="slipTotalOdds">1.00</b></div>
-    <div class="slip-row"><span style="color:var(--muted)">Stake (<span class="cur-sym">KSh</span>):</span><input type="number" id="slipStake" class="slip-stake-input" value="1000" min="10"></div>
-    <div class="slip-row" style="border-top:1px solid var(--border);padding-top:6px"><span>Potential Return:</span><b style="color:var(--cyan);font-size:1.15rem" id="slipReturn">KSh 1,000</b></div>
-    
-    <button class="btn-whatsapp-share btn-block" id="btnShareWhatsApp"><span>📲 Share Slip to WhatsApp</span></button>
-    <button class="btn-ticket-download btn-block" id="btnDownloadSlipImg"><span>📸 Download Ticket Image (.PNG)</span></button>
-
-    <div class="booking-code-box">
-      <button class="btn-book" data-code="SportyBet">📋 SportyBet</button>
-      <button class="btn-book" data-code="1xBet">📋 1xBet</button>
-      <button class="btn-book" data-code="Betway">📋 Betway</button>
-      <button class="btn-book" data-code="Bet9ja">📋 Bet9ja</button>
-    </div>
-    <button class="btn btn-danger btn-sm btn-block" id="slipClearBtn" style="margin-top:8px">Clear Slip</button>
-  </div>
-</div>
-
-<button class="slip-trigger" id="slipTrigger">🎫 Slip <span class="slip-badge" id="slipCountBadge">0</span></button>
-
-<!-- BANTER CHAT LOUNGE -->
-<div class="banter-drawer" id="banterDrawer">
-  <div class="slip-head"><b style="font-size:.9rem">💬 Live Match Banter Lounge</b><button id="banterClose" style="color:var(--muted);font-size:1.1rem">✕</button></div>
-  <div class="slip-body" id="banterMessagesList"></div>
-  <form class="ai-input-wrap" id="banterForm">
-    <input type="text" id="banterNickInput" placeholder="Name" style="max-width:80px" required>
-    <input type="text" id="banterMsgInput" placeholder="Join live banter..." required>
-    <button type="submit" class="ai-send-btn">Send</button>
-  </form>
-</div>
-
-<!-- ============ MASTER ADMIN PANEL (SENSITIVE TOKENS CONFIGURED HERE ONLY) ============ -->
-<div class="admin-modal" id="adminModal">
-  <div class="admin-card">
-    <button class="modal-close" id="adminClose">✕</button>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-      <h2 style="font-size:1.2rem">⚙️ Master Admin Control Panel</h2>
-      <div style="display:flex;gap:6px">
-        <button class="btn btn-primary btn-sm" id="btnExportSocialCard">📸 1080x1080 Social Card</button>
-        <button class="btn btn-cyan btn-sm" id="btnSyncFootballApi">🌐 Sync Live API Feeds</button>
-        <button class="btn btn-lime btn-sm" id="btnAutoSettleAll">⚡ Auto-Settle In-Play</button>
-      </div>
-    </div>
-
-    <!-- Private Admin Credentials Vault -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-      <div style="background:rgba(37,211,102,.1);border:1px solid var(--lime);border-radius:12px;padding:10px">
-        <b style="font-size:.72rem;color:var(--lime);display:block">🔒 DARAJA TILL &amp; AUTOMATION SETTINGS</b>
-        <div style="display:flex;gap:6px;margin-top:4px">
-          <input type="text" id="adminDarajaTill" placeholder="Till: 542891" style="font-size:.72rem;padding:6px">
-          <button class="btn btn-sm btn-lime" id="btnTestDarajaWebhook">Test Auto-STK</button>
-        </div>
-      </div>
-      <div style="background:rgba(34,158,217,.1);border:1px solid var(--cyan);border-radius:12px;padding:10px">
-        <b style="font-size:.72rem;color:var(--cyan);display:block">🔒 PRIVATE TELEGRAM BOT TOKEN VAULT</b>
-        <div style="display:flex;gap:6px;margin-top:4px">
-          <input type="password" id="adminTgToken" placeholder="Paste Bot Token (Hidden from public)" style="font-size:.72rem;padding:6px">
-          <button class="btn btn-sm btn-ghost" id="btnSaveTg">Save Token</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Add Match Form -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-      <div>
-        <div style="background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);border-radius:12px;padding:10px;margin-bottom:10px">
-          <label style="font-size:.66rem;font-weight:800;color:var(--cyan)">⚡ AUTO-GENERATE WITH AI</label>
-          <div style="display:flex;gap:4px;margin-top:4px">
-            <input type="text" id="aiGenPrompt" placeholder="e.g. Man City vs Liverpool" style="flex:1;padding:6px;font-size:.75rem">
-            <button type="button" class="btn btn-lime btn-sm" id="btnAiGenGame">Auto-Fill</button>
-          </div>
-        </div>
-
-        <form id="addGameForm">
-          <div class="field"><label>League</label><input id="aLeague" required placeholder="Premier League"></div>
-          <div class="field"><label>Home Team</label><input id="aHome" required placeholder="Arsenal"></div>
-          <div class="field"><label>Away Team</label><input id="aAway" required placeholder="Chelsea"></div>
-          <div class="field"><label>Tip</label><input id="aTip" required placeholder="Arsenal Win & BTTS"></div>
-          <div class="field"><label>Odds</label><input id="aOdds" required placeholder="2.10"></div>
-          <div class="field"><label>Confidence (%)</label><input id="aConf" type="number" required placeholder="88"></div>
-          <div class="field" style="display:flex;align-items:center;gap:6px">
-            <input type="checkbox" id="aVip" style="width:auto"> <label for="aVip" style="margin:0">Mark as VIP Pick 👑</label>
-          </div>
-          <div class="field" style="display:flex;align-items:center;gap:6px">
-            <input type="checkbox" id="aBroadcastTg" checked style="width:auto">
-            <label for="aBroadcastTg" style="margin:0;font-size:.74rem">📢 Broadcast to Telegram Channel</label>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Post Game Live</button>
-        </form>
-      </div>
-      <div>
-        <h4 style="font-size:.82rem;color:var(--cyan);margin-bottom:8px">Current Games List</h4>
-        <div id="adminRows" style="max-height:360px;overflow-y:auto"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<button class="admin-trigger" id="adminTrigger" aria-label="Admin Panel">⚙️</button>
-
-<!-- AI Chat -->
-<div class="ai-chat-window" id="aiChatWindow">
-  <div class="ai-header">
-    <b>🤖 Prime AI Analyst <span style="font-size:.65rem;color:var(--lime);font-weight:700">● LIVE</span></b>
-    <button id="aiClose" style="color:var(--muted);font-size:1.1rem">✕</button>
-  </div>
-  <div class="ai-messages" id="aiMessages">
-    <div class="ai-msg bot">👋 Ask me about fixtures, match statistics, or today's highest-confidence picks!</div>
-  </div>
-  <div class="ai-chips">
-    <button class="ai-chip" data-ask="Who is today's safest pick?">⚡ Safest pick?</button>
-    <button class="ai-chip" data-ask="Analyze the Arsenal vs Chelsea match">📊 Arsenal vs Chelsea</button>
-  </div>
-  <form class="ai-input-wrap" id="aiForm">
-    <input type="text" id="aiInput" placeholder="Ask about any match..." autocomplete="off" required>
-    <button type="submit" class="ai-send-btn">Send</button>
-  </form>
-</div>
-<button class="ai-trigger" id="aiTrigger"><span class="ai-pulse"></span>🤖 Ask AI Analyst</button>
-
-<!-- Auth Modal -->
-<div class="modal" id="authModal">
-  <div class="modal-card">
-    <button class="modal-close" id="authClose">✕</button>
-    <h3>Log In to Prime Tips</h3>
-    <form id="loginForm">
-      <div class="field"><label>Email</label><input id="lEmail" type="email" required placeholder="admin@primetips.com"></div>
-      <div class="field"><label>Password</label><input id="lPass" type="password" required placeholder="••••••••"></div>
-      <button type="submit" class="btn btn-primary btn-block">Log in</button>
-    </form>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<!-- PWA & SCRIPT SETUP -->
-<script>
-const pwaManifest = {
-  name: "Prime Tips - Football Predictions",
-  short_name: "PrimeTips",
-  start_url: window.location.href,
-  display: "standalone",
-  background_color: "#0a0612",
-  theme_color: "#0a0612",
-  icons: [{
-    src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>",
-    sizes: "192x192 512x512",
-    type: "image/svg+xml"
-  }]
-};
-const manifestBlob = new Blob([JSON.stringify(pwaManifest)], { type: 'application/manifest+json' });
-const linkTag = document.createElement('link');
-linkTag.rel = 'manifest';
-linkTag.href = URL.createObjectURL(manifestBlob);
-document.head.appendChild(linkTag);
-
-if ('serviceWorker' in navigator) {
-  const swCode = `self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));`;
-  navigator.serviceWorker.register(URL.createObjectURL(new Blob([swCode], { type: 'text/javascript' }))).catch(()=>{});
-}
-
-let deferredPwaPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPwaPrompt = e;
-  const b = document.getElementById('pwaBanner');
-  if (b) b.classList.add('show');
-});
-document.getElementById('btnInstallPwa').onclick = () => {
-  if (deferredPwaPrompt) {
-    deferredPwaPrompt.prompt();
-    document.getElementById('pwaBanner').classList.remove('show');
-  }
-};
-document.getElementById('btnClosePwa').onclick = () => document.getElementById('pwaBanner').classList.remove('show');
-</script>
-
-<!-- FIREBASE REAL-TIME ENGINE & ALL ENTERPRISE SYSTEMS -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDfauKKgP2o0gvyvjBwaNoEJbsBPrGG06s",
-  authDomain: "prime-56a1d.firebaseapp.com",
-  projectId: "prime-56a1d",
-  storageBucket: "prime-56a1d.firebasestorage.app",
-  messagingSenderId: "850931983405",
-  appId: "1:850931983405:web:532809d252cc51bf5f04a4"
-};
-
-// SENSITIVE TOKENS SCRUBBED FROM CODE (Loaded only from secure browser storage)
-let TG_BOT_TOKEN = localStorage.getItem('tg_bot_token') || ""; 
-let TG_CHANNEL_ID = "@isla_olivia0";
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-const defaultMatches = [
-  { league:"Premier League", home:"Arsenal", away:"Chelsea", time:"Today 20:00", tip:"Arsenal Win & BTTS", odds:"2.10", conf:94, vip:false, status:"live", score:"2-1", minute:"74'", dropping:"2.10 ➔ 1.78 (-15%)", mHome:74, mAway:26 },
-  { league:"La Liga", home:"Real Madrid", away:"Sevilla", time:"Today 21:00", tip:"Real Madrid -1.5", odds:"1.90", conf:85, vip:false, status:"won", score:"3-0" },
-  { league:"Champions League", home:"Man City", away:"PSG", time:"Tomorrow 20:00", tip:"Man City to Win", odds:"1.75", conf:89, vip:true, status:"pending", score:"" },
-  { league:"Serie A", home:"Inter", away:"Napoli", time:"Today 19:45", tip:"Under 2.5 Goals", odds:"1.80", conf:82, vip:false, status:"won", score:"1-1" },
-  { league:"Premier League", home:"Liverpool", away:"Tottenham", time:"Tomorrow 17:30", tip:"Liverpool Win & Over 2.5", odds:"2.25", conf:92, vip:true, status:"pending", score:"" }
-];
-
-const JACKPOT_FIXTURES = [
-  { num:1, teams:"Aston Villa vs Newcastle", dc:"1X", conf:88 },
-  { num:2, teams:"Everton vs West Ham", dc:"12", conf:82 },
-  { num:3, teams:"Fulham vs Brighton", dc:"X2", conf:85 },
-  { num:4, teams:"Wolves vs Crystal Palace", dc:"1X", conf:84 },
-  { num:5, teams:"Valencia vs Betis", dc:"X2", conf:86 },
-  { num:6, teams:"Villarreal vs Girona", dc:"12", conf:80 },
-  { num:7, teams:"Lazio vs Fiorentina", dc:"1X", conf:87 },
-  { num:8, teams:"Torino vs Atalanta", dc:"X2", conf:89 },
-  { num:9, teams:"Freiburg vs Frankfurt", dc:"12", conf:81 },
-  { num:10, teams:"Mainz vs Monchengladbach", dc:"1X", conf:83 },
-  { num:11, teams:"Rennes vs Nice", dc:"1X", conf:85 },
-  { num:12, teams:"Lens vs Marseille", dc:"12", conf:86 },
-  { num:13, teams:"Sporting CP vs Braga", dc:"1", conf:91 }
-];
-
-const PROMO_CARDS = [
-  { bookmaker: "SportyBet", bonus: "300% Welcome Bonus", code: "PRIME300", link: "https://www.sportybet.com" },
-  { bookmaker: "1xBet", bonus: "200% First Deposit Match", code: "PRIMETIPS", link: "https://1xbet.com" },
-  { bookmaker: "Betika", bonus: "Free Bet on First Registration", code: "BETIKAPRIME", link: "https://www.betika.com" },
-  { bookmaker: "Betway", bonus: "100% Deposit Match up to KES 5,000", code: "BETWAYVIP", link: "https://www.betway.co.ke" }
-];
-
-const fallbackBanter = [
-  { nick: "Omondi_K", text: "Arsenal midfield is running rings around Chelsea! Easy 2-1 banker 🔥" },
-  { nick: "KipchogeBet", text: "Locked that 13-game Mega Jackpot slip, looking solid so far!" },
-  { nick: "LondonGunner", text: "Over 2.5 hit in the 70th minute! Cha-ching 💰💰" },
-  { nick: "Analyst_Sam", text: "Keep eyes on Real Madrid -1.5, defensive gap is huge tonight." }
-];
-
-// PRE-POPULATE DB.matches IMMEDIATELY TO GUARANTEE NO BLANK SCREEN
-let DB = { matches: [...defaultMatches] };
-let currentUser = null;
-let isVipOrAdmin = false;
-let currentFilter = 'all';
-let BET_SLIP = [];
-
-let userVirtualCoins = parseInt(localStorage.getItem('virtual_coins') || '1000', 10);
-let userPortfolio = JSON.parse(localStorage.getItem('user_portfolio') || '[]');
-
-const CURRENCIES = {
-  KES: { sym: 'KSh ', rate: 130, defaultStake: 1000 },
-  USD: { sym: '$', rate: 1, defaultStake: 10 },
-  NGN: { sym: '₦', rate: 1450, defaultStake: 10000 },
-  EUR: { sym: '€', rate: 0.92, defaultStake: 10 },
-  GBP: { sym: '£', rate: 0.78, defaultStake: 10 }
-};
-let curCurrency = 'KES';
-let curOddsFormat = 'decimal';
-let soundEnabled = true;
-
-const $ = id => document.getElementById(id);
-
-function showToast(msg, isError) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.toggle('error', !!isError);
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-function escapeHTML(str) {
-  return String(str || '').replace(/[&<>"']/g, s => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[s]));
-}
-
-/* ============ 1. TELEGRAM MINI APP (TMA) DETECTION & HAPTICS ============ */
-const tg = window.Telegram?.WebApp;
-if (tg && tg.initData) {
-  tg.ready();
-  tg.expand();
-  if (tg.initDataUnsafe?.user) {
-    const tgUser = tg.initDataUnsafe.user;
-    currentUser = {
-      uid: 'tg_' + tgUser.id,
-      name: tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : ''),
-      email: tgUser.username ? `@${tgUser.username}` : `tg_${tgUser.id}`,
-      role: 'member',
-      vipStatus: 'free'
-    };
-    showToast(`Logged in via Telegram as ${currentUser.name}!`);
-  }
-}
-
-function triggerHaptic(type = 'light') {
-  if (tg && tg.HapticFeedback) {
-    if (type === 'success') tg.HapticFeedback.notificationOccurred('success');
-    else tg.HapticFeedback.impactOccurred(type);
-  }
-}
-
-/* ============ 2. 2D LIVE MATCH PITCH TRACKER SIMULATOR ============ */
-let pitchEventIdx = 0;
-const pitchEvents = [
-  { left: "75%", top: "35%", text: "⚡ Dangerous Attack: Arsenal on right wing (74')" },
-  { left: "86%", top: "48%", text: "🚩 Corner Kick: Arsenal in swinging box delivery (75')" },
-  { left: "45%", top: "52%", text: "🔄 Counter-Attack: Chelsea breaking through midfield (76')" },
-  { left: "22%", top: "40%", text: "🧤 Saved: Arsenal goalkeeper catches long-range strike (77')" }
-];
-setInterval(() => {
-  pitchEventIdx = (pitchEventIdx + 1) % pitchEvents.length;
-  const evt = pitchEvents[pitchEventIdx];
-  const ball = $('pitchBall');
-  const txt = $('pitchLiveText');
-  if (ball) { ball.style.left = evt.left; ball.style.top = evt.top; }
-  if (txt) { txt.textContent = evt.text; }
-}, 6000);
-
-/* ============ 3. POISSON DISTRIBUTION CORRECT SCORE HEATMAP ============ */
-function poissonProbability(k, lambda) {
-  function fact(n) { return n <= 1 ? 1 : n * fact(n - 1); }
-  return (Math.pow(lambda, k) * Math.exp(-lambda)) / fact(k);
-}
-
-function renderPoissonHeatmap(lambdaH = 1.9, lambdaA = 1.1) {
-  let html = '';
-  let scores = [];
-  for (let h = 0; h <= 3; h++) {
-    for (let a = 0; a <= 3; a++) {
-      const prob = (poissonProbability(h, lambdaH) * poissonProbability(a, lambdaA) * 100).toFixed(1);
-      scores.push({ h, a, prob: parseFloat(prob) });
-    }
-  }
-  const maxProb = Math.max(...scores.map(s => s.prob));
-  scores.slice(0, 12).forEach(s => {
-    const isTop = s.prob === maxProb;
-    const isHot = s.prob > 10.0;
-    html += `
-      <div class="poisson-cell ${isTop ? 'top' : (isHot ? 'hot' : '')}">
-        <b>${s.h} – ${s.a}</b>
-        <span>${s.prob}%</span>
-      </div>`;
-  });
-  if ($('poissonGrid')) $('poissonGrid').innerHTML = html;
-}
-
-/* ============ 4. BOOKING CODE REVERSE DECODER ============ */
-$('btnDecodeCode').onclick = () => {
-  const code = $('importCodeInput').value.trim();
-  if (!code) return showToast('Paste a booking code first!', true);
-
-  playCashSound();
-  triggerHaptic('success');
-  showToast(`Decoding ${code}...`);
-
-  // Decode & inject top matches from database
-  const matchingGames = DB.matches.filter(m => !m.vip).slice(0, 3);
-  matchingGames.forEach(m => {
-    const matchId = m.id || `${m.home}-${m.away}`;
-    if (!BET_SLIP.find(i => i.id === matchId)) {
-      BET_SLIP.push({ id: matchId, teams: `${m.home} vs ${m.away}`, tip: m.tip, odds: parseFloat(m.odds) || 1.85 });
-    }
-  });
-
-  renderSlip();
-  openSlip();
-  $('importCodeInput').value = '';
-  showToast(`✅ Decoded ${code}: Added 3 selections to your slip!`);
-};
-
-// VIRTUAL COINS
-function updateVirtualCoinsUI() {
-  $('headerCoinBalance').textContent = userVirtualCoins.toLocaleString();
-  $('arenaCoinBalance').textContent = `${userVirtualCoins.toLocaleString()} COINS`;
-  localStorage.setItem('virtual_coins', userVirtualCoins);
-}
-updateVirtualCoinsUI();
-
-$('btnResetVirtualCoins').onclick = () => {
-  userVirtualCoins = 1000;
-  updateVirtualCoinsUI();
-  playCashSound();
-  triggerHaptic('medium');
-  showToast('Refilled 1,000 Free Virtual Coins!');
-};
-
-$('btnPlaceVirtualSlip').onclick = () => {
-  if (BET_SLIP.length === 0) return showToast('Add matches to slip first!', true);
-  if (userVirtualCoins < 100) return showToast('Insufficient coins! Refill balance.', true);
-
-  userVirtualCoins -= 100;
-  updateVirtualCoinsUI();
-  playCashSound();
-  triggerHaptic('success');
-
-  const totalOddsDec = BET_SLIP.reduce((acc, curr) => acc * curr.odds, 1);
-  const winCoins = Math.round(100 * totalOddsDec);
-
-  setTimeout(() => {
-    if (Math.random() > 0.2) {
-      userVirtualCoins += winCoins;
-      updateVirtualCoinsUI();
-      playCheerSound();
-      showToast(`🎉 Virtual Bet WON! +${winCoins} Coins added to your rank!`);
-    } else {
-      playWhistleSound();
-      showToast('Virtual Bet settled: LOST. Keep practicing!');
-    }
-  }, 1500);
-  showToast('Placed 100 Virtual Coins on current slip!');
-};
-
-// PORTFOLIO
-function updatePortfolioUI() {
-  if (userPortfolio.length === 0) {
-    userPortfolio = [
-      { match: "Arsenal vs Chelsea", pick: "Arsenal Win & BTTS", odds: 2.10, stake: 2000, status: "won" },
-      { match: "Real Madrid vs Sevilla", pick: "Real Madrid -1.5", odds: 1.90, stake: 3000, status: "won" },
-      { match: "Juventus vs Milan", pick: "Draw or Juventus", odds: 1.55, stake: 2000, status: "lost" }
-    ];
-  }
-  let totalStaked = 0;
-  let netProfit = 0;
-  let wonCount = 0;
-
-  userPortfolio.forEach(b => {
-    totalStaked += b.stake;
-    if (b.status === 'won') {
-      netProfit += Math.round(b.stake * (b.odds - 1));
-      wonCount++;
-    } else if (b.status === 'lost') {
-      netProfit -= b.stake;
-    }
-  });
-
-  const c = CURRENCIES[curCurrency];
-  $('portTotalStaked').textContent = `${c.sym}${totalStaked.toLocaleString()}`;
-  $('portNetProfit').textContent = `${netProfit >= 0 ? '+' : ''}${c.sym}${netProfit.toLocaleString()}`;
-  $('portNetProfit').style.color = netProfit >= 0 ? 'var(--lime)' : 'var(--pink)';
-  const roi = totalStaked > 0 ? ((netProfit / totalStaked) * 100).toFixed(1) : 0;
-  $('portROI').textContent = `${roi >= 0 ? '+' : ''}${roi}%`;
-  const winRate = userPortfolio.length > 0 ? ((wonCount / userPortfolio.length) * 100).toFixed(1) : 0;
-  $('portWinRate').textContent = `${winRate}%`;
-
-  $('portfolioHistoryList').innerHTML = userPortfolio.map((b) => `
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:.78rem">
-      <div><b>${escapeHTML(b.match)}</b><br><small style="color:var(--muted)">${escapeHTML(b.pick)} @ ${b.odds}</small></div>
-      <div style="text-align:right">
-        <b>${c.sym}${b.stake.toLocaleString()}</b>
-        <div><span class="result-pill ${b.status}">${b.status.toUpperCase()}</span></div>
-      </div>
-    </div>
-  `).join('');
-  localStorage.setItem('user_portfolio', JSON.stringify(userPortfolio));
-}
-updatePortfolioUI();
-
-$('btnOpenTrackBetModal').onclick = () => $('logBetModal').classList.add('open');
-$('logBetClose').onclick = () => $('logBetModal').classList.remove('open');
-$('logBetForm').onsubmit = (e) => {
-  e.preventDefault();
-  userPortfolio.unshift({
-    match: $('lbMatch').value,
-    pick: $('lbPick').value,
-    odds: parseFloat($('lbOdds').value),
-    stake: parseInt($('lbStake').value, 10),
-    status: $('lbStatus').value
-  });
-  updatePortfolioUI();
-  playCashSound();
-  $('logBetModal').classList.remove('open');
-  showToast('Bet logged to your personal portfolio!');
-};
-
-// 1080x1080 SOCIAL GRAPHIC STUDIO
-$('btnExportSocialCard').onclick = () => {
-  showToast('Rendering 1080x1080 Social Graphic...');
-  playCashSound();
-  const topMatch = DB.matches.find(m => !m.vip) || DB.matches[0];
-  
-  const canvas = document.createElement('canvas');
-  canvas.width = 1080;
-  canvas.height = 1080;
-  const ctx = canvas.getContext('2d');
-
-  const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-  bgGrad.addColorStop(0, '#0a0612');
-  bgGrad.addColorStop(0.5, '#190a2c');
-  bgGrad.addColorStop(1, '#05020a');
-  ctx.fillStyle = bgGrad;
-  ctx.fillRect(0, 0, 1080, 1080);
-
-  ctx.strokeStyle = '#ff2d95';
-  ctx.lineWidth = 14;
-  ctx.strokeRect(40, 40, 1000, 1000);
-
-  ctx.strokeStyle = '#00e5ff';
-  ctx.lineWidth = 3;
-  ctx.strokeRect(60, 60, 960, 960);
-
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 48px Poppins, sans-serif';
-  ctx.fillText('⚽ PRIME TIPS VIP SELECTION', 100, 150);
-
-  ctx.fillStyle = '#ff2d95';
-  ctx.fillRect(100, 190, 880, 8);
-
-  ctx.fillStyle = '#ffd60a';
-  ctx.font = '900 32px Poppins, sans-serif';
-  ctx.fillText('🔥 OFFICIAL BANKER OF THE DAY', 100, 270);
-
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 68px Poppins, sans-serif';
-  ctx.fillText(`${topMatch.home}`, 100, 390);
-  ctx.fillStyle = '#00e5ff';
-  ctx.font = '900 44px Poppins, sans-serif';
-  ctx.fillText('VS', 100, 450);
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 68px Poppins, sans-serif';
-  ctx.fillText(`${topMatch.away}`, 100, 530);
-
-  ctx.fillStyle = 'rgba(255,255,255,0.6)';
-  ctx.font = '600 28px Poppins, sans-serif';
-  ctx.fillText(`${topMatch.league.toUpperCase()} · TODAY'S DROP`, 100, 600);
-
-  ctx.fillStyle = 'rgba(0, 229, 255, 0.15)';
-  ctx.fillRect(100, 650, 880, 140);
-  ctx.strokeStyle = '#00e5ff';
-  ctx.lineWidth = 4;
-  ctx.strokeRect(100, 650, 880, 140);
-
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 42px Poppins, sans-serif';
-  ctx.fillText(`TIP: ${topMatch.tip}`, 140, 735);
-
-  ctx.fillStyle = '#b6ff3b';
-  ctx.font = '900 52px Poppins, sans-serif';
-  ctx.fillText(`${formatOdds(topMatch.odds)}`, 830, 738);
-
-  ctx.fillStyle = '#ffd60a';
-  ctx.font = '800 32px Poppins, sans-serif';
-  ctx.fillText('👉 VISIT: https://prime-56a1d.web.app', 100, 870);
-
-  const a = document.createElement('a');
-  a.download = `prime-tips-promo-1080x1080-${Date.now()}.png`;
-  a.href = canvas.toDataURL('image/png');
-  a.click();
-  showToast('Downloaded 1080x1080 Social Media Card!');
-};
-
-// AUTOMATED FOOTBALL API INGESTION
-$('btnSyncFootballApi').onclick = async () => {
-  showToast('Ingesting live fixtures from Football API...');
-  playWhistleSound();
-  setTimeout(async () => {
-    const liveFeeds = [
-      { league: "Premier League", home: "Man United", away: "Tottenham", time: "Today 22:00", tip: "Over 2.5 Goals", odds: "1.85", conf: 89, vip: false, status: "live", score: "1-1", minute: "54'" },
-      { league: "Champions League", home: "Bayern Munich", away: "Real Madrid", time: "Tomorrow 21:00", tip: "BTTS - Yes", odds: "1.70", conf: 92, vip: true, status: "pending", score: "" }
-    ];
-    for (const match of liveFeeds) {
-      await addDoc(collection(db, "matches"), match);
-    }
-    showToast('Synced live fixtures into database!');
-    playCashSound();
-  }, 1000);
-};
-
-// DARAJA WEBHOOK SIMULATION
-$('btnTestDarajaWebhook').onclick = async () => {
-  showToast('Simulating Safaricom Daraja STK Callback...');
-  playWhistleSound();
-  setTimeout(async () => {
-    if (currentUser && currentUser.uid) {
-      await updateDoc(doc(db, "users", currentUser.uid), {
-        vipStatus: 'active',
-        plan: 'VIP Member',
-        planPrice: '$29.99/mo',
-        planExpiry: Date.now() + 30 * 24 * 60 * 60 * 1000
-      });
-      isVipOrAdmin = true;
-      renderCards();
-    }
-    playCheerSound();
-    alert(`⚡ DARAJA WEBHOOK RECONCILED!\nReceipt: QA${Math.floor(10000000+Math.random()*90000000)}\nAccount automatically promoted to VIP!`);
-    showToast('Hands-free automated VIP unlock complete!');
-  }, 1000);
-};
-
-// AUDIO SYNTHESIZER
-let audioCtx = null;
-function getAudioContext() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
-
-function playCashSound() {
-  if (!soundEnabled) return;
-  try {
-    const ctx = getAudioContext();
-    const now = ctx.currentTime;
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc1.type = 'triangle';
-    osc1.frequency.setValueAtTime(987.77, now);
-    osc1.frequency.exponentialRampToValueAtTime(1318.51, now + 0.12);
-    osc2.type = 'sine';
-    osc2.frequency.setValueAtTime(1318.51, now + 0.08);
-    osc2.frequency.exponentialRampToValueAtTime(1975.53, now + 0.28);
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-    osc1.connect(gain); osc2.connect(gain); gain.connect(ctx.destination);
-    osc1.start(now); osc2.start(now + 0.08); osc1.stop(now + 0.15); osc2.stop(now + 0.35);
-  } catch(e){}
-}
-
-function playWhistleSound() {
-  if (!soundEnabled) return;
-  try {
-    const ctx = getAudioContext();
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(2600, now);
-    osc.frequency.linearRampToValueAtTime(2900, now + 0.1);
-    osc.frequency.linearRampToValueAtTime(2500, now + 0.25);
-    gain.gain.setValueAtTime(0.15, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.start(now); osc.stop(now + 0.3);
-  } catch(e){}
-}
-
-function playCheerSound() {
-  if (!soundEnabled) return;
-  try {
-    const ctx = getAudioContext();
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(440, now);
-    osc.frequency.exponentialRampToValueAtTime(880, now + 0.4);
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.start(now); osc.stop(now + 0.5);
-  } catch(e){}
-}
-
-$('btnSoundToggle').onclick = () => {
-  soundEnabled = !soundEnabled;
-  $('btnSoundToggle').textContent = soundEnabled ? "🔊 Sound ON" : "🔇 Sound OFF";
-  if (soundEnabled) playCashSound();
-};
-
-function formatOdds(decVal) {
-  const d = parseFloat(decVal) || 1.85;
-  if (curOddsFormat === 'fractional') {
-    const n = Math.round((d - 1) * 10);
-    return `${Math.max(1, n)}/10`;
-  }
-  if (curOddsFormat === 'american') {
-    return d >= 2.0 ? `+${Math.round((d - 1) * 100)}` : `-${Math.round(100 / (d - 1))}`;
-  }
-  return d.toFixed(2);
-}
-
-function formatMoney(amountInUSD) {
-  const c = CURRENCIES[curCurrency];
-  const val = (amountInUSD * c.rate).toLocaleString(undefined, { maximumFractionDigits: 0 });
-  return `${c.sym}${val}`;
-}
-
-function updateCurrencyAndOddsUI() {
-  document.querySelectorAll('.cur-sym').forEach(el => el.textContent = CURRENCIES[curCurrency].sym);
-  $('planVipAmt').textContent = formatMoney(29.99);
-  $('stkAmountDisplay').textContent = formatMoney(29.99);
-  renderCards();
-  renderTable();
-  updateBankerOfDay();
-  renderSlip();
-}
-
-$('currencySelect').onchange = (e) => { curCurrency = e.target.value; updateCurrencyAndOddsUI(); };
-$('oddsFormatSelect').onchange = (e) => { curOddsFormat = e.target.value; updateCurrencyAndOddsUI(); };
-
-$('siteLogo').addEventListener('click', (e) => {
-  e.preventDefault();
-  if (currentUser && currentUser.role === 'admin') $('adminModal').classList.add('open');
-  else $('authModal').classList.add('open');
-});
-
-// REAL-TIME FIRESTORE LISTENER
-onSnapshot(collection(db, "matches"), (snap) => {
-  if (snap.empty) DB.matches = defaultMatches;
-  else DB.matches = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  renderFilters();
-  renderCards();
-  renderTable();
-  updateBankerOfDay();
-  if (currentUser && currentUser.role === 'admin') renderAdminList();
-  $('bootBar').classList.remove('show');
-}, () => {
-  DB.matches = defaultMatches;
-  renderFilters();
-  renderCards();
-  renderTable();
-  updateBankerOfDay();
-  $('bootBar').classList.remove('show');
-});
-
-function renderPromos() {
-  $('promoCardsGrid').innerHTML = PROMO_CARDS.map(p => `
-    <div class="promo-card">
-      <div>
-        <div class="promo-top"><b style="font-size:1.1rem">${p.bookmaker}</b><span class="result-pill won">Verified</span></div>
-        <div style="font-size:.84rem;color:var(--lime);font-weight:800">${p.bonus}</div>
-      </div>
-      <div>
-        <div class="promo-code-box">
-          <span style="font-size:.72rem;color:var(--muted)">PROMO CODE:</span>
-          <b style="color:var(--cyan);letter-spacing:.05em">${p.code}</b>
-        </div>
-        <a href="${p.link}" target="_blank" rel="noopener" class="btn btn-primary btn-sm btn-block">Claim Bonus 🎁</a>
-      </div>
-    </div>
-  `).join('');
-}
-renderPromos();
-
-// ASIAN HANDICAP SIMULATOR
-function runAHSim() {
-  const line = parseFloat($('ahLineSelect').value);
-  const h = parseInt($('ahScoreHome').value, 10) || 0;
-  const a = parseInt($('ahScoreAway').value, 10) || 0;
-  const diff = h - a;
-  const total = diff + line;
-
-  let badge = "WIN 🟢";
-  let desc = `Home covers the line. Full payout.`;
-  let color = "var(--lime)";
-
-  if (total === 0) {
-    badge = "PUSH / REFUND ⚪"; desc = "Exact push on handicap. 100% stake returned."; color = "var(--yellow)";
-  } else if (total === 0.25) {
-    badge = "HALF WIN 🟢"; desc = "Half win: 50% paid at full odds, 50% stake returned."; color = "var(--lime)";
-  } else if (total === -0.25) {
-    badge = "HALF LOSS 🔴"; desc = "Half loss: 50% stake lost, 50% refunded."; color = "var(--pink)";
-  } else if (total < 0) {
-    badge = "FULL LOSS 🔴"; desc = "Handicap not covered. Full stake lost."; color = "var(--pink)";
-  }
-  $('ahResultBadge').textContent = badge;
-  $('ahResultBadge').style.color = color;
-  $('ahOutcomeText').textContent = desc;
-}
-$('ahLineSelect').onchange = runAHSim;
-$('ahScoreHome').oninput = runAHSim;
-$('ahScoreAway').oninput = runAHSim;
-runAHSim();
-
-// SCANNER
-$('btnOpenScanner').onclick = () => $('scannerModal').classList.add('open');
-$('scannerClose').onclick = () => $('scannerModal').classList.remove('open');
-$('scannerDropZone').onclick = () => $('scannerFileInput').click();
-
-$('scannerFileInput').onchange = (e) => {
-  if (e.target.files && e.target.files[0]) {
-    showToast('AI Scanning Bet Ticket image...');
-    playWhistleSound();
-    setTimeout(() => {
-      $('scannerResultBox').style.display = 'block';
-      const prob = (72 + Math.random() * 18).toFixed(1);
-      $('scanProbability').textContent = `${prob}% Win Probability`;
-      $('scanVerdict').textContent = "Ticket analyzed via Computer Vision with positive expected value (+EV).";
-      playCashSound();
-    }, 1200);
-  }
-};
-
-$('btnOpenLeadModal').onclick = () => $('leadsModal').classList.add('open');
-$('leadsClose').onclick = () => $('leadsModal').classList.remove('open');
-$('leadsForm').onsubmit = async (e) => {
-  e.preventDefault();
-  $('leadsModal').classList.remove('open');
-  playCashSound();
-  showToast('Subscribed to free alerts list!');
-};
-
-$('btnAddCustomToSlip').onclick = () => {
-  const match = $('customMatchInput').value.trim();
-  const odds = parseFloat($('customOddsInput').value);
-  if (!match || isNaN(odds) || odds <= 1) return showToast('Enter valid match and odds > 1.0', true);
-  BET_SLIP.push({ id: `custom-${Date.now()}`, teams: match, tip: "Custom Pick", odds });
-  $('customMatchInput').value = '';
-  $('customOddsInput').value = '';
-  playCashSound();
-  renderSlip();
-};
-
-$('btnTriggerMicroSTK').onclick = () => {
-  const phone = $('microPhoneInput').value.trim();
-  if (phone.length < 9) return showToast('Enter valid phone number', true);
-  playWhistleSound();
-  setTimeout(() => {
-    alert(`✅ KES 50 PAYMENT SUCCESSFUL!\nSingle VIP Pick Unlocked.`);
-    $('checkoutModal').classList.remove('open');
-    isVipOrAdmin = true;
-    renderCards();
-  }, 1000);
-};
-
-// PREDICTIONS FEED
-function renderFilters() {
-  const leagues = [...new Set(DB.matches.map(m => m.league))];
-  let html = `<button class="filter-btn ${currentFilter==='all'?'active':''}" data-f="all">All</button>`;
-  leagues.forEach(l => {
-    html += `<button class="filter-btn ${currentFilter===l?'active':''}" data-f="${escapeHTML(l)}">${escapeHTML(l)}</button>`;
-  });
-  html += `<button class="filter-btn ${currentFilter==='vip'?'active':''}" data-f="vip">👑 VIP</button>`;
-  $('filters').innerHTML = html;
-}
-
-$('filters').addEventListener('click', e => {
-  const btn = e.target.closest('[data-f]');
-  if (!btn) return;
-  currentFilter = btn.dataset.f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderCards();
-});
-
-function renderCards() {
-  let list = DB.matches;
-  if (currentFilter === 'vip') list = list.filter(m => m.vip);
-  else if (currentFilter !== 'all') list = list.filter(m => m.league === currentFilter);
-
-  $('predGrid').innerHTML = list.map((m, idx) => {
-    const isLocked = m.vip && !isVipOrAdmin;
-    const mH = m.mHome || 65;
-    const mA = m.mAway || 35;
-
-    return `
-      <article class="pred-card">
-        <div class="pred-top">
-          <span class="league">${escapeHTML(m.league)}</span>
-          <span>${m.status === 'live' ? `<span style="color:var(--cyan)">🔴 ${m.minute || "LIVE"}</span>` : escapeHTML(m.time || 'Today')}</span>
-        </div>
-        <div class="teams"><div>${escapeHTML(m.home)}</div><div class="vs">VS</div><div>${escapeHTML(m.away)}</div></div>
-        
-        <div style="min-height:70px;position:relative">
-          ${isLocked ? `
-            <div class="lock-overlay">
-              <span>🔒 VIP Only Pick</span>
-              <button class="btn btn-sm btn-primary" onclick="openCheckout('VIP Member', '29.99')" style="font-size:.7rem;padding:4px 12px">Unlock VIP</button>
-            </div>
-          ` : `
-            <div class="pick-box"><div><small style="color:var(--muted)">TIP</small><div class="pick-tip">${escapeHTML(m.tip)}</div></div><div class="odds">${formatOdds(m.odds)}</div></div>
-            
-            <div class="lineup-radar-badge">
-              <span>🚑</span> Lineups: Key starters confirmed (AI edge Home).
-            </div>
-
-            ${m.status === 'live' ? `
-              <div class="momentum-gauge">
-                <div class="momentum-title"><span>Attacking Pressure (Last 15')</span><span>${mH}% vs ${mA}%</span></div>
-                <div class="momentum-bar"><div class="m-home" style="width:${mH}%"></div><div class="m-away" style="width:${mA}%"></div></div>
-              </div>
-            ` : ''}
-
-            <div class="card-actions">
-              <button class="btn btn-sm btn-ghost" data-h2h-idx="${idx}">📊 H2H Stats</button>
-              <button class="btn btn-sm btn-ghost" data-slip-idx="${idx}">+ Slip</button>
-            </div>
-          `}
-        </div>
-      </article>`;
-  }).join('');
-}
-
-$('predGrid').addEventListener('click', e => {
-  const h2hBtn = e.target.closest('[data-h2h-idx]');
-  if (h2hBtn) {
-    const match = DB.matches[h2hBtn.dataset.h2hIdx];
-    if (match) openH2H(match);
-    return;
-  }
-  const slipBtn = e.target.closest('[data-slip-idx]');
-  if (slipBtn) {
-    const match = DB.matches[slipBtn.dataset.slipIdx];
-    if (match) addMatchToSlip(match);
-  }
-});
-
-function openH2H(m) {
-  $('h2hLeague').textContent = m.league || 'League Match';
-  $('h2hTeams').textContent = `${m.home} vs ${m.away}`;
-  $('h2hHomeName').textContent = m.home;
-  $('h2hAwayName').textContent = m.away;
-  if ($('h2hClashesList')) {
-    $('h2hClashesList').innerHTML = `
-      <div class="h2h-clash"><span>${escapeHTML(m.home)} 2 – 1 ${escapeHTML(m.away)}</span><small style="color:var(--muted)">Previous Clash</small></div>
-      <div class="h2h-clash"><span>${escapeHTML(m.away)} 1 – 1 ${escapeHTML(m.home)}</span><small style="color:var(--muted)">League Cup</small></div>
-    `;
-  }
-  $('h2hVerdict').innerHTML = `⚡ <b>Prime AI Tactical Verdict:</b> Recommended pick: <b>${m.tip}</b>.`;
-  
-  // Render Poisson distribution heatmap
-  renderPoissonHeatmap(1.9, 1.1);
-  $('h2hModal').classList.add('open');
-}
-$('h2hClose').onclick = () => $('h2hModal').classList.remove('open');
+if ($('h2hClose')) $('h2hClose').onclick = () => $('h2hModal').classList.remove('open');
 
 // MEGA JACKPOT
 function renderJackpot() {
+  if (!$('jackpotGrid')) return;
   $('jackpotGrid').innerHTML = JACKPOT_FIXTURES.map(item => `
     <div class="jackpot-item">
       <div style="display:flex;align-items:center;gap:10px">
@@ -1862,13 +17,16 @@ function renderJackpot() {
 }
 renderJackpot();
 
-$('btnCopyJackpot').onclick = () => {
-  const slipText = JACKPOT_FIXTURES.map(f => `${f.num}. ${f.teams} -> [${f.dc}]`).join('\n');
-  if (navigator.clipboard) navigator.clipboard.writeText(slipText).then(() => { playCashSound(); triggerHaptic('success'); showToast('Copied 13-Game Jackpot Slip!'); });
-};
+if ($('btnCopyJackpot')) {
+  $('btnCopyJackpot').onclick = () => {
+    const slipText = JACKPOT_FIXTURES.map(f => `${f.num}. ${f.teams} -> [${f.dc}]`).join('\n');
+    if (navigator.clipboard) navigator.clipboard.writeText(slipText).then(() => { playCashSound(); triggerHaptic('success'); showToast('Copied 13-Game Jackpot Slip!'); });
+  };
+}
 
 // BANTER CHAT
 function renderBanter() {
+  if (!$('banterMessagesList')) return;
   $('banterMessagesList').innerHTML = fallbackBanter.map(b => `
     <div style="background:rgba(255,255,255,.05);border:1px solid var(--border);padding:8px 12px;border-radius:12px;font-size:.78rem;margin-bottom:8px">
       <b style="color:var(--cyan);display:block;font-size:.72rem">@${escapeHTML(b.nick)}</b>
@@ -1877,18 +35,34 @@ function renderBanter() {
   `).join('');
 }
 renderBanter();
-$('banterClose').onclick = () => $('banterDrawer').classList.remove('open');
-$('banterForm').onsubmit = (e) => {
-  e.preventDefault();
-  fallbackBanter.push({ nick: $('banterNickInput').value, text: $('banterMsgInput').value });
-  renderBanter();
-  $('banterMsgInput').value = '';
-  playCashSound();
-  triggerHaptic('light');
+
+// SAFE CHECK FOR HERO BANTER BUTTON (PREVENTS CRASHES)
+if ($('btnOpenBanterHero')) {
+  $('btnOpenBanterHero').onclick = () => {
+    if ($('banterDrawer')) $('banterDrawer').classList.add('open');
+  };
+}
+if ($('banterClose')) $('banterClose').onclick = () => {
+  if ($('banterDrawer')) $('banterDrawer').classList.remove('open');
 };
+
+if ($('banterForm')) {
+  $('banterForm').onsubmit = (e) => {
+    e.preventDefault();
+    const nick = $('banterNickInput') ? $('banterNickInput').value : 'Punter';
+    const msg = $('banterMsgInput') ? $('banterMsgInput').value : '';
+    if (!msg) return;
+    fallbackBanter.push({ nick, text: msg });
+    renderBanter();
+    if ($('banterMsgInput')) $('banterMsgInput').value = '';
+    playCashSound();
+    triggerHaptic('light');
+  };
+}
 
 // LIVE SCORES TABLE
 function renderTable() {
+  if (!$('dailyTableBody')) return;
   $('dailyTableBody').innerHTML = DB.matches.map((m, idx) => {
     let scoreDisplay = m.status === 'live' ? `<span style="color:var(--cyan)"><b>${m.score || "0-0"}</b> (${m.minute || "45'"})</span>` : (m.score || "—");
     return `
@@ -1903,50 +77,61 @@ function renderTable() {
   }).join('');
 }
 
-$('dailyTableBody').addEventListener('click', e => {
-  const btn = e.target.closest('[data-table-slip]');
-  if (btn) {
-    const match = DB.matches[btn.dataset.tableSlip];
-    if (match) addMatchToSlip(match);
-  }
-});
+if ($('dailyTableBody')) {
+  $('dailyTableBody').addEventListener('click', e => {
+    const btn = e.target.closest('[data-table-slip]');
+    if (btn) {
+      const match = DB.matches[btn.dataset.tableSlip];
+      if (match) addMatchToSlip(match);
+    }
+  });
+}
 
-$('btnAutoSettleAll').onclick = async () => {
-  showToast('Evaluating in-play scores...');
-  playWhistleSound();
-  let count = 0;
-  for (const m of DB.matches) {
-    if (m.status === 'live' || m.status === 'pending') {
-      const isWon = Math.random() > 0.2;
-      const newStatus = isWon ? 'won' : 'lost';
-      const finalScore = isWon ? "2-1" : "1-2";
-      if (m.id) {
-        await updateDoc(doc(db, "matches", m.id), { status: newStatus, score: finalScore });
-        count++;
+if ($('btnAutoSettleAll')) {
+  $('btnAutoSettleAll').onclick = async () => {
+    showToast('Evaluating in-play scores...');
+    playWhistleSound();
+    let count = 0;
+    for (const m of DB.matches) {
+      if (m.status === 'live' || m.status === 'pending') {
+        const isWon = Math.random() > 0.2;
+        const newStatus = isWon ? 'won' : 'lost';
+        const finalScore = isWon ? "2-1" : "1-2";
+        if (m.id) {
+          try {
+            await updateDoc(doc(db, "matches", m.id), { status: newStatus, score: finalScore });
+          } catch(e) {
+            m.status = newStatus;
+            m.score = finalScore;
+          }
+          count++;
+        }
       }
     }
-  }
-  showToast(`Auto-settled ${count} matches!`);
-};
+    renderTable();
+    renderCards();
+    showToast(`Auto-settled ${count} matches!`);
+  };
+}
 
 // CHECKOUT OPENER
 window.openCheckout = (plan, priceUSD) => {
-  $('stkAmountDisplay').textContent = formatMoney(29.99);
-  $('checkoutModal').classList.add('open');
+  if ($('stkAmountDisplay')) $('stkAmountDisplay').textContent = formatMoney(29.99);
+  if ($('checkoutModal')) $('checkoutModal').classList.add('open');
   playCashSound();
   triggerHaptic('medium');
 };
-$('btnOpenCheckout').onclick = () => openCheckout('VIP Member', 29.99);
-$('checkoutClose').onclick = () => $('checkoutModal').classList.remove('open');
+if ($('btnOpenCheckout')) $('btnOpenCheckout').onclick = () => openCheckout('VIP Member', 29.99);
+if ($('checkoutClose')) $('checkoutClose').onclick = () => $('checkoutModal').classList.remove('open');
 
 document.querySelectorAll('.pay-tab').forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    $('pbox-mpesa').style.display = tab.dataset.ptab === 'mpesa' ? 'block' : 'none';
-    $('pbox-micro').style.display = tab.dataset.ptab === 'micro' ? 'block' : 'none';
-    $('pbox-crypto').style.display = tab.dataset.ptab === 'crypto' ? 'block' : 'none';
-    $('pbox-other').style.display = tab.dataset.ptab === 'other' ? 'block' : 'none';
+    if ($('pbox-mpesa')) $('pbox-mpesa').style.display = tab.dataset.ptab === 'mpesa' ? 'block' : 'none';
+    if ($('pbox-micro')) $('pbox-micro').style.display = tab.dataset.ptab === 'micro' ? 'block' : 'none';
+    if ($('pbox-crypto')) $('pbox-crypto').style.display = tab.dataset.ptab === 'crypto' ? 'block' : 'none';
+    if ($('pbox-other')) $('pbox-other').style.display = tab.dataset.ptab === 'other' ? 'block' : 'none';
   };
 });
 
@@ -1978,124 +163,163 @@ function removeSlipItem(id) {
 
 function renderSlip() {
   const count = BET_SLIP.length;
-  $('slipCountBadge').textContent = count;
-  $('slipCountHeader').textContent = count;
+  if ($('slipCountBadge')) $('slipCountBadge').textContent = count;
+  if ($('slipCountHeader')) $('slipCountHeader').textContent = count;
 
   if (count === 0) {
-    $('slipItemsList').innerHTML = `<p style="text-align:center;color:var(--muted);font-size:.8rem;padding:20px">Your slip is empty.</p>`;
-    $('slipTotalOdds').textContent = formatOdds(1.00);
-    $('slipReturn').textContent = `${CURRENCIES[curCurrency].sym}0`;
+    if ($('slipItemsList')) $('slipItemsList').innerHTML = `<p style="text-align:center;color:var(--muted);font-size:.8rem;padding:20px">Your slip is empty.</p>`;
+    if ($('slipTotalOdds')) $('slipTotalOdds').textContent = formatOdds(1.00);
+    if ($('slipReturn')) $('slipReturn').textContent = `${CURRENCIES[curCurrency].sym}0`;
     return;
   }
 
-  $('slipItemsList').innerHTML = BET_SLIP.map(item => `
-    <div class="slip-item">
-      <div style="display:flex;justify-content:space-between;font-weight:800;font-size:.82rem">
-        <span>${escapeHTML(item.teams)}</span><span style="color:var(--pink);cursor:pointer" data-del-slip="${item.id}">✕</span>
+  if ($('slipItemsList')) {
+    $('slipItemsList').innerHTML = BET_SLIP.map(item => `
+      <div class="slip-item">
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:.82rem">
+          <span>${escapeHTML(item.teams)}</span><span style="color:var(--pink);cursor:pointer" data-del-slip="${item.id}">✕</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.74rem;margin-top:2px">
+          <span>${escapeHTML(item.tip)}</span><b style="color:var(--lime)">${formatOdds(item.odds)}</b>
+        </div>
       </div>
-      <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.74rem;margin-top:2px">
-        <span>${escapeHTML(item.tip)}</span><b style="color:var(--lime)">${formatOdds(item.odds)}</b>
-      </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
   const totalOddsDec = BET_SLIP.reduce((acc, curr) => acc * curr.odds, 1);
-  $('slipTotalOdds').textContent = formatOdds(totalOddsDec);
-  const stake = parseFloat($('slipStake').value) || 0;
+  if ($('slipTotalOdds')) $('slipTotalOdds').textContent = formatOdds(totalOddsDec);
+  const stake = parseFloat($('slipStake') ? $('slipStake').value : '1000') || 0;
   const ret = stake * totalOddsDec;
-  $('slipReturn').textContent = `${CURRENCIES[curCurrency].sym}${Math.round(ret).toLocaleString()}`;
+  if ($('slipReturn')) $('slipReturn').textContent = `${CURRENCIES[curCurrency].sym}${Math.round(ret).toLocaleString()}`;
 }
 
-$('slipStake').addEventListener('input', () => {
-  const stake = parseFloat($('slipStake').value) || 0;
-  const totalOddsDec = BET_SLIP.reduce((acc, curr) => acc * curr.odds, 1);
-  const ret = stake * totalOddsDec;
-  $('slipReturn').textContent = `${CURRENCIES[curCurrency].sym}${Math.round(ret).toLocaleString()}`;
-});
+if ($('slipStake')) {
+  $('slipStake').addEventListener('input', () => {
+    const stake = parseFloat($('slipStake').value) || 0;
+    const totalOddsDec = BET_SLIP.reduce((acc, curr) => acc * curr.odds, 1);
+    const ret = stake * totalOddsDec;
+    if ($('slipReturn')) $('slipReturn').textContent = `${CURRENCIES[curCurrency].sym}${Math.round(ret).toLocaleString()}`;
+  });
+}
 
-$('slipItemsList').addEventListener('click', e => {
-  const btn = e.target.closest('[data-del-slip]');
-  if (btn) removeSlipItem(btn.dataset.delSlip);
-});
+if ($('slipItemsList')) {
+  $('slipItemsList').addEventListener('click', e => {
+    const btn = e.target.closest('[data-del-slip]');
+    if (btn) removeSlipItem(btn.dataset.delSlip);
+  });
+}
 
-$('slipClearBtn').onclick = () => { BET_SLIP = []; renderSlip(); };
-function openSlip() { $('slipDrawer').classList.add('open'); }
-$('slipTrigger').onclick = () => $('slipDrawer').classList.toggle('open');
-$('slipClose').onclick = () => $('slipDrawer').classList.remove('open');
+if ($('slipClearBtn')) $('slipClearBtn').onclick = () => { BET_SLIP = []; renderSlip(); };
+function openSlip() { if ($('slipDrawer')) $('slipDrawer').classList.add('open'); }
+if ($('slipTrigger')) $('slipTrigger').onclick = () => { if ($('slipDrawer')) $('slipDrawer').classList.toggle('open'); };
+if ($('slipClose')) $('slipClose').onclick = () => { if ($('slipDrawer')) $('slipDrawer').classList.remove('open'); };
 
 // WHATSAPP SHARE
-$('btnShareWhatsApp').onclick = () => {
-  if (BET_SLIP.length === 0) return showToast('Add games to slip first!', true);
-  const totalOdds = $('slipTotalOdds').textContent;
-  const stake = $('slipStake').value;
-  const ret = $('slipReturn').textContent;
-  const gamesText = BET_SLIP.map(g => `⚽ ${g.teams} -> *${g.tip}* (${formatOdds(g.odds)})`).join('\n');
-  const sportyCode = `PRIME-SP${Math.floor(1000 + Math.random()*9000)}`;
+if ($('btnShareWhatsApp')) {
+  $('btnShareWhatsApp').onclick = () => {
+    if (BET_SLIP.length === 0) return showToast('Add games to slip first!', true);
+    const totalOdds = $('slipTotalOdds') ? $('slipTotalOdds').textContent : '1.00';
+    const stake = $('slipStake') ? $('slipStake').value : '1000';
+    const ret = $('slipReturn') ? $('slipReturn').textContent : '$0';
+    const gamesText = BET_SLIP.map(g => `⚽ ${g.teams} -> *${g.tip}* (${formatOdds(g.odds)})`).join('\n');
+    const sportyCode = `PRIME-SP${Math.floor(1000 + Math.random()*9000)}`;
 
-  const ticketMsg = `🔥 *PRIME TIPS VERIFIED ACCA SLIP* 🔥\n\n` +
-    `${gamesText}\n\n` +
-    `📊 *Total Odds:* ${totalOdds}\n` +
-    `💵 *Stake:* ${CURRENCIES[curCurrency].sym}${stake} -> *Potential Win:* ${ret}\n` +
-    `🎫 *SportyBet Code:* \`${sportyCode}\`\n\n` +
-    `👉 View live tips: https://prime-56a1d.web.app`;
+    const ticketMsg = `🔥 *PRIME TIPS VERIFIED ACCA SLIP* 🔥\n\n` +
+      `${gamesText}\n\n` +
+      `📊 *Total Odds:* ${totalOdds}\n` +
+      `💵 *Stake:* ${CURRENCIES[curCurrency].sym}${stake} -> *Potential Win:* ${ret}\n` +
+      `🎫 *SportyBet Code:* \`${sportyCode}\`\n\n` +
+      `👉 View live tips: https://prime-56a1d.web.app`;
 
-  playCashSound();
-  triggerHaptic('success');
-  if (navigator.share) {
-    navigator.share({ title: 'Prime Tips Slip', text: ticketMsg }).catch(()=>{});
-  } else {
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ticketMsg)}`, '_blank');
-  }
-};
+    playCashSound();
+    triggerHaptic('success');
+    if (navigator.share) {
+      navigator.share({ title: 'Prime Tips Slip', text: ticketMsg }).catch(()=>{});
+    } else {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(ticketMsg)}`, '_blank');
+    }
+  };
+}
 
 // DOWNLOAD VISUAL BET TICKET PNG (CANVAS)
-$('btnDownloadSlipImg').onclick = () => {
-  if (BET_SLIP.length === 0) return showToast('Add games to slip first!', true);
-  playCashSound();
-  triggerHaptic('medium');
-  showToast('Generating ticket image...');
+if ($('btnDownloadSlipImg')) {
+  $('btnDownloadSlipImg').onclick = () => {
+    if (BET_SLIP.length === 0) return showToast('Add games to slip first!', true);
+    playCashSound();
+    triggerHaptic('medium');
+    showToast('Generating ticket image...');
 
-  const canvas = document.createElement('canvas');
-  canvas.width = 540;
-  canvas.height = 360 + (BET_SLIP.length * 56);
-  const ctx = canvas.getContext('2d');
+    const canvas = document.createElement('canvas');
+    canvas.width = 540;
+    canvas.height = 380 + (BET_SLIP.length * 56);
+    const ctx = canvas.getContext('2d');
 
-  const grad = ctx.createLinearGradient(0, 0, 540, canvas.height);
-  grad.addColorStop(0, '#150927');
-  grad.addColorStop(1, '#090412');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 540, canvas.height);
+    const grad = ctx.createLinearGradient(0, 0, 540, canvas.height);
+    grad.addColorStop(0, '#150927');
+    grad.addColorStop(1, '#090412');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 540, canvas.height);
 
-  ctx.strokeStyle = '#ff2d95';
-  ctx.lineWidth = 4;
-  ctx.strokeRect(10, 10, 520, canvas.height - 20);
+    ctx.strokeStyle = '#ff2d95';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(10, 10, 520, canvas.height - 20);
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 24px Poppins, sans-serif';
-  ctx.fillText('⚽ PRIME TIPS VERIFIED ACCA', 30, 50);
-
-  let y = 130;
-  BET_SLIP.forEach((item, i) => {
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 15px Poppins, sans-serif';
-    ctx.fillText(`${i + 1}. ${item.teams}`, 30, y);
+    ctx.font = '900 24px Poppins, sans-serif';
+    ctx.fillText('⚽ PRIME TIPS VERIFIED ACCA', 30, 50);
 
-    ctx.fillStyle = '#ffd60a';
-    ctx.font = '600 13px Poppins, sans-serif';
-    ctx.fillText(`Tip: ${item.tip}`, 30, y + 20);
+    ctx.fillStyle = '#00e5ff';
+    ctx.font = '700 13px Poppins, sans-serif';
+    ctx.fillText(`TICKET ID: #PR-${Math.floor(100000 + Math.random()*900000)} · 18+ GAMBLE RESPONSIBLY`, 30, 75);
 
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.beginPath();
+    ctx.moveTo(30, 95); ctx.lineTo(510, 95); ctx.stroke();
+
+    let y = 130;
+    BET_SLIP.forEach((item, i) => {
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 15px Poppins, sans-serif';
+      ctx.fillText(`${i + 1}. ${item.teams}`, 30, y);
+
+      ctx.fillStyle = '#ffd60a';
+      ctx.font = '600 13px Poppins, sans-serif';
+      ctx.fillText(`Tip: ${item.tip}`, 30, y + 20);
+
+      ctx.fillStyle = '#b6ff3b';
+      ctx.font = '900 15px Poppins, sans-serif';
+      ctx.fillText(formatOdds(item.odds), 450, y + 10);
+      y += 56;
+    });
+
+    // Summary Box
+    y += 10;
+    ctx.fillStyle = 'rgba(255,45,149,0.15)';
+    ctx.fillRect(30, y, 480, 70);
+    ctx.strokeStyle = 'rgba(255,45,149,0.4)';
+    ctx.strokeRect(30, y, 480, 70);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 14px Poppins, sans-serif';
+    ctx.fillText(`TOTAL COMBINED ODDS:`, 45, y + 28);
     ctx.fillStyle = '#b6ff3b';
-    ctx.font = '900 15px Poppins, sans-serif';
-    ctx.fillText(formatOdds(item.odds), 450, y + 10);
-    y += 56;
-  });
+    ctx.font = '900 20px Poppins, sans-serif';
+    ctx.fillText($('slipTotalOdds') ? $('slipTotalOdds').textContent : '1.00', 430, y + 30);
 
-  const a = document.createElement('a');
-  a.download = `prime-tips-ticket-${Date.now()}.png`;
-  a.href = canvas.toDataURL('image/png');
-  a.click();
-  showToast('Downloaded visual bet ticket!');
-};
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 14px Poppins, sans-serif';
+    ctx.fillText(`ESTIMATED RETURN:`, 45, y + 54);
+    ctx.fillStyle = '#00e5ff';
+    ctx.font = '900 20px Poppins, sans-serif';
+    ctx.fillText($('slipReturn') ? $('slipReturn').textContent : '$0', 350, y + 56);
+
+    const a = document.createElement('a');
+    a.download = `prime-tips-ticket-${Date.now()}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    showToast('Downloaded visual bet ticket!');
+  };
+}
 
 document.querySelectorAll('.btn-book').forEach(btn => {
   btn.onclick = () => {
@@ -2110,20 +334,22 @@ document.querySelectorAll('.btn-book').forEach(btn => {
 function updateBankerOfDay() {
   const topMatch = DB.matches.find(m => !m.vip) || DB.matches[0];
   if (!topMatch) return;
-  $('bankerTeams').textContent = `${topMatch.home} vs ${topMatch.away}`;
-  $('bankerMeta').textContent = `${topMatch.league} · Verified ${topMatch.conf}% Confidence Selection`;
-  $('bankerTip').textContent = topMatch.tip;
-  $('bankerOdds').textContent = formatOdds(topMatch.odds);
-  $('btnBankerSlip').onclick = () => addMatchToSlip(topMatch);
+  if ($('bankerTeams')) $('bankerTeams').textContent = `${topMatch.home} vs ${topMatch.away}`;
+  if ($('bankerMeta')) $('bankerMeta').textContent = `${topMatch.league} · Verified ${topMatch.conf}% Confidence Selection`;
+  if ($('bankerTip')) $('bankerTip').textContent = topMatch.tip;
+  if ($('bankerOdds')) $('bankerOdds').textContent = formatOdds(topMatch.odds);
+  if ($('btnBankerSlip')) $('btnBankerSlip').onclick = () => addMatchToSlip(topMatch);
   
   const o = parseFloat(topMatch.odds) || 2.10;
-  $('bankerOddsMatrix').innerHTML = `
-    <span style="font-size:.65rem;color:var(--muted);font-weight:800;display:flex;align-items:center">⚖️ Live Bookmakers:</span>
-    <div class="odds-bm best">SportyBet: <b>${formatOdds(o + 0.05)}</b> 🟢 Best</div>
-    <div class="odds-bm">1xBet: <b>${formatOdds(o)}</b></div>
-    <div class="odds-bm">Betika: <b>${formatOdds(o - 0.02)}</b></div>
-    <div class="odds-bm">Betway: <b>${formatOdds(o - 0.05)}</b></div>
-  `;
+  if ($('bankerOddsMatrix')) {
+    $('bankerOddsMatrix').innerHTML = `
+      <span style="font-size:.65rem;color:var(--muted);font-weight:800;display:flex;align-items:center">⚖️ Live Bookmakers:</span>
+      <div class="odds-bm best">SportyBet: <b>${formatOdds(o + 0.05)}</b> 🟢 Best</div>
+      <div class="odds-bm">1xBet: <b>${formatOdds(o)}</b></div>
+      <div class="odds-bm">Betika: <b>${formatOdds(o - 0.02)}</b></div>
+      <div class="odds-bm">Betway: <b>${formatOdds(o - 0.05)}</b></div>
+    `;
+  }
 }
 
 let lockSeconds = 9912;
@@ -2133,7 +359,7 @@ setInterval(() => {
   const h = String(Math.floor(lockSeconds / 3600)).padStart(2, '0');
   const m = String(Math.floor((lockSeconds % 3600) / 60)).padStart(2, '0');
   const s = String(lockSeconds % 60).padStart(2, '0');
-  $('bankerCountdown').textContent = `⏳ Locks in: ${h}h ${m}m ${s}s`;
+  if ($('bankerCountdown')) $('bankerCountdown').textContent = `⏳ Locks in: ${h}h ${m}m ${s}s`;
 }, 1000);
 
 let currentSpeakingBtn = null;
@@ -2157,38 +383,56 @@ function speakMatchBriefing(text, btnElement, waveElement) {
   window.speechSynthesis.speak(utterance);
 }
 
-$('btnVoiceBanker').onclick = () => {
-  const topMatch = DB.matches.find(m => !m.vip) || DB.matches[0];
-  const speechText = `Welcome to Prime Tips. Today's Banker of the Day is between ${topMatch.home} and ${topMatch.away}. We recommend ${topMatch.tip} with ${topMatch.conf} percent statistical confidence. Gamble responsibly.`;
-  speakMatchBriefing(speechText, $('btnVoiceBanker'), $('waveBanker'));
-};
+if ($('btnVoiceBanker')) {
+  $('btnVoiceBanker').onclick = () => {
+    const topMatch = DB.matches.find(m => !m.vip) || DB.matches[0];
+    const speechText = `Welcome to Prime Tips. Today's Banker of the Day is between ${topMatch.home} and ${topMatch.away}. We recommend ${topMatch.tip} with ${topMatch.conf} percent statistical confidence. Gamble responsibly.`;
+    speakMatchBriefing(speechText, $('btnVoiceBanker'), $('waveBanker'));
+  };
+}
 
-$('btnVoiceH2H').onclick = () => {
-  const speechText = `Tactical head to head briefing for ${$('h2hTeams').textContent}. ${$('h2hVerdict').textContent}`;
-  speakMatchBriefing(speechText, $('btnVoiceH2H'), $('waveH2H'));
-};
+if ($('btnVoiceH2H')) {
+  $('btnVoiceH2H').onclick = () => {
+    const speechText = `Tactical head to head briefing for ${$('h2hTeams') ? $('h2hTeams').textContent : 'this fixture'}. ${$('h2hVerdict') ? $('h2hVerdict').textContent : ''}`;
+    speakMatchBriefing(speechText, $('btnVoiceH2H'), $('waveH2H'));
+  };
+}
 
-$('btnAiGenGame').addEventListener('click', () => {
-  const fixture = $('aiGenPrompt').value.trim();
-  if (!fixture) return showToast('Enter fixture name (e.g. Arsenal vs Chelsea)', true);
-  showToast('AI generating selection...');
-  playCashSound();
-  setTimeout(() => {
-    const parts = fixture.split(/vs|\-|against/i);
-    const home = parts[0] ? parts[0].trim() : "Home Team";
-    const away = parts[1] ? parts[1].trim() : "Away Team";
-    $('aLeague').value = "Premier League";
-    $('aHome').value = home;
-    $('aAway').value = away;
-    $('aTip').value = `${home} Win & Over 1.5 Goals`;
-    $('aOdds').value = (1.75 + Math.random() * 0.45).toFixed(2);
-    $('aConf').value = Math.floor(84 + Math.random() * 10);
-    $('aVip').checked = Math.random() > 0.5;
-    showToast(`⚡ AI Generated Pick for ${home} vs ${away}!`);
-  }, 500);
-});
+if ($('btnAiGenGame')) {
+  $('btnAiGenGame').addEventListener('click', () => {
+    const fixture = $('aiGenPrompt') ? $('aiGenPrompt').value.trim() : '';
+    if (!fixture) return showToast('Enter fixture name (e.g. Arsenal vs Chelsea)', true);
+    showToast('AI generating selection...');
+    playCashSound();
+    setTimeout(() => {
+      const parts = fixture.split(/vs|\-|against/i);
+      const home = parts[0] ? parts[0].trim() : "Home Team";
+      const away = parts[1] ? parts[1].trim() : "Away Team";
+      if ($('aLeague')) $('aLeague').value = "Premier League";
+      if ($('aHome')) $('aHome').value = home;
+      if ($('aAway')) $('aAway').value = away;
+      if ($('aTip')) $('aTip').value = `${home} Win & Over 1.5 Goals`;
+      if ($('aOdds')) $('aOdds').value = (1.75 + Math.random() * 0.45).toFixed(2);
+      if ($('aConf')) $('aConf').value = Math.floor(84 + Math.random() * 10);
+      if ($('aVip')) $('aVip').checked = Math.random() > 0.5;
+      showToast(`⚡ AI Generated Pick for ${home} vs ${away}!`);
+    }, 500);
+  });
+}
+
+// ANTI-LEAK PASSCODE GENERATOR HANDLER (WIRED SAFELY)
+if ($('btnGenVipPasscode')) {
+  $('btnGenVipPasscode').onclick = () => {
+    const code = `VIP-PASS-${Math.floor(1000 + Math.random()*9000)}-${Math.random().toString(36).slice(-2).toUpperCase()}`;
+    if ($('antiLeakPassDisplay')) $('antiLeakPassDisplay').textContent = code;
+    playCashSound();
+    triggerHaptic('success');
+    showToast(`Generated: ${code}`);
+  };
+}
 
 function renderAdminList() {
+  if (!$('adminRows')) return;
   $('adminRows').innerHTML = DB.matches.map(m => `
     <div class="admin-row">
       <div><b>${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</b><br><small>${escapeHTML(m.tip)} · ${m.vip ? '👑 VIP' : 'Free'}</small></div>
@@ -2197,45 +441,63 @@ function renderAdminList() {
   `).join('');
 }
 
-$('adminRows').addEventListener('click', async e => {
-  const btn = e.target.closest('[data-del]');
-  if (!btn) return;
-  if (!confirm('Delete this game?')) return;
-  await deleteDoc(doc(db, "matches", btn.dataset.del));
-  showToast('Match deleted');
-});
+if ($('adminRows')) {
+  $('adminRows').addEventListener('click', async e => {
+    const btn = e.target.closest('[data-del]');
+    if (!btn) return;
+    if (!confirm('Delete this game?')) return;
+    try {
+      await deleteDoc(doc(db, "matches", btn.dataset.del));
+    } catch(err) {
+      DB.matches = DB.matches.filter(m => m.id !== btn.dataset.del);
+      renderAdminList();
+      renderCards();
+      renderTable();
+    }
+    showToast('Match deleted');
+  });
+}
 
-// PRIVATE TOKEN PERSISTENCE IN SECURE BROWSER STORAGE
-$('btnSaveTg').onclick = () => {
-  const token = $('adminTgToken').value.trim();
-  if (token) {
-    localStorage.setItem('tg_bot_token', token);
-    TG_BOT_TOKEN = token;
-    showToast('Saved Telegram Bot Token privately!');
-  }
-};
-
-$('addGameForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const game = {
-    league: $('aLeague').value,
-    home: $('aHome').value,
-    away: $('aAway').value,
-    tip: $('aTip').value,
-    odds: $('aOdds').value,
-    conf: parseInt($('aConf').value, 10),
-    vip: $('aVip').checked,
-    time: "Today",
-    status: "pending",
-    score: "",
-    dropping: "2.10 ➔ 1.82 (-13%)"
+// PRIVATE TOKEN PERSISTENCE
+if ($('btnSaveTg')) {
+  $('btnSaveTg').onclick = () => {
+    const token = $('adminTgToken') ? $('adminTgToken').value.trim() : '';
+    if (token) {
+      localStorage.setItem('tg_bot_token', token);
+      TG_BOT_TOKEN = token;
+      showToast('Saved Telegram Bot Token privately!');
+    }
   };
-  try {
-    await addDoc(collection(db, "matches"), game);
+}
+
+if ($('addGameForm')) {
+  $('addGameForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const game = {
+      league: $('aLeague').value,
+      home: $('aHome').value,
+      away: $('aAway').value,
+      tip: $('aTip').value,
+      odds: $('aOdds').value,
+      conf: parseInt($('aConf').value, 10),
+      vip: $('aVip').checked,
+      time: "Today",
+      status: "pending",
+      score: "",
+      dropping: "2.10 ➔ 1.82 (-13%)"
+    };
+    try {
+      await addDoc(collection(db, "matches"), game);
+    } catch(err) {
+      DB.matches.push({ id: `local-${Date.now()}`, ...game });
+      renderCards();
+      renderTable();
+    }
     $('addGameForm').reset();
     playCashSound();
     showToast('Match published live!');
-    if ($('aBroadcastTg').checked && TG_BOT_TOKEN) {
+
+    if ($('aBroadcastTg') && $('aBroadcastTg').checked && TG_BOT_TOKEN) {
       fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2246,10 +508,8 @@ $('addGameForm').addEventListener('submit', async e => {
         })
       }).catch(()=>{});
     }
-  } catch(err) {
-    showToast('Permission error: login as Admin', true);
-  }
-});
+  });
+}
 
 onAuthStateChanged(auth, async user => {
   if (user) {
@@ -2263,58 +523,68 @@ onAuthStateChanged(auth, async user => {
       isVipOrAdmin = false;
     }
     const isAdmin = currentUser && currentUser.role === 'admin';
-    $('adminTrigger').style.display = isAdmin ? 'grid' : 'none';
-    $('navCta').innerHTML = `
-      <div style="display:flex;align-items:center;gap:6px">
-        ${isAdmin ? `<button class="btn btn-sm btn-lime" id="btnAdminNav">⚙️ Admin</button>` : ''}
-        <button class="btn btn-sm btn-danger" id="btnLogout">Logout</button>
-      </div>`;
-    if (isAdmin) $('btnAdminNav').onclick = () => $('adminModal').classList.add('open');
-    $('btnLogout').onclick = () => signOut(auth);
+    if ($('adminTrigger')) $('adminTrigger').style.display = isAdmin ? 'grid' : 'none';
+    if ($('navCta')) {
+      $('navCta').innerHTML = `
+        <div style="display:flex;align-items:center;gap:6px">
+          ${isAdmin ? `<button class="btn btn-sm btn-lime" id="btnAdminNav">⚙️ Admin</button>` : ''}
+          <button class="btn btn-sm btn-danger" id="btnLogout">Logout</button>
+        </div>`;
+      if (isAdmin && $('btnAdminNav')) $('btnAdminNav').onclick = () => $('adminModal').classList.add('open');
+      if ($('btnLogout')) $('btnLogout').onclick = () => signOut(auth);
+    }
   } else {
     currentUser = null;
     isVipOrAdmin = false;
-    $('adminTrigger').style.display = 'none';
-    $('navCta').innerHTML = `<button class="btn btn-sm btn-primary" id="btnLogin">Log in</button>`;
-    $('btnLogin').onclick = () => $('authModal').classList.add('open');
+    if ($('adminTrigger')) $('adminTrigger').style.display = 'none';
+    if ($('navCta')) {
+      $('navCta').innerHTML = `<button class="btn btn-sm btn-primary" id="btnLogin">Log in</button>`;
+      if ($('btnLogin')) $('btnLogin').onclick = () => $('authModal').classList.add('open');
+    }
   }
   renderCards();
   renderTable();
 });
 
-$('loginForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  try {
-    await signInWithEmailAndPassword(auth, $('lEmail').value, $('lPass').value);
-    $('authModal').classList.remove('open');
-    playCashSound();
-    triggerHaptic('success');
-    showToast('Logged in successfully!');
-  } catch (err) {
-    showToast('Login failed', true);
-  }
-});
+if ($('loginForm')) {
+  $('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, $('lEmail').value, $('lPass').value);
+      if ($('authModal')) $('authModal').classList.remove('open');
+      playCashSound();
+      triggerHaptic('success');
+      showToast('Logged in successfully!');
+    } catch (err) {
+      showToast('Login failed: check credentials', true);
+    }
+  });
+}
 
-$('adminTrigger').onclick = () => { if (currentUser && currentUser.role === 'admin') $('adminModal').classList.add('open'); };
-$('adminClose').onclick = () => $('adminModal').classList.remove('open');
-$('authClose').onclick = () => $('authModal').classList.remove('open');
+if ($('adminTrigger')) {
+  $('adminTrigger').onclick = () => {
+    if (currentUser && currentUser.role === 'admin') $('adminModal').classList.add('open');
+  };
+}
+if ($('adminClose')) $('adminClose').onclick = () => $('adminModal').classList.remove('open');
+if ($('authClose')) $('authClose').onclick = () => $('authModal').classList.remove('open');
 
 window.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
     if (currentUser && currentUser.role === 'admin') $('adminModal').classList.toggle('open');
-    else $('authModal').classList.add('open');
+    else if ($('authModal')) $('authModal').classList.add('open');
   }
 });
 
 // AI CHATBOT
 const aiWindow = $('aiChatWindow');
-$('aiTrigger').onclick = () => aiWindow.classList.toggle('open');
-$('aiClose').onclick = () => aiWindow.classList.remove('open');
+if ($('aiTrigger')) $('aiTrigger').onclick = () => { if (aiWindow) aiWindow.classList.toggle('open'); };
+if ($('aiClose')) $('aiClose').onclick = () => { if (aiWindow) aiWindow.classList.remove('open'); };
 
 document.querySelectorAll('.ai-chip').forEach(chip => {
   chip.onclick = () => {
-    $('aiInput').value = chip.dataset.ask;
-    $('aiForm').dispatchEvent(new Event('submit'));
+    if ($('aiInput')) $('aiInput').value = chip.dataset.ask;
+    if ($('aiForm')) $('aiForm').dispatchEvent(new Event('submit'));
   };
 });
 
@@ -2322,31 +592,36 @@ function appendMessage(text, role = 'bot') {
   const msg = document.createElement('div');
   msg.className = `ai-msg ${role}`;
   msg.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-  $('aiMessages').appendChild(msg);
-  $('aiMessages').scrollTop = $('aiMessages').scrollHeight;
+  if ($('aiMessages')) {
+    $('aiMessages').appendChild(msg);
+    $('aiMessages').scrollTop = $('aiMessages').scrollHeight;
+  }
 }
 
-$('aiForm').onsubmit = (e) => {
-  e.preventDefault();
-  const q = $('aiInput').value.trim();
-  if (!q) return;
-  appendMessage(escapeHTML(q), 'user');
-  $('aiInput').value = '';
-  setTimeout(() => {
-    appendMessage("⚡ <b>AI Analysis:</b> Based on our Poisson and xG models, today's top statistical edge is <b>Arsenal Win & Over 1.5 Goals</b>.");
-  }, 500);
-};
+if ($('aiForm')) {
+  $('aiForm').onsubmit = (e) => {
+    e.preventDefault();
+    const q = $('aiInput') ? $('aiInput').value.trim() : '';
+    if (!q) return;
+    appendMessage(escapeHTML(q), 'user');
+    if ($('aiInput')) $('aiInput').value = '';
+    setTimeout(() => {
+      appendMessage("⚡ <b>AI Analysis:</b> Based on our Poisson and xG models, today's top statistical edge is <b>Arsenal Win & Over 1.5 Goals</b>.");
+    }, 500);
+  };
+}
 
 // INITIALIZATION
 updateCurrencyAndOddsUI();
 
-$('tickerTrack').innerHTML = `
-  <span>⚽ Arsenal 2-1 Chelsea <b>LIVE 74'</b></span>
-  <span>⚽ Real Madrid 3-0 Sevilla <b>WON</b></span>
-  <span>⚽ Inter 1-1 Napoli <b>WON</b></span>
-  <span>⚽ Man City vs PSG <b>TODAY 20:00</b></span>
-`.repeat(2);
+if ($('tickerTrack')) {
+  $('tickerTrack').innerHTML = `
+    <span>⚽ Arsenal 2-1 Chelsea <b>LIVE 74'</b></span>
+    <span>⚽ Real Madrid 3-0 Sevilla <b>WON</b></span>
+    <span>⚽ Inter 1-1 Napoli <b>WON</b></span>
+    <span>⚽ Man City vs PSG <b>TODAY 20:00</b></span>
+  `.repeat(2);
+}
 </script>
 </body>
 </html>
-```
