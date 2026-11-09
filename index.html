@@ -2,24 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prime Tips — Football Predictions, VIP & Subscriptions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0612">
+<meta name="description" content="Prime Tips — daily football predictions, VIP tips and expert match analysis.">
+<title>Prime Tips — Football Predictions & VIP Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ============ BASE ============ */
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 :root{
   --pink:#ff2d95; --purple:#7b2ff7; --cyan:#00e5ff; --lime:#b6ff3b;
   --orange:#ff8a00; --yellow:#ffd60a; --dark:#0a0612; --dark2:#120a20;
   --text:#f4f0ff; --muted:#a79fc0; --border:rgba(255,255,255,.1); --card:rgba(255,255,255,.045);
+  --tg:#229ed9; --wa:#25d366;
 }
 body{
   font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   background:var(--dark); color:var(--text); overflow-x:hidden; line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right);
 }
 body::before{
   content:'';position:fixed;inset:0;z-index:-2;
@@ -35,22 +38,52 @@ body::after{
                    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
   background-size:64px 64px;
   mask-image:radial-gradient(circle at 50% 30%,#000 20%,transparent 78%);
+  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 20%,transparent 78%);
 }
 a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;-webkit-tap-highlight-color:transparent}
 img{max-width:100%;display:block}
+input,textarea,select{font-family:inherit}
 .container{width:min(1180px,92%);margin-inline:auto}
+
+/* ============ BOOT / OFFLINE BAR ============ */
+#bootBar{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange));
+  color:#fff;font-size:.78rem;font-weight:800;text-align:center;
+  padding:10px 16px;display:none;letter-spacing:.03em;
+}
+#bootBar.show{display:block}
+#bootBar.error{background:linear-gradient(90deg,#c2005a,#7b2ff7)}
+#bootBar .dotspin{
+  display:inline-block;width:10px;height:10px;border-radius:50%;
+  border:2px solid #fff;border-right-color:transparent;
+  animation:spin 0.8s linear infinite;vertical-align:-1px;margin-right:6px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* live sync badge */
+.live-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.62rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;white-space:nowrap;
+}
+.live-badge.on{background:rgba(182,255,59,.14);border:1px solid rgba(182,255,59,.45);color:var(--lime)}
+.live-badge.off{background:rgba(255,45,149,.14);border:1px solid rgba(255,45,149,.4);color:var(--pink)}
+.live-badge .ldot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.4s infinite}
 
 /* ============ TICKER ============ */
 .ticker{
   background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange),var(--purple));
   background-size:300% 100%; animation:tickerShift 8s linear infinite;
   padding:8px 0;overflow:hidden;position:relative;z-index:60;
+  padding-top:max(8px,env(safe-area-inset-top));
 }
 @keyframes tickerShift{to{background-position:300% 0}}
 .ticker-track{
   display:flex;gap:42px;white-space:nowrap;width:max-content;
   animation:scrollX 38s linear infinite; font-size:.78rem;font-weight:600;letter-spacing:.03em;
+  will-change:transform;
 }
 @keyframes scrollX{to{transform:translateX(-50%)}}
 .ticker-track span{display:inline-flex;align-items:center;gap:7px;opacity:.96}
@@ -58,14 +91,10 @@ img{max-width:100%;display:block}
 .ticker-track .live b{background:#fff;color:#c2005a}
 
 /* ============ NAV ============ */
-.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(10,6,18,.72);border-bottom:1px solid var(--border)}
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(10,6,18,.78);border-bottom:1px solid var(--border)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.22rem;letter-spacing:-.02em}
-.logo-mark{
-  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.05rem;
-  background:linear-gradient(135deg,var(--pink),var(--purple) 55%,var(--cyan));
-  box-shadow:0 6px 22px rgba(255,45,149,.42); animation:pulseLogo 3.2s ease-in-out infinite;
-}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.22rem;letter-spacing:-.02em;flex-shrink:0}
+.logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.05rem;background:linear-gradient(135deg,var(--pink),var(--purple) 55%,var(--cyan));box-shadow:0 6px 22px rgba(255,45,149,.42);animation:pulseLogo 3.2s ease-in-out infinite;flex-shrink:0}
 @keyframes pulseLogo{50%{box-shadow:0 6px 32px rgba(0,229,255,.55)}}
 .logo span.grad{background:linear-gradient(90deg,var(--pink),var(--orange),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
 .nav-links{display:flex;gap:30px;font-size:.9rem;font-weight:500}
@@ -73,16 +102,15 @@ img{max-width:100%;display:block}
 .nav-links a:hover{color:#fff}
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-6px;height:2px;width:0;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:width .25s;border-radius:2px}
 .nav-links a:hover::after{width:100%}
-.nav-cta{display:flex;align-items:center;gap:12px}
-.burger{display:none;font-size:1.5rem;line-height:1}
-
+.nav-cta{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.burger{display:none;font-size:1.5rem;line-height:1;width:40px;height:40px;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--border)}
 .member-chip{display:flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:100px;background:rgba(255,255,255,.06);border:1px solid var(--border);cursor:pointer;transition:.22s;font-size:.8rem;font-weight:700}
 .member-chip:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28)}
 .member-chip .mc-avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:900;color:#0a0612;flex:none;background:linear-gradient(135deg,var(--pink),var(--orange))}
 .member-chip .mc-badge{font-size:.56rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;background:var(--yellow);color:#2a1500;padding:2px 7px;border-radius:20px}
 
 /* ============ BUTTONS ============ */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:14px;font-weight:700;font-size:.9rem;transition:transform .2s,box-shadow .25s,filter .2s;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:14px;font-weight:700;font-size:.9rem;transition:transform .2s,box-shadow .25s,filter .2s;white-space:nowrap;min-height:44px}
 .btn-primary{background:linear-gradient(135deg,var(--pink),var(--purple) 60%,var(--cyan));background-size:200% 200%;color:#fff;box-shadow:0 10px 30px rgba(255,45,149,.35);animation:gradShift 6s ease infinite}
 @keyframes gradShift{50%{background-position:100% 50%}}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(255,45,149,.5)}
@@ -90,10 +118,14 @@ img{max-width:100%;display:block}
 .btn-ghost:hover{background:rgba(255,255,255,.11);transform:translateY(-3px);border-color:var(--cyan)}
 .btn-lime{background:linear-gradient(135deg,var(--lime),var(--cyan));color:#04120a;box-shadow:0 10px 30px rgba(182,255,59,.3)}
 .btn-lime:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(182,255,59,.45)}
-.btn-sm{padding:9px 18px;font-size:.82rem;border-radius:11px}
+.btn-sm{padding:9px 18px;font-size:.82rem;border-radius:11px;min-height:38px}
 .btn-block{width:100%}
 .btn-danger{background:rgba(255,45,149,.14);border:1.5px solid rgba(255,45,149,.4);color:var(--pink)}
 .btn-danger:hover{background:var(--pink);color:#fff}
+.btn-tg{background:linear-gradient(135deg,#229ed9,#1a7fb0);color:#fff;box-shadow:0 10px 30px rgba(34,158,217,.4)}
+.btn-tg:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(34,158,217,.55)}
+.btn-wa{background:linear-gradient(135deg,#25d366,#1da851);color:#fff;box-shadow:0 10px 30px rgba(37,211,102,.4)}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(37,211,102,.55)}
 
 /* ============ HERO ============ */
 .hero{padding:74px 0 90px;position:relative;overflow:hidden}
@@ -101,7 +133,7 @@ img{max-width:100%;display:block}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:100px;font-size:.78rem;font-weight:700;background:rgba(182,255,59,.1);border:1px solid rgba(182,255,59,.35);color:var(--lime);margin-bottom:22px}
 .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);animation:blink 1.4s infinite}
 @keyframes blink{50%{opacity:.25;transform:scale(.7)}}
-h1{font-size:clamp(2.3rem,5.2vw,4rem);line-height:1.05;font-weight:900;letter-spacing:-.035em;margin-bottom:20px}
+h1{font-size:clamp(2.1rem,5.2vw,4rem);line-height:1.08;font-weight:900;letter-spacing:-.035em;margin-bottom:20px}
 .grad-text{background:linear-gradient(100deg,var(--pink),var(--orange) 40%,var(--lime) 70%,var(--cyan));background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradSlide 7s ease infinite}
 @keyframes gradSlide{50%{background-position:100% 0}}
 .hero p.lead{color:var(--muted);font-size:1.02rem;max-width:520px;margin-bottom:32px}
@@ -109,20 +141,18 @@ h1{font-size:clamp(2.3rem,5.2vw,4rem);line-height:1.05;font-weight:900;letter-sp
 .hero-stats{display:flex;gap:34px;flex-wrap:wrap}
 .hero-stats .hs b{display:block;font-size:1.6rem;font-weight:900;letter-spacing:-.02em;background:linear-gradient(90deg,var(--cyan),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-stats .hs span{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:600}
-
 .hero-visual{position:relative;display:grid;place-items:center}
-.glow-ring{position:absolute;width:400px;height:400px;border-radius:50%;background:conic-gradient(from 0deg,var(--pink),var(--purple),var(--cyan),var(--lime),var(--orange),var(--pink));filter:blur(60px);opacity:.42;animation:spin 18s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.floating-card{position:relative;width:100%;max-width:360px;background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:1px solid var(--border);border-radius:24px;padding:22px;backdrop-filter:blur(16px);box-shadow:0 30px 70px rgba(0,0,0,.55);animation:floaty 6s ease-in-out infinite}
+.glow-ring{position:absolute;width:400px;height:400px;border-radius:50%;background:conic-gradient(from 0deg,var(--pink),var(--purple),var(--cyan),var(--lime),var(--orange),var(--pink));filter:blur(60px);opacity:.42;animation:spin 18s linear infinite;max-width:100%}
+.floating-card{position:relative;width:100%;max-width:360px;background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:1px solid var(--border);border-radius:24px;padding:22px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 30px 70px rgba(0,0,0,.55);animation:floaty 6s ease-in-out infinite}
 @keyframes floaty{50%{transform:translateY(-14px)}}
-.fc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.fc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;gap:8px}
 .fc-head .livepill{display:flex;align-items:center;gap:6px;color:var(--lime)}
 .fc-head .livepill i{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:blink 1.2s infinite}
 .fc-match{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(0,0,0,.3);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid rgba(255,255,255,.07)}
 .fc-team{font-weight:700;font-size:.92rem;text-align:center;flex:1}
 .fc-team small{display:block;font-size:.6rem;color:var(--muted);font-weight:500;letter-spacing:.1em}
 .fc-score{font-weight:900;font-size:1.15rem;color:var(--cyan);padding:0 8px}
-.fc-pick{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;margin-bottom:14px}
+.fc-pick{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;margin-bottom:14px;gap:8px;flex-wrap:wrap}
 .fc-pick .tag{background:linear-gradient(90deg,rgba(255,45,149,.2),rgba(123,47,247,.2));border:1px solid rgba(255,45,149,.4);color:#ffd0e8;padding:5px 12px;border-radius:9px;font-weight:700}
 .fc-pick .odd{font-weight:900;color:var(--lime);font-size:1rem}
 .fc-bar{height:7px;border-radius:20px;background:rgba(255,255,255,.09);overflow:hidden}
@@ -130,45 +160,45 @@ h1{font-size:clamp(2.3rem,5.2vw,4rem);line-height:1.05;font-weight:900;letter-sp
 @keyframes grow{from{width:0}}
 .fc-foot{display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted);margin-top:8px;font-weight:600}
 .vip-float{position:absolute;bottom:-18px;right:-6px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#2a1500;font-weight:900;font-size:.72rem;letter-spacing:.06em;padding:9px 16px;border-radius:12px;transform:rotate(-6deg);box-shadow:0 14px 34px rgba(255,138,0,.45);animation:floaty 5s ease-in-out infinite .8s}
-.check-float{position:absolute;top:-14px;left:-10px;background:rgba(182,255,59,.14);border:1px solid rgba(182,255,59,.45);color:var(--lime);font-size:.72rem;font-weight:800;padding:8px 14px;border-radius:12px;backdrop-filter:blur(10px);animation:floaty 5.5s ease-in-out infinite .4s}
+.check-float{position:absolute;top:-14px;left:-10px;background:rgba(182,255,59,.14);border:1px solid rgba(182,255,59,.45);color:var(--lime);font-size:.72rem;font-weight:800;padding:8px 14px;border-radius:12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:floaty 5.5s ease-in-out infinite .4s}
 
 /* ============ SECTIONS ============ */
 section{padding:86px 0;position:relative}
 .sec-head{text-align:center;max-width:660px;margin:0 auto 50px}
 .sec-tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:16px;background:rgba(123,47,247,.18);border:1px solid rgba(123,47,247,.45);color:#c9a8ff}
-.sec-head h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:900;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px}
+.sec-head h2{font-size:clamp(1.7rem,3.6vw,2.7rem);font-weight:900;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px}
 .sec-head p{color:var(--muted);font-size:.96rem}
 
 /* ============ FILTERS ============ */
 .filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:38px}
-.filter-btn{padding:9px 20px;border-radius:100px;font-size:.82rem;font-weight:700;border:1.5px solid rgba(255,255,255,.13);color:var(--muted);background:rgba(255,255,255,.03);transition:.22s}
+.filter-btn{padding:9px 20px;border-radius:100px;font-size:.82rem;font-weight:700;border:1.5px solid rgba(255,255,255,.13);color:var(--muted);background:rgba(255,255,255,.03);transition:.22s;min-height:38px}
 .filter-btn:hover{color:#fff;border-color:rgba(255,255,255,.32)}
 .filter-btn.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(255,45,149,.35)}
 
 /* ============ PREDICTION CARDS ============ */
-.pred-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.pred-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
 .pred-card{background:linear-gradient(165deg,rgba(255,255,255,.075),rgba(255,255,255,.022));border:1px solid var(--border);border-radius:20px;padding:20px;position:relative;overflow:hidden;transition:transform .28s,box-shadow .28s,border-color .28s}
 .pred-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),transparent 85%)}
 .pred-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.24);box-shadow:0 22px 50px rgba(0,0,0,.5)}
 .pred-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:10px}
-.league{font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 11px;border-radius:8px;color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,transparent);border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.league{font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 11px;border-radius:8px;color:var(--accent);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
 .time{font-size:.7rem;color:var(--muted);font-weight:600;white-space:nowrap}
 .teams{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:18px}
-.team{font-weight:800;font-size:.95rem;text-align:center;flex:1;line-height:1.25}
-.vs{font-size:.6rem;font-weight:900;color:var(--muted);letter-spacing:.12em;background:rgba(255,255,255,.07);padding:5px 8px;border-radius:7px}
+.team{font-weight:800;font-size:.95rem;text-align:center;flex:1;line-height:1.25;word-break:break-word}
+.vs{font-size:.6rem;font-weight:900;color:var(--muted);letter-spacing:.12em;background:rgba(255,255,255,.07);padding:5px 8px;border-radius:7px;flex-shrink:0}
 .pick-wrap{position:relative;border-radius:14px}
 .pick{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
 .pick-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700}
-.pick-tip{font-weight:800;font-size:.98rem;color:#fff}
-.odds{font-weight:900;font-size:1.05rem;color:var(--lime);background:rgba(182,255,59,.1);border:1px solid rgba(182,255,59,.3);padding:7px 14px;border-radius:11px;white-space:nowrap}
+.pick-tip{font-weight:800;font-size:.98rem;color:#fff;word-break:break-word}
+.odds{font-weight:900;font-size:1.05rem;color:var(--lime);background:rgba(182,255,59,.1);border:1px solid rgba(182,255,59,.3);padding:7px 14px;border-radius:11px;white-space:nowrap;flex-shrink:0}
 .conf-head{display:flex;justify-content:space-between;font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:6px}
 .bar{height:6px;border-radius:20px;background:rgba(255,255,255,.09);overflow:hidden}
 .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),#ffffff88);animation:grow 1.4s cubic-bezier(.2,.8,.3,1) forwards}
-.lock-overlay{position:absolute;inset:-6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(10,6,18,.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border-radius:14px;border:1px dashed rgba(255,214,10,.4);transition:background .25s}
-.pred-card:hover .lock-overlay{background:rgba(10,6,18,.58)}
+.lock-overlay{position:absolute;inset:-6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(10,6,18,.82);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border-radius:14px;border:1px dashed rgba(255,214,10,.4);transition:background .25s;padding:8px;text-align:center}
+.pred-card:hover .lock-overlay{background:rgba(10,6,18,.72)}
 .lock-overlay .ic{font-size:1.25rem}
 .lock-overlay .txt{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow)}
-.lock-overlay button{margin-top:4px;font-size:.7rem;font-weight:800;padding:6px 16px;border-radius:9px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#2a1500;transition:transform .2s}
+.lock-overlay button{margin-top:4px;font-size:.7rem;font-weight:800;padding:6px 16px;border-radius:9px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#2a1500;transition:transform .2s;min-height:32px}
 .lock-overlay button:hover{transform:scale(1.07)}
 .lock-overlay .unlocked-tag{font-size:.62rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;background:var(--lime);color:#04120a;padding:3px 9px;border-radius:20px}
 
@@ -176,7 +206,7 @@ section{padding:86px 0;position:relative}
 .table-section{padding-top:0}
 .table-wrap{background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)}
 .table-topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:22px 26px;background:linear-gradient(120deg,rgba(255,45,149,.14),rgba(123,47,247,.14) 55%,rgba(0,229,255,.1));border-bottom:1px solid rgba(255,255,255,.1)}
-.table-topbar .tb-left{display:flex;align-items:center;gap:14px}
+.table-topbar .tb-left{display:flex;align-items:center;gap:14px;min-width:0}
 .tb-icon{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:1.25rem;flex:none;background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:0 10px 26px rgba(255,45,149,.4)}
 .tb-title{font-weight:900;font-size:1.05rem;letter-spacing:-.01em;line-height:1.2}
 .tb-sub{font-size:.76rem;color:var(--muted);font-weight:600}
@@ -184,8 +214,8 @@ section{padding:86px 0;position:relative}
 .tb-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .tb-legend{display:flex;gap:14px;font-size:.7rem;font-weight:700;color:var(--muted);flex-wrap:wrap}
 .tb-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
-.table-scroll{overflow-x:auto}
-table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:820px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:800px}
 .daily-table thead th{text-align:left;font-size:.66rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:16px 20px;white-space:nowrap;background:rgba(255,255,255,.035);border-bottom:1px solid var(--border)}
 .daily-table thead th:first-child{padding-left:26px}
 .daily-table thead th:last-child{padding-right:26px;text-align:center}
@@ -195,17 +225,17 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width
 .daily-table td{padding:15px 20px;vertical-align:middle}
 .daily-table td:first-child{padding-left:26px}
 .daily-table td:last-child{padding-right:26px;text-align:center}
-.match-cell{display:flex;align-items:center;gap:14px;min-width:230px}
+.match-cell{display:flex;align-items:center;gap:14px;min-width:220px}
 .match-time{flex:none;width:66px;text-align:center;font-size:.66rem;font-weight:800;letter-spacing:.04em;line-height:1.25;color:var(--cyan);background:rgba(0,229,255,.09);border:1px solid rgba(0,229,255,.25);border-radius:9px;padding:6px 4px}
-.match-teams{line-height:1.35}
-.match-teams b{display:block;font-weight:800;font-size:.87rem;white-space:nowrap}
+.match-teams{line-height:1.35;min-width:0}
+.match-teams b{display:block;font-weight:800;font-size:.87rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .match-teams span{font-size:.67rem;color:var(--muted);font-weight:600}
 .league-chip{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#cfc5e6;white-space:nowrap}
-.tip-cell{min-width:180px}
+.tip-cell{min-width:170px}
 .tip-name{font-weight:800;font-size:.85rem;display:block;margin-bottom:3px}
 .tip-meta{display:flex;align-items:center;gap:9px;font-size:.68rem;color:var(--muted);font-weight:600}
 .tip-odds{font-weight:900;color:var(--lime);font-size:.8rem;background:rgba(182,255,59,.1);border:1px solid rgba(182,255,59,.25);padding:2px 9px;border-radius:7px}
-.conf-mini{display:flex;align-items:center;gap:7px;min-width:110px}
+.conf-mini{display:flex;align-items:center;gap:7px;min-width:100px}
 .conf-mini .cb{width:58px;height:5px;border-radius:20px;background:rgba(255,255,255,.1);overflow:hidden}
 .conf-mini .cb i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--lime))}
 .conf-mini span{font-size:.68rem;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -224,16 +254,16 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width
 
 /* ============ VIP ============ */
 .vip-section{padding-top:20px}
-.vip-panel{position:relative;border-radius:32px;overflow:hidden;background:linear-gradient(140deg,rgba(123,47,247,.28),rgba(255,45,149,.16) 45%,rgba(0,229,255,.14));border:1px solid rgba(255,214,10,.28);padding:clamp(30px,5vw,60px);display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;box-shadow:0 34px 90px rgba(123,47,247,.28)}
+.vip-panel{position:relative;border-radius:32px;overflow:hidden;background:linear-gradient(140deg,rgba(123,47,247,.28),rgba(255,45,149,.16) 45%,rgba(0,229,255,.14));border:1px solid rgba(255,214,10,.28);padding:clamp(24px,5vw,60px);display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;box-shadow:0 34px 90px rgba(123,47,247,.28)}
 .vip-panel::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px 300px at 82% 15%,rgba(255,214,10,.22),transparent 70%)}
 .vip-crown{display:inline-flex;align-items:center;gap:9px;font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#2a1500;background:linear-gradient(135deg,var(--yellow),var(--orange));padding:8px 18px;border-radius:100px;margin-bottom:20px;box-shadow:0 10px 28px rgba(255,138,0,.4)}
-.vip-panel h2{font-size:clamp(1.7rem,3.3vw,2.5rem);font-weight:900;letter-spacing:-.03em;line-height:1.14;margin-bottom:16px}
+.vip-panel h2{font-size:clamp(1.6rem,3.3vw,2.5rem);font-weight:900;letter-spacing:-.03em;line-height:1.14;margin-bottom:16px}
 .vip-panel p{color:#cfc5e6;font-size:.96rem;margin-bottom:26px;max-width:520px}
 .vip-list{list-style:none;display:grid;gap:12px;margin-bottom:32px}
 .vip-list li{display:flex;align-items:flex-start;gap:11px;font-size:.9rem;color:#e8e2f7}
 .vip-list .tick{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:.66rem;font-weight:900;color:#04120a;margin-top:2px;background:linear-gradient(135deg,var(--lime),var(--cyan))}
 .vip-visual{position:relative;display:grid;place-items:center}
-.vip-ticket{width:100%;max-width:300px;border-radius:22px;padding:24px;background:linear-gradient(160deg,rgba(255,214,10,.16),rgba(255,45,149,.13));border:1px solid rgba(255,214,10,.4);backdrop-filter:blur(12px);box-shadow:0 26px 60px rgba(0,0,0,.5);transform:rotate(3deg);animation:floaty 7s ease-in-out infinite}
+.vip-ticket{width:100%;max-width:300px;border-radius:22px;padding:24px;background:linear-gradient(160deg,rgba(255,214,10,.16),rgba(255,45,149,.13));border:1px solid rgba(255,214,10,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 26px 60px rgba(0,0,0,.5);transform:rotate(3deg);animation:floaty 7s ease-in-out infinite}
 .vip-ticket .tk-top{display:flex;justify-content:space-between;align-items:center;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--yellow);margin-bottom:18px}
 .vip-ticket .tk-row{display:flex;justify-content:space-between;font-size:.82rem;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.14)}
 .vip-ticket .tk-row:last-child{border:none}
@@ -241,16 +271,9 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width
 .vip-ticket .tk-row span:last-child{font-weight:800;color:#fff}
 .vip-ticket .tk-win{color:var(--lime)!important}
 
-/* ============ STATS ============ */
-.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;background:linear-gradient(120deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--border);border-radius:26px;padding:36px 26px}
-.stat{text-align:center;position:relative}
-.stat:not(:last-child)::after{content:'';position:absolute;right:-9px;top:14%;height:72%;width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.18),transparent)}
-.stat b{display:block;font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;background:linear-gradient(120deg,var(--pink),var(--orange) 45%,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:700}
-
 /* ============ PRICING ============ */
-.billing-toggle{display:flex;justify-content:center;gap:6px;margin:0 auto 44px;width:max-content;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:100px;padding:6px}
-.billing-toggle button{padding:10px 26px;border-radius:100px;font-size:.82rem;font-weight:800;color:var(--muted);transition:.25s;position:relative}
+.billing-toggle{display:flex;justify-content:center;gap:6px;margin:0 auto 44px;width:max-content;max-width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:100px;padding:6px}
+.billing-toggle button{padding:10px 26px;border-radius:100px;font-size:.82rem;font-weight:800;color:var(--muted);transition:.25s;position:relative;min-height:40px}
 .billing-toggle button.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 8px 24px rgba(255,45,149,.36)}
 .billing-toggle .save{font-size:.6rem;background:var(--lime);color:#04120a;padding:2px 7px;border-radius:20px;margin-left:6px;font-weight:900;vertical-align:middle}
 .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
@@ -261,9 +284,9 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width
 .price-card.featured::before{content:'';position:absolute;inset:-2px;border-radius:26px;z-index:-1;background:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan),var(--lime));background-size:300% 300%;animation:gradShift 5s ease infinite;filter:blur(.5px)}
 .popular-flag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--yellow),var(--orange));color:#2a1500;font-size:.64rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:6px 18px;border-radius:100px;white-space:nowrap;box-shadow:0 10px 26px rgba(255,138,0,.45)}
 .plan-name{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.plan-price{display:flex;align-items:flex-end;gap:6px;margin-bottom:6px}
+.plan-price{display:flex;align-items:flex-end;gap:6px;margin-bottom:6px;flex-wrap:wrap}
 .plan-price .cur{font-size:1.2rem;font-weight:800;color:var(--muted);margin-bottom:9px}
-.plan-price .amt{font-size:2.9rem;font-weight:900;letter-spacing:-.04em;line-height:1}
+.plan-price .amt{font-size:clamp(2.2rem,4vw,2.9rem);font-weight:900;letter-spacing:-.04em;line-height:1}
 .plan-price .per{font-size:.8rem;color:var(--muted);margin-bottom:9px;font-weight:600}
 .plan-desc{font-size:.82rem;color:var(--muted);margin-bottom:24px;min-height:40px}
 .plan-feats{list-style:none;display:grid;gap:11px;margin-bottom:28px}
@@ -271,6 +294,12 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.86rem;min-width
 .plan-feats .tick{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:.6rem;font-weight:900;background:rgba(182,255,59,.16);color:var(--lime);margin-top:2px}
 .plan-feats .cross{background:rgba(255,255,255,.07);color:var(--muted)}
 .plan-feats .off{color:var(--muted);text-decoration:line-through;opacity:.7}
+
+.payment-box{margin-top:32px;border-radius:20px;padding:24px;background:linear-gradient(135deg,rgba(34,158,217,.14),rgba(37,211,102,.12) 60%,rgba(255,214,10,.1));border:1px solid rgba(34,158,217,.4);text-align:center}
+.payment-box h4{font-size:1.05rem;font-weight:900;letter-spacing:-.02em;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.payment-box p{color:#cfc5e6;font-size:.86rem;margin-bottom:20px;max-width:560px;margin-inline:auto}
+.payment-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.payment-btns .btn{flex:1;min-width:180px;max-width:260px}
 
 /* ============ TESTIMONIALS ============ */
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -293,246 +322,82 @@ summary::after{content:'+';font-size:1.3rem;font-weight:800;color:var(--pink);tr
 details[open] summary::after{transform:rotate(45deg)}
 details p{color:var(--muted);font-size:.87rem;padding-bottom:20px;line-height:1.7}
 
-/* ============ CTA ============ */
-.cta-band{text-align:center;border-radius:32px;padding:clamp(40px,6vw,72px) 30px;position:relative;overflow:hidden;background:linear-gradient(130deg,var(--purple),var(--pink) 50%,var(--orange));background-size:220% 220%;animation:gradShift 9s ease infinite;box-shadow:0 32px 80px rgba(255,45,149,.35)}
-.cta-band h2{font-size:clamp(1.7rem,4vw,2.7rem);font-weight:900;letter-spacing:-.03em;margin-bottom:14px}
-.cta-band p{max-width:520px;margin:0 auto 30px;color:rgba(255,255,255,.92);font-size:.96rem}
-.cta-band .btn-ghost{border-color:rgba(255,255,255,.6)}
-.cta-band .btn-ghost:hover{background:rgba(255,255,255,.22)}
-.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
 /* ============ FOOTER ============ */
-footer{border-top:1px solid var(--border);padding:56px 0 32px;margin-top:60px}
+footer{border-top:1px solid var(--border);padding:56px 0 32px;margin-top:60px;padding-bottom:max(32px,env(safe-area-inset-bottom))}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
 .foot-grid p{font-size:.84rem;color:var(--muted);max-width:290px;margin-top:14px}
 .foot-col h4{font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;color:#fff;margin-bottom:16px;font-weight:800}
-.foot-col a{display:block;font-size:.84rem;color:var(--muted);margin-bottom:10px;transition:color .2s,transform .2s}
-.foot-col a:hover{color:var(--pink);transform:translateX(3px)}
+.foot-col a{display:block;font-size:.84rem;color:var(--muted);margin-bottom:10px;transition:color .2s}
+.foot-col a:hover{color:var(--pink)}
 .foot-bottom{border-top:1px solid var(--border);padding-top:26px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.76rem;color:var(--muted)}
-.socials{display:flex;gap:10px}
-.socials a{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:.85rem;background:rgba(255,255,255,.06);border:1px solid var(--border);transition:.25s}
-.socials a:hover{background:linear-gradient(135deg,var(--pink),var(--purple));transform:translateY(-3px);border-color:transparent}
 .disclaimer{font-size:.72rem;color:#6f678a;margin-top:22px;line-height:1.7;border-left:3px solid rgba(255,45,149,.5);padding-left:14px}
 
 /* ============ MODALS ============ */
-.modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.78);backdrop-filter:blur(8px)}
+.modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overflow-y:auto}
 .modal.open{display:grid;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}}
-.modal-card{width:min(460px,100%);border-radius:26px;padding:34px;position:relative;background:linear-gradient(165deg,#1a0f2e,#120a20);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.7);animation:popIn .35s cubic-bezier(.2,.9,.3,1.3);max-height:92vh;overflow-y:auto}
-@keyframes popIn{from{transform:scale(.9) translateY(14px);opacity:0}}
-.modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-size:1.1rem;color:#fff;transition:.2s}
+.modal-card{width:min(480px,100%);border-radius:26px;padding:34px;position:relative;background:linear-gradient(165deg,#1a0f2e,#120a20);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.7);max-height:calc(100vh - 40px);overflow-y:auto;margin:auto}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-size:1.1rem;color:#fff;transition:.2s;z-index:2}
 .modal-close:hover{background:rgba(255,45,149,.3);transform:rotate(90deg)}
-.modal-card h3{font-size:1.35rem;font-weight:900;letter-spacing:-.02em;margin-bottom:6px}
-.modal-card .sub{font-size:.84rem;color:var(--muted);margin-bottom:24px}
-.modal-plan{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(255,45,149,.16),rgba(123,47,247,.16));border:1px solid rgba(255,45,149,.35);border-radius:14px;padding:14px 18px;margin-bottom:22px}
-.modal-plan b{font-size:.95rem}
-.modal-plan .mp-price{font-weight:900;color:var(--lime);font-size:1.05rem}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
-.field input,.field select,.field textarea{width:100%;padding:13px 16px;border-radius:12px;font-family:inherit;font-size:.9rem;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
-.field textarea{resize:vertical;min-height:90px}
-.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.field input,.field select,.field textarea{width:100%;padding:13px 16px;border-radius:12px;font-family:inherit;font-size:16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:#fff;outline:none;transition:border-color .2s;min-height:48px}
+.field textarea{resize:vertical;min-height:90px;font-size:.9rem}
 .field select option{background:#1a0f2e;color:#fff}
-.field input::placeholder,.field textarea::placeholder{color:#6f678a}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,149,.16)}
-.modal-note{font-size:.7rem;color:#6f678a;text-align:center;margin-top:14px;line-height:1.6}
-.modal-switch{text-align:center;font-size:.8rem;color:var(--muted);margin-top:18px}
-.modal-switch a{color:var(--cyan);font-weight:700;cursor:pointer}
-.modal-switch a:hover{color:var(--lime)}
 .form-error{font-size:.76rem;font-weight:700;color:var(--pink);background:rgba(255,45,149,.1);border:1px solid rgba(255,45,149,.3);border-radius:10px;padding:9px 13px;margin-bottom:12px;display:none}
 .form-error.show{display:block}
-.success-state{text-align:center;padding:14px 0}
-.success-state .big{font-size:3rem;margin-bottom:14px;animation:popIn .5s ease}
-.success-state h3{margin-bottom:10px}
-.success-state p{color:var(--muted);font-size:.88rem}
 
-/* ============ DASHBOARD ============ */
-.dash-modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.82);backdrop-filter:blur(10px)}
+/* ============ DASHBOARD MODAL ============ */
+.dash-modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow-y:auto}
 .dash-modal.open{display:grid;animation:fadeIn .25s ease}
-.dash-card{width:min(820px,100%);max-height:92vh;overflow-y:auto;border-radius:26px;padding:0;position:relative;background:linear-gradient(165deg,#170d2a,#0e0718);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.8);animation:popIn .35s cubic-bezier(.2,.9,.3,1.3)}
-.dash-header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:24px 28px;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(123,47,247,.16));border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);border-radius:26px 26px 0 0}
-.dash-user{display:flex;align-items:center;gap:14px;min-width:0}
-.dash-avatar{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.15rem;font-weight:900;color:#0a0612;flex:none;background:linear-gradient(135deg,var(--pink),var(--orange));box-shadow:0 10px 26px rgba(255,45,149,.4)}
-.dash-user .du-name{font-weight:900;font-size:1.05rem;letter-spacing:-.01em;line-height:1.2}
-.dash-user .du-email{font-size:.76rem;color:var(--muted);font-weight:600}
+.dash-card{width:min(820px,100%);max-height:calc(100vh - 40px);overflow-y:auto;border-radius:26px;padding:0;position:relative;background:linear-gradient(165deg,#170d2a,#0e0718);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.8);margin:auto}
+.dash-header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:24px 28px;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(123,47,247,.16));border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:26px 26px 0 0}
+.dash-user{display:flex;align-items:center;gap:14px}
+.dash-avatar{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.15rem;font-weight:900;color:#0a0612;background:linear-gradient(135deg,var(--pink),var(--orange))}
 .dash-body{padding:26px 28px 32px}
 .dash-plan-card{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;border-radius:18px;padding:22px 24px;margin-bottom:22px;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(123,47,247,.16) 55%,rgba(0,229,255,.1));border:1px solid rgba(255,214,10,.3)}
-.dash-plan-card.is-vip{background:linear-gradient(135deg,rgba(255,214,10,.18),rgba(255,138,0,.14) 55%,rgba(255,45,149,.14));border-color:rgba(255,214,10,.45)}
-.dash-plan-card .dp-label{font-size:.66rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.dash-plan-card .dp-name{font-weight:900;font-size:1.3rem;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
-.dash-plan-card .dp-name .crown{font-size:1.15rem}
-.dash-plan-card .dp-expiry{font-size:.78rem;color:#cfc5e6;font-weight:600;margin-top:3px}
-.dash-plan-card .dp-actions{display:flex;gap:9px;flex-wrap:wrap}
-.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:26px}
-.dash-stat{background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:14px;padding:15px 14px;text-align:center}
-.dash-stat b{display:block;font-size:1.4rem;font-weight:900;letter-spacing:-.02em;line-height:1.1;background:linear-gradient(120deg,var(--pink),var(--orange) 45%,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
-.dash-stat span{font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:700}
-.dash-section-title{font-size:.78rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.dash-section-title span{font-size:.7rem;color:var(--cyan);letter-spacing:.04em}
 .vip-unlock-list{display:grid;gap:10px;margin-bottom:26px}
-.vip-unlock-item{display:flex;justify-content:space-between;align-items:center;gap:14px;background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:.22s}
-.vip-unlock-item:hover{border-color:rgba(255,214,10,.4);background:rgba(255,214,10,.05)}
-.vip-unlock-item .vui-main{min-width:0}
-.vip-unlock-item .vui-teams{font-weight:800;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vip-unlock-item .vui-meta{font-size:.68rem;color:var(--muted);display:flex;gap:9px;flex-wrap:wrap;margin-top:3px}
-.vip-unlock-item .vui-tip{font-weight:800;color:var(--lime);font-size:.8rem;text-align:right}
-.vip-unlock-item .vui-tip small{display:block;color:var(--muted);font-weight:600;font-size:.64rem}
-.dash-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.vip-unlock-item{display:flex;justify-content:space-between;align-items:center;gap:14px;background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
 
-/* ============ TOAST ============ */
-.toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,20px);background:linear-gradient(135deg,var(--lime),var(--cyan));color:#04120a;font-weight:800;font-size:.84rem;padding:13px 26px;border-radius:14px;box-shadow:0 16px 44px rgba(182,255,59,.4);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;max-width:90vw;text-align:center}
+/* ============ ADMIN MODAL ============ */
+.admin-trigger{position:fixed;bottom:24px;right:24px;z-index:150;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:1.3rem;background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:0 12px 36px rgba(255,45,149,.55);transition:transform .25s}
+.admin-trigger:hover{transform:scale(1.08) rotate(8deg)}
+.admin-modal{position:fixed;inset:0;z-index:190;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow-y:auto}
+.admin-modal.open{display:grid;animation:fadeIn .25s ease}
+.admin-card{width:min(1100px,100%);max-height:calc(100vh - 40px);overflow-y:auto;border-radius:26px;position:relative;background:linear-gradient(165deg,#170d2a,#0e0718);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.8);margin:auto}
+.admin-header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:22px 28px;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(123,47,247,.16));border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:26px 26px 0 0}
+.admin-body{padding:26px 28px 32px}
+.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;background:rgba(255,255,255,.04);padding:6px;border-radius:14px;border:1px solid var(--border)}
+.admin-tab{padding:9px 16px;border-radius:10px;font-size:.76rem;font-weight:800;color:var(--muted);transition:.22s}
+.admin-tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff}
+.admin-pane{display:none}
+.admin-pane.active{display:block}
+.admin-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:26px;align-items:start}
+.admin-form{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:18px;padding:22px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.admin-row{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:13px;padding:12px 14px;margin-bottom:10px}
+.admin-row .ar-main{flex:1;min-width:0}
+.admin-row .ar-actions{display:flex;gap:6px}
+.admin-row .ar-btn{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:.9rem}
+.admin-row .ar-edit{background:rgba(0,229,255,.1);color:var(--cyan)}
+.admin-row .ar-del{background:rgba(255,45,149,.12);color:var(--pink)}
+.toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,20px);background:linear-gradient(135deg,var(--lime),var(--cyan));color:#04120a;font-weight:800;font-size:.84rem;padding:13px 26px;border-radius:14px;box-shadow:0 16px 44px rgba(182,255,59,.4);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.error{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff}
 
-/* ============ ADMIN ============ */
-.admin-trigger{position:fixed;bottom:24px;right:24px;z-index:150;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:1.3rem;background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:0 12px 36px rgba(255,45,149,.55);transition:transform .25s,box-shadow .25s}
-.admin-trigger:hover{transform:scale(1.08) rotate(8deg);box-shadow:0 16px 44px rgba(255,45,149,.7)}
-.admin-trigger::after{content:'Admin';position:absolute;right:66px;white-space:nowrap;background:#1a0f2e;color:#fff;font-size:.7rem;font-weight:700;padding:7px 12px;border-radius:9px;border:1px solid var(--border);opacity:0;transform:translateX(8px);transition:.25s;pointer-events:none}
-.admin-trigger:hover::after{opacity:1;transform:translateX(0)}
-.admin-modal{position:fixed;inset:0;z-index:190;display:none;place-items:center;padding:20px;background:rgba(5,2,10,.82);backdrop-filter:blur(10px)}
-.admin-modal.open{display:grid;animation:fadeIn .25s ease}
-.admin-card{width:min(1100px,100%);max-height:92vh;overflow-y:auto;border-radius:26px;padding:0;position:relative;background:linear-gradient(165deg,#170d2a,#0e0718);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 100px rgba(0,0,0,.8);animation:popIn .35s cubic-bezier(.2,.9,.3,1.3)}
-.admin-header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:22px 28px;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(123,47,247,.16));border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);border-radius:26px 26px 0 0}
-.admin-header h2{font-size:1.2rem;font-weight:900;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.admin-header h2 span{font-size:.6rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;background:var(--lime);color:#04120a;padding:4px 9px;border-radius:20px}
-.admin-body{padding:26px 28px 32px}
-.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;background:rgba(255,255,255,.04);padding:6px;border-radius:14px;border:1px solid var(--border);width:max-content;max-width:100%}
-.admin-tab{padding:9px 18px;border-radius:10px;font-size:.78rem;font-weight:800;color:var(--muted);transition:.22s;white-space:nowrap}
-.admin-tab:hover{color:#fff;background:rgba(255,255,255,.07)}
-.admin-tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 8px 22px rgba(255,45,149,.35)}
-.admin-pane{display:none}
-.admin-pane.active{display:block;animation:fadeIn .3s ease}
-.admin-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:26px;align-items:start}
-.admin-form{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:18px;padding:22px}
-.admin-form h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.12em;color:var(--pink);margin-bottom:18px;font-weight:800}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-toggle{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.form-toggle input{width:auto;accent-color:var(--pink);transform:scale(1.25);cursor:pointer}
-.form-toggle label{font-size:.8rem;font-weight:700;color:#ded6f2;cursor:pointer;margin:0}
-.admin-list h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:18px;font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.admin-list h3 span{font-size:.7rem;color:var(--muted);letter-spacing:.04em;font-weight:600}
-.admin-rows{display:grid;gap:10px;max-height:480px;overflow-y:auto;padding-right:4px}
-.admin-rows::-webkit-scrollbar{width:6px}
-.admin-rows::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:20px}
-.admin-row{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:13px;padding:12px 14px;transition:border-color .2s,background .2s}
-.admin-row:hover{border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.07)}
-.admin-row .ar-main{flex:1;min-width:0}
-.admin-row .ar-teams{font-weight:800;font-size:.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.admin-row .ar-meta{font-size:.68rem;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
-.admin-row .ar-league{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.09);color:#cfc5e6}
-.admin-row .ar-vip{color:var(--yellow);font-weight:900;font-size:.62rem;letter-spacing:.05em}
-.admin-row .ar-actions{display:flex;gap:6px;flex:none}
-.admin-row .ar-btn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:.9rem;transition:.2s;border:1px solid transparent}
-.admin-row .ar-edit{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.3);color:var(--cyan)}
-.admin-row .ar-edit:hover{background:var(--cyan);color:#04120a;transform:scale(1.08)}
-.admin-row .ar-del{background:rgba(255,45,149,.12);border-color:rgba(255,45,149,.35);color:var(--pink)}
-.admin-row .ar-del:hover{background:var(--pink);color:#fff;transform:scale(1.08)}
-.admin-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:.84rem;border:1px dashed rgba(255,255,255,.15);border-radius:14px}
-.admin-hint{font-size:.7rem;color:#6f678a;margin-top:14px;line-height:1.6;border-left:3px solid rgba(0,229,255,.5);padding-left:11px}
-.admin-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:16px}
-table.admin-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:640px}
-.admin-table thead th{text-align:left;font-size:.62rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:13px 14px;background:rgba(255,255,255,.05);border-bottom:1px solid var(--border);white-space:nowrap}
-.admin-table tbody tr{border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
-.admin-table tbody tr:last-child{border-bottom:none}
-.admin-table tbody tr:hover{background:rgba(255,255,255,.04)}
-.admin-table td{padding:11px 14px;vertical-align:middle}
-.admin-table .at-match{font-weight:800;font-size:.8rem;white-space:nowrap}
-.admin-table .at-time{font-size:.66rem;color:var(--muted);font-weight:600}
-.admin-table .at-tip{font-size:.74rem;color:#ded6f2;max-width:160px}
-.admin-table select.status-select{padding:7px 10px;border-radius:9px;font-size:.7rem;font-weight:800;font-family:inherit;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);color:#fff;outline:none;cursor:pointer;transition:.2s;appearance:none;min-width:104px;text-align:center}
-.admin-table select.status-select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,149,.15)}
-.admin-table select.status-select.won{background:rgba(182,255,59,.15);border-color:rgba(182,255,59,.45);color:var(--lime)}
-.admin-table select.status-select.lost{background:rgba(255,45,149,.14);border-color:rgba(255,45,149,.45);color:var(--pink)}
-.admin-table select.status-select.pending{background:rgba(255,214,10,.12);border-color:rgba(255,214,10,.4);color:var(--yellow)}
-.admin-table select.status-select.live{background:rgba(0,229,255,.12);border-color:rgba(0,229,255,.45);color:var(--cyan)}
-.admin-table select.status-select option{background:#1a0f2e;color:#fff}
-.admin-table .at-score-input{width:74px;padding:7px 9px;border-radius:9px;font-size:.76rem;font-family:inherit;font-weight:700;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.13);color:#fff;outline:none;text-align:center;transition:.2s}
-.admin-table .at-score-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.15)}
-.admin-table .at-score-input::placeholder{color:#6f678a;font-weight:500}
-.league-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:22px}
-.league-manage-card{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:.22s}
-.league-manage-card:hover{border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.07)}
-.league-manage-card .lm-name{font-weight:800;font-size:.84rem}
-.league-manage-card .lm-count{font-size:.68rem;color:var(--muted);font-weight:600}
-.league-manage-card .lm-actions{display:flex;gap:6px;flex:none}
-.lm-btn{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:.85rem;transition:.2s;border:1px solid transparent}
-.lm-btn.edit{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.3);color:var(--cyan)}
-.lm-btn.edit:hover{background:var(--cyan);color:#04120a;transform:scale(1.08)}
-.lm-btn.del{background:rgba(255,45,149,.12);border-color:rgba(255,45,149,.35);color:var(--pink)}
-.lm-btn.del:hover{background:var(--pink);color:#fff;transform:scale(1.08)}
-.sub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:22px}
-.sub-stat{background:linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--border);border-radius:14px;padding:18px 16px;text-align:center}
-.sub-stat b{display:block;font-size:1.6rem;font-weight:900;letter-spacing:-.02em;background:linear-gradient(120deg,var(--pink),var(--orange) 45%,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
-.sub-stat span{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:700}
-.feedback-rows{display:grid;gap:12px;max-height:520px;overflow-y:auto;padding-right:4px}
-.feedback-card{background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:14px;padding:16px;transition:.22s}
-.feedback-card:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.07)}
-.feedback-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
-.feedback-user{display:flex;align-items:center;gap:10px;min-width:0}
-.feedback-avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.78rem;color:#0a0612;flex:none}
-.feedback-user b{display:block;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.feedback-user span{font-size:.66rem;color:var(--muted);font-weight:600}
-.feedback-actions{display:flex;gap:6px;flex:none}
-.fb-btn{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:.8rem;transition:.2s;border:1px solid transparent}
-.fb-btn.edit{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.3);color:var(--cyan)}
-.fb-btn.edit:hover{background:var(--cyan);color:#04120a;transform:scale(1.08)}
-.fb-btn.del{background:rgba(255,45,149,.12);border-color:rgba(255,45,149,.35);color:var(--pink)}
-.fb-btn.del:hover{background:var(--pink);color:#fff;transform:scale(1.08)}
-.feedback-stars{color:var(--yellow);font-size:.8rem;letter-spacing:2px;margin-bottom:8px}
-.feedback-text{font-size:.8rem;color:#ded6f2;line-height:1.6}
-
-/* ============ REVEAL ============ */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.3,1)}
-.reveal.in{opacity:1;transform:none}
-
-/* ============ RESPONSIVE ============ */
-@media(max-width:1000px){
-  .hero-inner{grid-template-columns:1fr;gap:60px;text-align:center}
-  .hero p.lead{margin-inline:auto}
-  .hero-btns,.hero-stats{justify-content:center}
-  .vip-panel{grid-template-columns:1fr;text-align:left}
-  .vip-visual{order:-1;margin-bottom:10px}
-  .price-grid{grid-template-columns:1fr;max-width:440px;margin-inline:auto}
-  .price-card.featured{transform:none}
-  .price-card.featured:hover{transform:translateY(-8px)}
-  .testi-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}
-  .foot-grid{grid-template-columns:1fr 1fr;gap:30px}
-  .stats-strip{grid-template-columns:1fr 1fr;gap:26px}
-  .stat:nth-child(2)::after{display:none}
-  .admin-grid{grid-template-columns:1fr}
-}
-@media(max-width:820px){
+@media(max-width:900px){
+  .hero-inner,.vip-panel,.admin-grid{grid-template-columns:1fr}
+  .price-grid,.testi-grid{grid-template-columns:1fr}
   .nav-links{display:none}
-  .burger{display:block}
-  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(12,7,22,.98);backdrop-filter:blur(20px);padding:22px 5%;gap:18px;border-bottom:1px solid var(--border)}
-  .nav-cta .btn-ghost{display:none}
-}
-@media(max-width:600px){
-  section{padding:64px 0}
-  .hero{padding:48px 0 70px}
-  .pred-grid{grid-template-columns:1fr}
-  .foot-grid{grid-template-columns:1fr}
-  .hero-stats{gap:22px}
-  .billing-toggle button{padding:9px 18px;font-size:.75rem}
-  .modal-card{padding:26px}
-  .ticker-track{font-size:.72rem;gap:28px}
-  .nav-cta .btn{padding:10px 16px;font-size:.8rem}
-  .admin-header{padding:18px 20px}
-  .admin-header h2{font-size:1rem}
-  .admin-body{padding:20px}
-  .field-row{grid-template-columns:1fr}
-  .admin-trigger{width:50px;height:50px;bottom:18px;right:18px}
-  .table-topbar{padding:18px 20px}
-  .table-foot{padding:16px 20px}
-  .tb-date{font-size:.66rem;padding:7px 13px}
-  .dash-header{padding:18px 20px}
-  .dash-body{padding:20px}
-  .member-chip .mc-name{display:none}
+  .burger{display:flex}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(12,7,22,.98);padding:22px 5%;border-bottom:1px solid var(--border)}
 }
 </style>
 </head>
 <body>
 
+<div id="bootBar"><span class="dotspin"></span><span id="bootText">Connecting to backend server…</span></div>
 <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
 
 <header class="nav">
@@ -543,7 +408,6 @@ table.admin-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:
       <a href="#daily-table">Daily Table</a>
       <a href="#vip">VIP Zone</a>
       <a href="#pricing">Plans</a>
-      <a href="#testimonials">Feedback</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta" id="navCta"></div>
@@ -556,15 +420,15 @@ table.admin-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:
     <div class="hero-copy">
       <div class="badge"><span class="dot"></span> 87.4% win rate this season</div>
       <h1>Football predictions that <span class="grad-text">actually win</span></h1>
-      <p class="lead">Daily expert tips, deep match analysis and an exclusive VIP zone with the highest-confidence picks. Join 12,000+ smart bettors.</p>
+      <p class="lead">Daily expert tips, match analytics, and an exclusive VIP zone with verified picks.</p>
       <div class="hero-btns">
         <a href="#predictions" class="btn btn-primary">See today's free tips →</a>
         <a href="#pricing" class="btn btn-ghost">🔓 Unlock VIP</a>
       </div>
       <div class="hero-stats">
-        <div class="hs"><b data-count="87" data-suffix="%">0%</b><span>Win rate</span></div>
-        <div class="hs"><b data-count="12400" data-suffix="+">0+</b><span>Members</span></div>
-        <div class="hs"><b data-count="42" data-suffix="+">0+</b><span>Leagues</span></div>
+        <div class="hs"><b data-count="87" data-suffix="%">87%</b><span>Win rate</span></div>
+        <div class="hs"><b data-count="12400" data-suffix="+">12.4k+</b><span>Members</span></div>
+        <div class="hs"><b data-count="42" data-suffix="+">42+</b><span>Leagues</span></div>
       </div>
     </div>
     <div class="hero-visual">
@@ -580,196 +444,75 @@ table.admin-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:
         <div class="fc-bar"><i></i></div>
         <div class="fc-foot"><span>Confidence</span><span>88%</span></div>
       </div>
-      <div class="check-float">✅ Verified tip</div>
-      <div class="vip-float">👑 VIP PICK</div>
     </div>
   </div>
 </section>
 
 <section id="predictions">
   <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-tag">Free predictions</span>
-      <h2>Today's football tips</h2>
-      <p>Hand-picked by our analysts. Free picks are updated every morning — VIP picks drop 3 hours before kick-off.</p>
+    <div class="sec-head">
+      <span class="sec-tag">Predictions</span>
+      <h2>Today's football picks</h2>
+      <p>VIP tips are securely locked on the server and unlocked instantly upon subscription activation.</p>
     </div>
-    <div class="filters reveal" id="filters"></div>
+    <div class="filters" id="filters"></div>
     <div class="pred-grid" id="predGrid"></div>
-    <div style="text-align:center;margin-top:44px" class="reveal">
-      <a href="#pricing" class="btn btn-primary" id="unlockCta">Unlock all 40+ daily VIP picks 👑</a>
-    </div>
   </div>
 </section>
 
 <section id="daily-table" class="table-section">
   <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-tag">Free daily predictions</span>
-      <h2>Today's prediction table</h2>
-      <p>Every free pick in one clean view — match, tip, odds and the final result as it settles.</p>
+    <div class="sec-head">
+      <span class="sec-tag">Daily recap</span>
+      <h2>Live prediction table</h2>
     </div>
-    <div class="table-wrap reveal">
-      <div class="table-topbar">
-        <div class="tb-left">
-          <div class="tb-icon">📋</div>
-          <div>
-            <div class="tb-title">Daily predictions &amp; results</div>
-            <div class="tb-sub" id="tableDateLabel">Free picks · updated today</div>
-          </div>
-        </div>
-        <div class="tb-right">
-          <div class="tb-legend">
-            <span><i style="background:var(--lime)"></i>Won</span>
-            <span><i style="background:var(--pink)"></i>Lost</span>
-            <span><i style="background:var(--yellow)"></i>Pending</span>
-            <span><i style="background:var(--cyan)"></i>Live</span>
-          </div>
-          <span class="tb-date" id="tbDate">Today</span>
-        </div>
-      </div>
+    <div class="table-wrap">
       <div class="table-scroll">
         <table class="daily-table">
           <thead><tr><th>Match</th><th>League</th><th>Tip</th><th>Confidence</th><th>Result</th></tr></thead>
           <tbody id="dailyTableBody"></tbody>
         </table>
       </div>
-      <div class="table-foot">
-        <div class="tf-stats" id="tableFootStats"></div>
-        <div>Tracked transparently · <b>18+</b> · Gamble responsibly</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="vip" class="vip-section">
-  <div class="container">
-    <div class="vip-panel reveal">
-      <div>
-        <span class="vip-crown">👑 Prime VIP Zone</span>
-        <h2>Where the real edges live</h2>
-        <p>Our VIP members get the highest-confidence selections, early access, live in-play alerts and full match breakdowns from professional analysts.</p>
-        <ul class="vip-list">
-          <li><span class="tick">✓</span> 15–20 premium tips daily across 40+ leagues</li>
-          <li><span class="tick">✓</span> Early access — 3 hours before the free tips</li>
-          <li><span class="tick">✓</span> Live in-play alerts &amp; cash-out signals</li>
-          <li><span class="tick">✓</span> Bankroll &amp; staking plan included</li>
-          <li><span class="tick">✓</span> Private Telegram group with the analysts</li>
-        </ul>
-        <a href="#pricing" class="btn btn-lime">Become a VIP member →</a>
-      </div>
-      <div class="vip-visual">
-        <div class="vip-ticket">
-          <div class="tk-top"><span>VIP Slip</span><span>#PR-2841</span></div>
-          <div class="tk-row"><span>Real Madrid</span><span>Win</span></div>
-          <div class="tk-row"><span>Over 2.5 Goals</span><span>1.72</span></div>
-          <div class="tk-row"><span>BTTS – Yes</span><span>1.80</span></div>
-          <div class="tk-row"><span>Total Odds</span><span class="tk-win">5.57</span></div>
-          <div class="tk-row"><span>Confidence</span><span class="tk-win">94%</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="results" style="padding-top:20px">
-  <div class="container">
-    <div class="stats-strip reveal">
-      <div class="stat"><b data-count="87" data-suffix="%">0%</b><span>Win rate</span></div>
-      <div class="stat"><b data-count="12400" data-suffix="+">0+</b><span>Active members</span></div>
-      <div class="stat"><b data-count="42" data-suffix="+">0+</b><span>Leagues covered</span></div>
-      <div class="stat"><b data-count="7" data-suffix=" yrs">0</b><span>Experience</span></div>
+      <div class="table-foot"><div class="tf-stats" id="tableFootStats"></div></div>
     </div>
   </div>
 </section>
 
 <section id="pricing">
   <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-tag">Subscription</span>
+    <div class="sec-head">
+      <span class="sec-tag">Membership</span>
       <h2>Pick your plan</h2>
-      <p>Cancel anytime. No hidden fees. Every paid plan comes with a 7-day money-back guarantee.</p>
-    </div>
-    <div class="billing-toggle reveal">
-      <button data-billing="weekly">Weekly</button>
-      <button data-billing="monthly" class="active">Monthly <span class="save">SAVE 25%</span></button>
+      <p>Manual activation via Telegram or WhatsApp. Screenshot proof is verified instantly by the analyst team.</p>
     </div>
     <div class="price-grid">
-      <div class="price-card reveal">
+      <div class="price-card">
         <div class="plan-name">Starter</div>
         <div class="plan-price"><span class="cur">$</span><span class="amt">0</span><span class="per">forever</span></div>
-        <p class="plan-desc">Get a taste of Prime Tips with a few free predictions every day.</p>
         <ul class="plan-feats">
-          <li><span class="tick">✓</span> 3 free predictions daily</li>
-          <li><span class="tick">✓</span> Basic confidence rating</li>
-          <li><span class="tick">✓</span> Weekly results recap</li>
-          <li><span class="tick cross">✕</span> <span class="off">VIP premium tips</span></li>
-          <li><span class="tick cross">✕</span> <span class="off">Live in-play alerts</span></li>
+          <li><span class="tick">✓</span> Free daily predictions</li>
+          <li><span class="tick">✓</span> Basic match ratings</li>
         </ul>
         <button class="btn btn-ghost btn-block" onclick="document.getElementById('predictions').scrollIntoView()">Start free</button>
       </div>
-      <div class="price-card featured reveal">
+      <div class="price-card featured">
         <div class="popular-flag">⭐ Most popular</div>
         <div class="plan-name">VIP Member</div>
-        <div class="plan-price"><span class="cur">$</span><span class="amt" id="priceVip">29.99</span><span class="per" id="perVip">/ month</span></div>
-        <p class="plan-desc">Full access to the VIP zone — our highest-confidence daily selections.</p>
+        <div class="plan-price"><span class="cur">$</span><span class="amt">29.99</span><span class="per">/ mo</span></div>
         <ul class="plan-feats">
-          <li><span class="tick">✓</span> 15–20 VIP tips every day</li>
-          <li><span class="tick">✓</span> Early access (3h before kick-off)</li>
-          <li><span class="tick">✓</span> Live in-play alerts</li>
-          <li><span class="tick">✓</span> Staking &amp; bankroll plan</li>
-          <li><span class="tick">✓</span> Private Telegram group</li>
+          <li><span class="tick">✓</span> 15–20 high-confidence VIP tips daily</li>
+          <li><span class="tick">✓</span> In-play live notifications</li>
+          <li><span class="tick">✓</span> Private Telegram analyst channel</li>
         </ul>
-        <button class="btn btn-primary btn-block" data-plan="VIP Member" data-price="29.99">Join VIP now 👑</button>
-      </div>
-      <div class="price-card reveal">
-        <div class="plan-name">VIP Pro</div>
-        <div class="plan-price"><span class="cur">$</span><span class="amt" id="pricePro">59.99</span><span class="per" id="perPro">/ month</span></div>
-        <p class="plan-desc">Everything in VIP plus 1-on-1 analyst support and exclusive combo slips.</p>
-        <ul class="plan-feats">
-          <li><span class="tick">✓</span> Everything in VIP Member</li>
-          <li><span class="tick">✓</span> Daily combo &amp; acca slips</li>
-          <li><span class="tick">✓</span> 1-on-1 analyst chat support</li>
-          <li><span class="tick">✓</span> Bankroll coaching session</li>
-          <li><span class="tick">✓</span> Priority early access</li>
-        </ul>
-        <button class="btn btn-lime btn-block" data-plan="VIP Pro" data-price="59.99">Go Pro ⚡</button>
+        <button class="btn btn-primary btn-block" id="btnBuyVip">Get VIP access 👑</button>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="testimonials">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-tag">Members</span>
-      <h2>What our members say</h2>
-      <p>Real feedback from bettors who upgraded to Prime Tips.</p>
-    </div>
-    <div class="testi-grid" id="testiGrid"></div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="container">
-    <div class="sec-head reveal"><span class="sec-tag">Questions</span><h2>Frequently asked</h2></div>
-    <div class="faq-wrap">
-      <details class="reveal" open><summary>How accurate are Prime Tips predictions?</summary><p>Our long-term win rate sits at around 87% across all markets, tracked and published transparently. No tipster wins every single day — the key is consistent long-term value, which is exactly what our analysts focus on.</p></details>
-      <details class="reveal"><summary>What's the difference between free and VIP tips?</summary><p>Free tips are a small daily sample. VIP members receive 15–20 premium selections per day, get them 3 hours earlier, plus live in-play alerts, staking plans and access to our private Telegram group.</p></details>
-      <details class="reveal"><summary>Can I cancel my subscription anytime?</summary><p>Yes. All plans are cancel-anytime with a single click from your member dashboard. You keep access until the end of your current billing period, and we offer a 7-day money-back guarantee on first purchases.</p></details>
-      <details class="reveal"><summary>Which leagues do you cover?</summary><p>We cover 42+ competitions including the Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Champions League, Europa League and over 30 domestic leagues worldwide.</p></details>
-      <details class="reveal"><summary>Do you guarantee winnings?</summary><p>No. Football is unpredictable and no tipster can guarantee results. Prime Tips provides expert research and analysis — never bet more than you can afford to lose. 18+ only.</p></details>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="cta-band reveal">
-      <h2>Ready to stop guessing?</h2>
-      <p>Join 12,400+ members getting smarter football predictions every single day.</p>
-      <div class="cta-btns">
-        <a href="#pricing" class="btn btn-lime">Join VIP — from $9.99/week</a>
-        <a href="#predictions" class="btn btn-ghost">Try free tips first</a>
+    <div class="payment-box">
+      <h4>💳 Manual VIP Activation</h4>
+      <p>Message the admin directly, send your receipt, and your login will be generated within minutes.</p>
+      <div class="payment-btns">
+        <a href="https://t.me/isla_olivia0" target="_blank" rel="noopener" class="btn btn-tg">✈ Telegram @isla_olivia0</a>
+        <a href="https://wa.me/2340000000000" target="_blank" rel="noopener" class="btn btn-wa">📱 WhatsApp</a>
       </div>
     </div>
   </div>
@@ -777,1638 +520,336 @@ table.admin-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:
 
 <footer>
   <div class="container">
-    <div class="foot-grid">
-      <div>
-        <a href="#" class="logo"><span class="logo-mark">⚽</span><span>Prime<span class="grad">Tips</span></span></a>
-        <p>Expert football predictions, daily free tips and an exclusive VIP zone. Analysis you can trust — since 2018.</p>
-        <div class="socials" style="margin-top:18px">
-          <a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Telegram">✈</a>
-          <a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="YouTube">▶</a>
-        </div>
-      </div>
-      <div class="foot-col">
-        <h4>Product</h4>
-        <a href="#predictions">Free Tips</a><a href="#daily-table">Daily Table</a>
-        <a href="#vip">VIP Zone</a><a href="#pricing">Subscription</a>
-      </div>
-      <div class="foot-col">
-        <h4>Company</h4>
-        <a href="#">About Us</a><a href="#">Our Analysts</a>
-        <a href="#">Careers</a><a href="#">Contact</a>
-      </div>
-      <div class="foot-col">
-        <h4>Legal</h4>
-        <a href="#">Terms of Service</a><a href="#">Privacy Policy</a>
-        <a href="#">Refund Policy</a><a href="#">Responsible Betting</a>
-      </div>
-    </div>
     <div class="foot-bottom">
-      <span>© 2025 Prime Tips. All rights reserved.</span>
-      <span>Made for football fans ⚽</span>
+      <span>© 2026 Prime Tips. All rights reserved.</span>
+      <span>18+ | Gamble responsibly.</span>
     </div>
-    <p class="disclaimer">18+ | Gamble responsibly. Prime Tips provides sports analysis and information only. We do not accept bets or guarantee winnings. Past performance is not a reliable indicator of future results. If gambling is affecting your life, seek support from a local helpline.</p>
   </div>
 </footer>
 
-<!-- AUTH MODAL -->
-<div class="modal" id="authModal">
-  <div class="modal-card">
-    <button class="modal-close" id="authClose" aria-label="Close">✕</button>
-    <div id="authBody"></div>
-  </div>
-</div>
+<!-- Modals -->
+<div class="modal" id="authModal"><div class="modal-card"><button class="modal-close" id="authClose">✕</button><div id="authBody"></div></div></div>
+<div class="dash-modal" id="dashModal"><div class="dash-card"><div class="dash-header"><div class="dash-user"><div class="dash-avatar" id="dashAvatar">JD</div><div><div id="dashName" style="font-weight:900">Member</div><div id="dashEmail" style="font-size:.76rem;color:var(--muted)"></div></div></div><button class="modal-close" id="dashClose" style="position:static">✕</button></div><div class="dash-body" id="dashBody"></div></div></div>
+<div class="admin-modal" id="adminModal"><div class="admin-card"><div class="admin-header"><h2>⚙️ Admin Control Center</h2><button class="modal-close" id="adminClose" style="position:static">✕</button></div><div class="admin-body"><div class="admin-tabs"><button class="admin-tab active" data-tab="games">🎯 Games</button><button class="admin-tab" data-tab="members">👥 Members</button></div><div class="admin-pane active" id="pane-games"><div class="admin-grid"><div class="admin-form"><h3>➕ Add or Edit Game</h3><form id="addGameForm"><input type="hidden" id="editId"><div class="field"><label>League</label><input id="aLeague" required placeholder="Premier League"></div><div class="field-row"><div class="field"><label>Home</label><input id="aHome" required placeholder="Arsenal"></div><div class="field"><label>Away</label><input id="aAway" required placeholder="Chelsea"></div></div><div class="field-row"><div class="field"><label>Kick-off</label><input id="aTime" required placeholder="Today 20:00"></div><div class="field"><label>Odds</label><input id="aOdds" type="number" step="0.01" required placeholder="2.10"></div></div><div class="field"><label>Tip</label><input id="aTip" required placeholder="Arsenal Win & BTTS"></div><div class="field"><label>Confidence (%)</label><input id="aConf" type="number" required placeholder="88"></div><div class="field" style="display:flex;align-items:center;gap:10px"><input type="checkbox" id="aVip" style="width:auto;min-height:auto"><label for="aVip" style="margin:0">👑 Mark as VIP</label></div><button type="submit" class="btn btn-primary btn-block">Save Game</button></form></div><div><h3 style="margin-bottom:14px">Manage Games</h3><div id="adminRows"></div></div></div></div><div class="admin-pane" id="pane-members"><div class="admin-form" style="margin-bottom:20px"><h3>➕ Create VIP Member Login</h3><form id="createMemberForm"><div class="field-row"><div class="field"><label>Name</label><input id="cmName" required placeholder="John Doe"></div><div class="field"><label>Email</label><input id="cmEmail" type="email" required placeholder="john@example.com"></div></div><button type="submit" class="btn btn-primary btn-block">Create &amp; Generate Password</button></form></div><div id="memberAdminList"></div></div></div></div></div>
+<button class="admin-trigger" id="adminTrigger" aria-label="Admin">⚙️</button>
+<div class="toast" id="toast"></div>
 
-<!-- CHECKOUT MODAL -->
-<div class="modal" id="checkoutModal">
-  <div class="modal-card">
-    <button class="modal-close" id="checkoutClose" aria-label="Close">✕</button>
-    <div id="checkoutBody"></div>
-  </div>
-</div>
+<!-- JavaScript Module -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-<!-- DASHBOARD -->
-<div class="dash-modal" id="dashModal">
-  <div class="dash-card">
-    <div class="dash-header">
-      <div class="dash-user">
-        <div class="dash-avatar" id="dashAvatar">JD</div>
-        <div>
-          <div class="du-name" id="dashName">Member</div>
-          <div class="du-email" id="dashEmail">member@example.com</div>
-        </div>
-      </div>
-      <button class="modal-close" id="dashClose" style="position:static" aria-label="Close">✕</button>
-    </div>
-    <div class="dash-body" id="dashBody"></div>
-  </div>
-</div>
+const firebaseConfig = {
+  apiKey: "AIzaSyDfauKKgP2o0gvyvjBwaNoEJbsBPrGG06s",
+  authDomain: "prime-56a1d.firebaseapp.com",
+  projectId: "prime-56a1d",
+  storageBucket: "prime-56a1d.firebasestorage.app",
+  messagingSenderId: "850931983405",
+  appId: "1:850931983405:web:532809d252cc51bf5f04a4"
+};
 
-<!-- TOAST -->
-<div class="toast" id="toast">Saved!</div>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-<!-- ADMIN PANEL -->
-<div class="admin-modal" id="adminModal">
-  <div class="admin-card">
-    <div class="admin-header">
-      <h2>⚙️ Admin Panel <span>Control Center</span></h2>
-      <button class="modal-close" id="adminClose" style="position:static" aria-label="Close">✕</button>
-    </div>
-    <div class="admin-body">
-      <div class="admin-tabs">
-        <button class="admin-tab active" data-tab="games">🎯 Games</button>
-        <button class="admin-tab" data-tab="leagues">🏆 Leagues</button>
-        <button class="admin-tab" data-tab="results">📊 Results</button>
-        <button class="admin-tab" data-tab="subs">💳 Subscriptions</button>
-        <button class="admin-tab" data-tab="feedback">💬 Feedback</button>
-      </div>
+// Directs calls to your deployed Cloud Functions endpoint
+const API_BASE = (window.location.hostname.includes('web.app') || window.location.hostname.includes('firebaseapp.com'))
+  ? '/api'
+  : 'https://prime-56a1d.web.app/api';
 
-      <div class="admin-pane active" id="pane-games">
-        <div class="admin-grid">
-          <div class="admin-form">
-            <h3 id="formTitle">➕ Add new game</h3>
-            <form id="addGameForm">
-              <input type="hidden" id="editIndex" value="-1">
-              <div class="field">
-                <label for="aLeague">League</label>
-                <select id="aLeague" required></select>
-              </div>
-              <div class="field-row">
-                <div class="field"><label for="aHome">Home team</label><input id="aHome" type="text" placeholder="Arsenal" required></div>
-                <div class="field"><label for="aAway">Away team</label><input id="aAway" type="text" placeholder="Chelsea" required></div>
-              </div>
-              <div class="field-row">
-                <div class="field"><label for="aTime">Kick-off</label><input id="aTime" type="text" placeholder="Today 20:00" required></div>
-                <div class="field"><label for="aOdds">Odds</label><input id="aOdds" type="number" step="0.01" min="1" placeholder="2.10" required></div>
-              </div>
-              <div class="field"><label for="aTip">Prediction tip</label><input id="aTip" type="text" placeholder="Arsenal Win & BTTS" required></div>
-              <div class="field"><label for="aConf">Confidence (%)</label><input id="aConf" type="number" min="1" max="100" placeholder="88" required></div>
-              <div class="field">
-                <label for="aColor">Card accent color</label>
-                <select id="aColor">
-                  <option value="#ff2d95">Pink</option><option value="#ff8a00">Orange</option>
-                  <option value="#00e5ff">Cyan</option><option value="#b6ff3b">Lime</option>
-                  <option value="#7b2ff7">Purple</option><option value="#ffd60a">Yellow</option>
-                </select>
-              </div>
-              <div class="form-toggle">
-                <input type="checkbox" id="aVip">
-                <label for="aVip">👑 Mark as VIP-only (locked)</label>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="aStatus">Result status</label>
-                  <select id="aStatus">
-                    <option value="pending">⏳ Pending</option>
-                    <option value="won">✅ Won</option>
-                    <option value="lost">❌ Lost</option>
-                    <option value="live">🔴 Live</option>
-                  </select>
-                </div>
-                <div class="field"><label for="aScore">Final score</label><input id="aScore" type="text" placeholder="2-1"></div>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Add game</button>
-              <button type="button" class="btn btn-ghost btn-block" id="cancelEditBtn" style="display:none;margin-top:8px">Cancel edit</button>
-            </form>
-            <p class="admin-hint">New games appear on the predictions grid and daily table instantly.</p>
-          </div>
-          <div class="admin-list">
-            <h3>📋 Manage games <span id="gameCount">0 games</span></h3>
-            <div class="admin-rows" id="adminRows"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="admin-pane" id="pane-leagues">
-        <div class="admin-grid">
-          <div class="admin-form">
-            <h3 id="leagueFormTitle">➕ Add new league</h3>
-            <form id="leagueForm">
-              <input type="hidden" id="editLeagueIndex" value="-1">
-              <div class="field"><label for="lName">League name</label><input id="lName" type="text" placeholder="e.g. Ligue 1" required></div>
-              <div class="field">
-                <label for="lColor">Accent color</label>
-                <select id="lColor">
-                  <option value="#ff2d95">Pink</option><option value="#ff8a00">Orange</option>
-                  <option value="#00e5ff">Cyan</option><option value="#b6ff3b">Lime</option>
-                  <option value="#7b2ff7">Purple</option><option value="#ffd60a">Yellow</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block" id="leagueSubmitBtn">Add league</button>
-              <button type="button" class="btn btn-ghost btn-block" id="cancelLeagueEditBtn" style="display:none;margin-top:8px">Cancel edit</button>
-            </form>
-            <p class="admin-hint">Leagues control filter buttons on the predictions section.</p>
-          </div>
-          <div class="admin-list">
-            <h3>🏆 Manage leagues <span id="leagueCount">0 leagues</span></h3>
-            <div class="league-grid" id="leagueGrid"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="admin-pane" id="pane-results">
-        <div class="admin-list" style="margin-bottom:18px">
-          <h3>📊 Update daily table results <span id="resultCount">0 rows</span></h3>
-        </div>
-        <div class="admin-table-wrap">
-          <table class="admin-table">
-            <thead><tr><th>Match</th><th>League</th><th>Tip</th><th>Status</th><th>Score</th></tr></thead>
-            <tbody id="adminResultBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="admin-pane" id="pane-subs">
-        <div class="sub-stats">
-          <div class="sub-stat"><b id="subCountVip">0</b><span>VIP Members</span></div>
-          <div class="sub-stat"><b id="subCountPro">0</b><span>VIP Pro Members</span></div>
-          <div class="sub-stat"><b id="subCountTotal">0</b><span>Total Subscribers</span></div>
-          <div class="sub-stat"><b id="subRevenue">$0</b><span>Monthly Revenue</span></div>
-        </div>
-        <div class="admin-list" style="margin-bottom:18px">
-          <h3>💳 Subscriber list <span id="subListCount">0 subscribers</span></h3>
-        </div>
-        <div class="admin-rows" id="subRows"></div>
-      </div>
-
-      <div class="admin-pane" id="pane-feedback">
-        <div class="admin-list" style="margin-bottom:18px">
-          <h3>💬 Member feedback <span id="feedbackCount">0 reviews</span></h3>
-        </div>
-        <div class="admin-form" style="margin-bottom:22px">
-          <h3 id="fbFormTitle">➕ Add new feedback</h3>
-          <form id="feedbackForm">
-            <input type="hidden" id="editFeedbackIndex" value="-1">
-            <div class="field-row">
-              <div class="field"><label for="fbName">Member name</label><input id="fbName" type="text" placeholder="James M." required></div>
-              <div class="field"><label for="fbRole">Plan / location</label><input id="fbRole" type="text" placeholder="VIP Member · UK" required></div>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="fbStars">Rating</label>
-                <select id="fbStars">
-                  <option value="5">★★★★★ (5)</option>
-                  <option value="4">★★★★☆ (4)</option>
-                  <option value="3">★★★☆☆ (3)</option>
-                  <option value="2">★★☆☆☆ (2)</option>
-                  <option value="1">★☆☆☆☆ (1)</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="fbColor">Avatar color</label>
-                <select id="fbColor">
-                  <option value="linear-gradient(135deg,var(--pink),var(--orange))">Pink → Orange</option>
-                  <option value="linear-gradient(135deg,var(--cyan),var(--lime))">Cyan → Lime</option>
-                  <option value="linear-gradient(135deg,var(--purple),var(--cyan))">Purple → Cyan</option>
-                  <option value="linear-gradient(135deg,var(--lime),var(--orange))">Lime → Orange</option>
-                  <option value="linear-gradient(135deg,var(--pink),var(--purple))">Pink → Purple</option>
-                </select>
-              </div>
-            </div>
-            <div class="field"><label for="fbText">Feedback text</label><textarea id="fbText" placeholder="Share the review..." required></textarea></div>
-            <button type="submit" class="btn btn-primary btn-block" id="fbSubmitBtn">Add feedback</button>
-            <button type="button" class="btn btn-ghost btn-block" id="cancelFeedbackEditBtn" style="display:none;margin-top:8px">Cancel edit</button>
-          </form>
-        </div>
-        <div class="feedback-rows" id="feedbackRows"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<button class="admin-trigger" id="adminTrigger" aria-label="Open admin panel">⚙️</button>
-
-<script>
-/* ==================================================================
-   Prime Tips — full app logic
-================================================================== */
-const DB_KEY = 'primeTipsDB_v4';
-const SESSION_KEY = 'primeTipsSession_v4';
-
-async function sha256(str){
-  const enc = new TextEncoder().encode(str);
-  if(window.crypto && window.crypto.subtle){
-    const buf = await window.crypto.subtle.digest('SHA-256', enc);
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-  let h = 0;
-  for(let i=0;i<str.length;i++){ h = ((h<<5)-h) + str.charCodeAt(i); h |= 0; }
-  return 'fb' + Math.abs(h).toString(16);
-}
-
-function genToken(){
-  const arr = new Uint8Array(24);
-  if(window.crypto && window.crypto.getRandomValues) crypto.getRandomValues(arr);
-  else for(let i=0;i<arr.length;i++) arr[i] = Math.floor(Math.random()*256);
-  return Array.from(arr).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-function loadDB(){
-  try {
-    const raw = localStorage.getItem(DB_KEY);
-    if(raw){
-      const p = JSON.parse(raw);
-      if(p && typeof p === 'object'){
-        return {
-          users: Array.isArray(p.users) ? p.users : [],
-          leagues: Array.isArray(p.leagues) ? p.leagues : [],
-          matches: Array.isArray(p.matches) ? p.matches : [],
-          feedback: Array.isArray(p.feedback) ? p.feedback : [],
-          resetTokens: p.resetTokens && typeof p.resetTokens === 'object' ? p.resetTokens : {},
-          lastInit: p.lastInit || 0
-        };
-      }
-    }
-  } catch(e){}
-  return null;
-}
-
-function saveDB(){
-  try { localStorage.setItem(DB_KEY, JSON.stringify(DB)); } catch(e){}
-}
-
-const SEED_LEAGUES = [
-  { name:'Premier League', color:'#ff2d95' },
-  { name:'La Liga', color:'#ff8a00' },
-  { name:'Serie A', color:'#00e5ff' },
-  { name:'Bundesliga', color:'#b6ff3b' },
-  { name:'Champions League', color:'#7b2ff7' }
-];
-
-const SEED_MATCHES = [
-  { league:'Premier League', home:'Arsenal', away:'Chelsea', time:'Today 20:00', tip:'Arsenal Win & BTTS', odds:'2.10', conf:88, color:'#ff2d95', vip:false, status:'won', score:'2-1' },
-  { league:'La Liga', home:'Real Madrid', away:'Sevilla', time:'Today 21:00', tip:'Real Madrid -1.5 AH', odds:'1.90', conf:85, color:'#ff8a00', vip:false, status:'won', score:'3-0' },
-  { league:'Serie A', home:'Inter', away:'Napoli', time:'Today 19:45', tip:'Under 2.5 Goals', odds:'1.75', conf:82, color:'#00e5ff', vip:false, status:'won', score:'1-1' },
-  { league:'Bundesliga', home:'Bayern Munich', away:'Dortmund', time:'Today 18:30', tip:'Over 3.5 Goals', odds:'1.95', conf:90, color:'#b6ff3b', vip:false, status:'won', score:'4-2' },
-  { league:'Champions League', home:'Man City', away:'PSG', time:'Tomorrow 20:00', tip:'Man City to Win', odds:'1.68', conf:84, color:'#7b2ff7', vip:false, status:'live', score:'1-0' },
-  { league:'Premier League', home:'Liverpool', away:'Tottenham', time:'Today 17:30', tip:'Liverpool Win + Over 2.5', odds:'2.25', conf:92, color:'#ff2d95', vip:true, status:'won', score:'3-1' },
-  { league:'La Liga', home:'Barcelona', away:'Atletico', time:'Today 22:00', tip:'BTTS – Yes', odds:'1.80', conf:89, color:'#ff8a00', vip:true, status:'pending', score:'' },
-  { league:'Serie A', home:'Juventus', away:'AC Milan', time:'Tomorrow 19:45', tip:'Draw or Juventus', odds:'1.55', conf:86, color:'#00e5ff', vip:true, status:'lost', score:'1-2' },
-  { league:'Bundesliga', home:'Leverkusen', away:'RB Leipzig', time:'Tomorrow 18:30', tip:'Leverkusen -1 AH', odds:'2.05', conf:91, color:'#b6ff3b', vip:true, status:'pending', score:'' }
-];
-
-const SEED_FEEDBACK = [
-  { name:'James M.', role:'VIP Member · UK', stars:5, text:'Been with Prime Tips for 4 months. The VIP picks are genuinely different class — the analysis behind each one is unreal. My strike rate went from 48% to 71%.', color:'linear-gradient(135deg,var(--pink),var(--orange))' },
-  { name:'Aisha K.', role:'VIP Pro · Nigeria', stars:5, text:'The live in-play alerts alone are worth the subscription. Won 6 of my last 8 accas. Customer support is fast and the Telegram group is a great community.', color:'linear-gradient(135deg,var(--cyan),var(--lime))' },
-  { name:'Diego R.', role:'VIP Member · Spain', stars:5, text:'I was sceptical at first but the free tips were already profitable, so I upgraded. Three months in and it\'s the best money I spend each month. Transparent results too.', color:'linear-gradient(135deg,var(--purple),var(--cyan))' }
-];
-
-async function seedDatabase(){
-  const adminHash = await sha256('admin123');
-  const demoHash = await sha256('demo123');
-  const now = Date.now();
-  const monthMs = 30 * 24 * 60 * 60 * 1000;
-  return {
-    users: [
-      {
-        id: 'u_admin', name: 'Site Admin', email: 'admin@primetips.com',
-        passwordHash: adminHash, role: 'admin',
-        plan: null, planPrice: null, planExpiry: null, joined: now
-      },
-      {
-        id: 'u_demo', name: 'Demo VIP', email: 'demo@primetips.com',
-        passwordHash: demoHash, role: 'member',
-        plan: 'VIP Member', planPrice: '$29.99/mo',
-        planExpiry: now + monthMs, joined: now
-      }
-    ],
-    leagues: JSON.parse(JSON.stringify(SEED_LEAGUES)),
-    matches: JSON.parse(JSON.stringify(SEED_MATCHES)),
-    feedback: JSON.parse(JSON.stringify(SEED_FEEDBACK)),
-    resetTokens: {}, lastInit: now
-  };
-}
-
-let DB;
+let DB = { matches: [], members: [] };
 let SESSION = null;
-
-async function initData(){
-  const loaded = loadDB();
-  if(loaded && loaded.users && loaded.users.length){
-    DB = loaded;
-  } else {
-    DB = await seedDatabase();
-    saveDB();
-  }
-  if(!DB.leagues.length) DB.leagues = JSON.parse(JSON.stringify(SEED_LEAGUES));
-  if(!DB.matches.length) DB.matches = JSON.parse(JSON.stringify(SEED_MATCHES));
-  if(!DB.feedback.length) DB.feedback = JSON.parse(JSON.stringify(SEED_FEEDBACK));
-  saveDB();
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    if(raw){
-      const s = JSON.parse(raw);
-      if(s && s.userId && DB.users.some(u => u.id === s.userId)) SESSION = s;
-    }
-  } catch(e){ SESSION = null; }
-}
-
-function saveSession(){
-  try {
-    if(SESSION) localStorage.setItem(SESSION_KEY, JSON.stringify(SESSION));
-    else localStorage.removeItem(SESSION_KEY);
-  } catch(e){}
-}
-
-function currentUser(){
-  if(!SESSION || !SESSION.userId) return null;
-  return DB.users.find(u => u.id === SESSION.userId) || null;
-}
-
-function isPaid(user){
-  if(!user) return false;
-  if(user.role === 'admin') return true;
-  if(!user.plan) return false;
-  if(!user.planExpiry) return false;
-  return user.planExpiry > Date.now();
-}
-
-function isAdmin(user){ return user && user.role === 'admin'; }
+let isAdminUser = false;
+let currentFilter = 'all';
 
 const $ = id => document.getElementById(id);
 
-function showToast(msg, isError){
+function showToast(msg, isError) {
   const t = $('toast');
   t.textContent = msg;
   t.classList.toggle('error', !!isError);
   t.classList.add('show');
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => t.classList.remove('show'), 2600);
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function escapeHTML(str){
-  return String(str == null ? '' : str).replace(/[&<>"']/g, s => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[s]));
+function escapeHTML(str) {
+  return String(str || '').replace(/[&<>"']/g, s => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[s]));
 }
 
-function getInitials(name){
-  const parts = String(name).trim().split(/\s+/);
-  if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
-  return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
-}
-
-const STATUS_LABELS = { won:'✅ Won', lost:'❌ Lost', pending:'⏳ Pending', live:'🔴 Live' };
-function statusPillHTML(status){
-  const s = ['won','lost','pending','live'].includes(status) ? status : 'pending';
-  return `<span class="result-pill ${s}">${STATUS_LABELS[s]}</span>`;
-}
-
-/* ================= AUTH ================= */
-const authModal = $('authModal');
-const authBody = $('authBody');
-
-function openAuth(view){
-  authModal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderAuth(view || 'login');
-}
-function closeAuth(){
-  authModal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-$('authClose').addEventListener('click', closeAuth);
-authModal.addEventListener('click', e => { if(e.target === authModal) closeAuth(); });
-
-function renderAuth(view, extra){
-  let html = '';
-  if(view === 'login'){
-    html = `
-      <h3>Welcome back ⚽</h3>
-      <p class="sub">Log in to access your VIP tips and dashboard.</p>
-      <div class="form-error" id="authError"></div>
-      <form id="loginForm" autocomplete="on">
-        <div class="field">
-          <label for="loginEmail">Email</label>
-          <input id="loginEmail" type="email" placeholder="you@example.com" required>
-        </div>
-        <div class="field">
-          <label for="loginPass">Password</label>
-          <input id="loginPass" type="password" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Log in</button>
-      </form>
-      <div class="modal-switch">
-        <div style="margin-bottom:8px"><a id="toReset">Forgot password?</a></div>
-        No account? <a id="toSignup">Create one free →</a>
-      </div>`;
-  } else if(view === 'signup'){
-    html = `
-      <h3>Create your account</h3>
-      <p class="sub">Free to start. Upgrade anytime to unlock VIP tips.</p>
-      <div class="form-error" id="authError"></div>
-      <form id="signupForm">
-        <div class="field"><label for="suName">Full name</label><input id="suName" type="text" placeholder="John Doe" required></div>
-        <div class="field"><label for="suEmail">Email</label><input id="suEmail" type="email" placeholder="you@example.com" required></div>
-        <div class="field"><label for="suPass">Password (min 6 chars)</label><input id="suPass" type="password" placeholder="••••••••" minlength="6" required></div>
-        <div class="field"><label for="suPass2">Confirm password</label><input id="suPass2" type="password" placeholder="••••••••" minlength="6" required></div>
-        <button type="submit" class="btn btn-primary btn-block">Create account</button>
-      </form>
-      <div class="modal-switch">Already have an account? <a id="toLogin">Log in →</a></div>`;
-  } else if(view === 'reset'){
-    html = `
-      <h3>Reset your password</h3>
-      <p class="sub">We'll generate a reset token you can use below.</p>
-      <div class="form-error" id="authError"></div>
-      <form id="resetForm">
-        <div class="field"><label for="rsEmail">Email address</label><input id="rsEmail" type="email" placeholder="you@example.com" required></div>
-        <button type="submit" class="btn btn-primary btn-block">Send reset token</button>
-      </form>
-      <div class="modal-switch" style="margin-top:18px"><a id="toLogin2">← Back to login</a></div>`;
-  } else if(view === 'resetDone'){
-    html = `
-      <div class="success-state"><div class="big">📩</div><h3>Reset token generated</h3>
-      <p>Copy your one-time reset token below. Use it to set a new password.</p></div>
-      <div class="modal-plan" style="margin-top:18px">
-        <b style="font-size:.7rem;letter-spacing:.08em">TOKEN</b>
-        <span class="mp-price" style="font-size:.72rem;word-break:break-all">${escapeHTML(extra || '')}</span>
-      </div>
-      <button class="btn btn-primary btn-block" id="toNewPass" data-token="${escapeHTML(extra || '')}">Set new password →</button>`;
-  } else if(view === 'newpass'){
-    html = `
-      <h3>Set a new password</h3>
-      <p class="sub">Enter your reset token and new password.</p>
-      <div class="form-error" id="authError"></div>
-      <form id="newPassForm">
-        <div class="field"><label for="npToken">Reset token</label><input id="npToken" type="text" value="${escapeHTML(extra || '')}" required></div>
-        <div class="field"><label for="npPass">New password</label><input id="npPass" type="password" minlength="6" required></div>
-        <div class="field"><label for="npPass2">Confirm new password</label><input id="npPass2" type="password" minlength="6" required></div>
-        <button type="submit" class="btn btn-primary btn-block">Update password</button>
-      </form>
-      <div class="modal-switch"><a id="toLogin3">← Back to login</a></div>`;
+async function apiCall(endpoint, method = 'GET', body = null) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth.currentUser) {
+    const token = await auth.currentUser.getIdToken();
+    headers['Authorization'] = `Bearer ${token}`;
   }
-  authBody.innerHTML = html;
-  bindAuth(view, extra);
+  const opts = { method, headers };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(`${API_BASE}${endpoint}`, opts);
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || `Error ${res.status}`);
+  }
+  return res.json();
 }
 
-function authError(msg){
-  const el = $('authError');
-  if(!el) return;
-  el.textContent = msg;
-  el.classList.add('show');
-}
-
-function bindAuth(view, extra){
-  const toLogin = () => renderAuth('login');
-  const toSignup = () => renderAuth('signup');
-  const toReset = () => renderAuth('reset');
-
-  if($('toLogin')) $('toLogin').addEventListener('click', toLogin);
-  if($('toLogin2')) $('toLogin2').addEventListener('click', toLogin);
-  if($('toLogin3')) $('toLogin3').addEventListener('click', toLogin);
-  if($('toSignup')) $('toSignup').addEventListener('click', toSignup);
-  if($('toReset')) $('toReset').addEventListener('click', toReset);
-
-  if(view === 'login'){
-    $('loginForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const email = $('loginEmail').value.trim().toLowerCase();
-      const pass = $('loginPass').value;
-      const user = DB.users.find(u => u.email.toLowerCase() === email);
-      if(!user){ authError('No account found with that email.'); return; }
-      const hash = await sha256(pass);
-      if(hash !== user.passwordHash){ authError('Incorrect password. Try again.'); return; }
-      SESSION = { userId: user.id, token: genToken(), createdAt: Date.now() };
-      saveSession();
-      closeAuth();
-      refreshSessionUI();
-      showToast(`Welcome back, ${user.name.split(' ')[0]}!`);
-    });
-  }
-
-  if(view === 'signup'){
-    $('signupForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const name = $('suName').value.trim();
-      const email = $('suEmail').value.trim().toLowerCase();
-      const pass = $('suPass').value;
-      const pass2 = $('suPass2').value;
-      if(!name || !email || !pass){ authError('Please fill in all fields.'); return; }
-      if(pass.length < 6){ authError('Password must be at least 6 characters.'); return; }
-      if(pass !== pass2){ authError('Passwords do not match.'); return; }
-      if(DB.users.some(u => u.email.toLowerCase() === email)){ authError('That email is already registered.'); return; }
-
-      const hash = await sha256(pass);
-      const user = {
-        id: 'u_' + genToken().slice(0,12),
-        name, email, passwordHash: hash, role: 'member',
-        plan: null, planPrice: null, planExpiry: null, joined: Date.now()
-      };
-      DB.users.push(user);
-      saveDB();
-      SESSION = { userId: user.id, token: genToken(), createdAt: Date.now() };
-      saveSession();
-      closeAuth();
-      refreshSessionUI();
-      showToast(`Account created — welcome, ${name.split(' ')[0]}!`);
-    });
-  }
-
-  if(view === 'reset'){
-    $('resetForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const email = $('rsEmail').value.trim().toLowerCase();
-      const user = DB.users.find(u => u.email.toLowerCase() === email);
-      if(!user){ authError('No account found with that email.'); return; }
-      const token = genToken().slice(0, 10).toUpperCase();
-      DB.resetTokens[token] = { userId: user.id, expires: Date.now() + 30*60*1000 };
-      saveDB();
-      renderAuth('resetDone', token);
-    });
-  }
-
-  if(view === 'resetDone'){
-    $('toNewPass').addEventListener('click', e => {
-      renderAuth('newpass', e.currentTarget.dataset.token);
-    });
-  }
-
-  if(view === 'newpass'){
-    $('newPassForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const token = $('npToken').value.trim().toUpperCase();
-      const pass = $('npPass').value;
-      const pass2 = $('npPass2').value;
-      const entry = DB.resetTokens[token];
-      if(!entry || entry.expires < Date.now()){ authError('Invalid or expired reset token.'); return; }
-      if(pass.length < 6){ authError('Password must be at least 6 characters.'); return; }
-      if(pass !== pass2){ authError('Passwords do not match.'); return; }
-      const user = DB.users.find(u => u.id === entry.userId);
-      if(!user){ authError('Account no longer exists.'); return; }
-      user.passwordHash = await sha256(pass);
-      delete DB.resetTokens[token];
-      saveDB();
-      closeAuth();
-      refreshSessionUI();
-      showToast('Password updated — please log in.');
-      setTimeout(() => openAuth('login'), 300);
-    });
-  }
-}
-
-/* ================= CHECKOUT ================= */
-const checkoutModal = $('checkoutModal');
-const checkoutBody = $('checkoutBody');
-
-$('checkoutClose').addEventListener('click', () => {
-  checkoutModal.classList.remove('open');
-  document.body.style.overflow = '';
-});
-checkoutModal.addEventListener('click', e => {
-  if(e.target === checkoutModal){
-    checkoutModal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-});
-
-function openCheckout(plan, price, periodLabel){
-  const user = currentUser();
-  if(!user){ openAuth('signup'); return; }
-  if(isAdmin(user)){ showToast('Admins already have full access.'); return; }
-
-  checkoutBody.innerHTML = `
-    <h3>Complete your subscription</h3>
-    <p class="sub">You're one step away from the VIP zone 🚀</p>
-    <div class="modal-plan">
-      <b>${escapeHTML(plan)}</b>
-      <span class="mp-price">$${escapeHTML(price)} ${escapeHTML(periodLabel)}</span>
-    </div>
-    <div class="field">
-      <label>Billing to</label>
-      <input type="text" value="${escapeHTML(user.name)} · ${escapeHTML(user.email)}" disabled>
-    </div>
-    <div class="field">
-      <label for="coCard">Card number (demo)</label>
-      <input id="coCard" type="text" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242">
-    </div>
-    <button class="btn btn-primary btn-block" id="coConfirm">🔒 Pay $${escapeHTML(price)} &amp; unlock VIP</button>
-    <p class="modal-note">Demo checkout — no real card is charged. Cancel anytime.</p>`;
-
-  checkoutModal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  $('coConfirm').addEventListener('click', () => {
-    const ms = periodLabel === '/wk' ? 7*24*60*60*1000 : 30*24*60*60*1000;
-    user.plan = plan;
-    user.planPrice = '$' + price + periodLabel;
-    user.planExpiry = Date.now() + ms;
-    saveDB();
-    checkoutModal.classList.remove('open');
-    document.body.style.overflow = '';
-    refreshSessionUI();
+async function loadData() {
+  try {
+    DB.matches = await apiCall('/matches');
+    renderFilters();
     renderPredGrid();
     renderDailyTable();
-    showToast(`🎉 Payment successful — ${plan} unlocked!`);
-    setTimeout(() => openDashboard(), 400);
+    if (isAdminUser) {
+      renderAdminMatches();
+      loadAdminMembers();
+    }
+  } catch (err) {
+    showToast('Failed to load matches: ' + err.message, true);
+  }
+}
+
+async function loadAdminMembers() {
+  try {
+    DB.members = await apiCall('/members');
+    renderAdminMembers();
+  } catch (e) {}
+}
+
+function renderFilters() {
+  const leagues = [...new Set(DB.matches.map(m => m.league))];
+  let html = `<button class="filter-btn ${currentFilter==='all'?'active':''}" data-f="all">All</button>`;
+  leagues.forEach(l => {
+    html += `<button class="filter-btn ${currentFilter===l?'active':''}" data-f="${escapeHTML(l)}">${escapeHTML(l)}</button>`;
   });
+  html += `<button class="filter-btn ${currentFilter==='vip'?'active':''}" data-f="vip">👑 VIP Only</button>`;
+  $('filters').innerHTML = html;
 }
 
-/* ================= DASHBOARD ================= */
-const dashModal = $('dashModal');
-
-$('dashClose').addEventListener('click', () => {
-  dashModal.classList.remove('open');
-  document.body.style.overflow = '';
-});
-dashModal.addEventListener('click', e => {
-  if(e.target === dashModal){
-    dashModal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-});
-
-function openDashboard(){
-  const user = currentUser();
-  if(!user){ openAuth('login'); return; }
-
-  $('dashAvatar').textContent = getInitials(user.name);
-  $('dashName').textContent = user.name;
-  $('dashEmail').textContent = user.email;
-
-  const paid = isPaid(user);
-  const expiryStr = user.planExpiry
-    ? new Date(user.planExpiry).toLocaleDateString(undefined, { day:'numeric', month:'short', year:'numeric' })
-    : '—';
-
-  const vipGames = DB.matches.filter(m => m.vip);
-  const won = DB.matches.filter(m => m.status === 'won').length;
-  const lost = DB.matches.filter(m => m.status === 'lost').length;
-  const pending = DB.matches.filter(m => m.status === 'pending').length;
-  const settled = won + lost;
-  const winRate = settled ? Math.round((won / settled) * 100) : 0;
-
-  let planCard;
-  if(isAdmin(user)){
-    planCard = `
-      <div class="dash-plan-card is-vip">
-        <div>
-          <div class="dp-label">Your access</div>
-          <div class="dp-name"><span class="crown">🛡️</span> Site Administrator</div>
-          <div class="dp-expiry">Full access to everything · unlimited</div>
-        </div>
-        <div class="dp-actions">
-          <button class="btn btn-lime btn-sm" id="dashOpenAdmin">⚙️ Open Admin Panel</button>
-        </div>
-      </div>`;
-  } else if(paid){
-    planCard = `
-      <div class="dash-plan-card is-vip">
-        <div>
-          <div class="dp-label">Active plan</div>
-          <div class="dp-name"><span class="crown">👑</span> ${escapeHTML(user.plan)}</div>
-          <div class="dp-expiry">${escapeHTML(user.planPrice || '')} · renews ${escapeHTML(expiryStr)}</div>
-        </div>
-        <div class="dp-actions">
-          <button class="btn btn-ghost btn-sm" id="dashUpgrade">Upgrade plan</button>
-          <button class="btn btn-danger btn-sm" id="dashCancel">Cancel plan</button>
-        </div>
-      </div>`;
-  } else {
-    planCard = `
-      <div class="dash-plan-card">
-        <div>
-          <div class="dp-label">Current plan</div>
-          <div class="dp-name">Free Starter</div>
-          <div class="dp-expiry">Upgrade to unlock all VIP tips</div>
-        </div>
-        <div class="dp-actions">
-          <a href="#pricing" class="btn btn-primary btn-sm" id="dashUpgrade">Upgrade to VIP 👑</a>
-        </div>
-      </div>`;
-  }
-
-  let vipList;
-  if(vipGames.length === 0){
-    vipList = `<div class="admin-empty" style="border-radius:14px;padding:26px 16px">No VIP tips available right now. Check back soon.</div>`;
-  } else if(paid){
-    vipList = vipGames.map(m => `
-      <div class="vip-unlock-item">
-        <div class="vui-main">
-          <div class="vui-teams">${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</div>
-          <div class="vui-meta">
-            <span class="league-chip">${escapeHTML(m.league)}</span>
-            <span>${escapeHTML(m.time)}</span>
-          </div>
-        </div>
-        <div class="vui-tip">
-          ${escapeHTML(m.tip)}
-          <small>${escapeHTML(m.odds)} odds · ${m.conf}%</small>
-        </div>
-      </div>`).join('');
-  } else {
-    vipList = vipGames.map(m => `
-      <div class="vip-unlock-item" style="opacity:.85">
-        <div class="vui-main">
-          <div class="vui-teams">${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</div>
-          <div class="vui-meta">
-            <span class="league-chip">${escapeHTML(m.league)}</span>
-            <span>${escapeHTML(m.time)}</span>
-          </div>
-        </div>
-        <div class="vui-tip" style="color:var(--yellow)">🔒 Locked<small>Upgrade to view</small></div>
-      </div>`).join('');
-  }
-
-  $('dashBody').innerHTML = `
-    ${planCard}
-    <div class="dash-stats">
-      <div class="dash-stat"><b>${won}</b><span>Won picks</span></div>
-      <div class="dash-stat"><b>${lost}</b><span>Lost picks</span></div>
-      <div class="dash-stat"><b>${pending}</b><span>Pending</span></div>
-      <div class="dash-stat"><b>${winRate}%</b><span>Win rate</span></div>
-    </div>
-    <div class="dash-section-title">
-      👑 VIP tips — ${paid ? 'unlocked' : 'locked'}
-      <span>${paid ? 'Full access' : 'Upgrade to view'}</span>
-    </div>
-    <div class="vip-unlock-list">${vipList}</div>
-    <div class="dash-actions">
-      <button class="btn btn-ghost btn-sm" id="dashChangePass">🔑 Change password</button>
-      <button class="btn btn-danger btn-sm" id="dashLogout">Log out</button>
-    </div>
-    <p class="modal-note" style="text-align:left;margin-top:16px">Demo dashboard · In production, VIP tips are served from a real backend only after verifying your active subscription.</p>`;
-
-  dashModal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  if($('dashLogout')){
-    $('dashLogout').addEventListener('click', () => {
-      SESSION = null;
-      saveSession();
-      dashModal.classList.remove('open');
-      document.body.style.overflow = '';
-      refreshSessionUI();
-      renderPredGrid();
-      showToast('Logged out.');
-    });
-  }
-  if($('dashCancel')){
-    $('dashCancel').addEventListener('click', () => {
-      if(!confirm('Cancel your subscription? You will lose VIP access immediately in this demo.')) return;
-      user.plan = null;
-      user.planPrice = null;
-      user.planExpiry = null;
-      saveDB();
-      closeDashAndRefresh();
-      showToast('Subscription cancelled.');
-    });
-  }
-  if($('dashUpgrade')){
-    $('dashUpgrade').addEventListener('click', e => {
-      e.preventDefault();
-      dashModal.classList.remove('open');
-      document.body.style.overflow = '';
-      document.getElementById('pricing').scrollIntoView({ behavior:'smooth' });
-    });
-  }
-  if($('dashOpenAdmin')){
-    $('dashOpenAdmin').addEventListener('click', () => {
-      dashModal.classList.remove('open');
-      document.body.style.overflow = '';
-      openAdmin();
-    });
-  }
-  if($('dashChangePass')){
-    $('dashChangePass').addEventListener('click', () => {
-      dashModal.classList.remove('open');
-      document.body.style.overflow = '';
-      openAuth('newpass');
-    });
-  }
-}
-
-function closeDashAndRefresh(){
-  dashModal.classList.remove('open');
-  document.body.style.overflow = '';
-  refreshSessionUI();
-  renderPredGrid();
-  renderDailyTable();
-}
-
-/* ================= NAV ================= */
-function refreshSessionUI(){
-  const user = currentUser();
-  const navCta = $('navCta');
-
-  if(!user){
-    navCta.innerHTML = `
-      <button class="btn btn-ghost btn-sm" id="navLogin">Log in</button>
-      <a href="#pricing" class="btn btn-primary btn-sm" id="navJoin">Join VIP</a>`;
-    $('navLogin').addEventListener('click', () => openAuth('login'));
-    $('navJoin').addEventListener('click', () => openAuth('signup'));
-  } else {
-    const paid = isPaid(user);
-    const badge = isAdmin(user) ? 'ADMIN' : (paid ? 'VIP' : 'FREE');
-    navCta.innerHTML = `
-      <div class="member-chip" id="navMember">
-        <div class="mc-avatar">${escapeHTML(getInitials(user.name))}</div>
-        <span class="mc-name">${escapeHTML(user.name.split(' ')[0])}</span>
-        <span class="mc-badge">${badge}</span>
-      </div>`;
-    $('navMember').addEventListener('click', () => {
-      if(isAdmin(user)) openAdmin();
-      else openDashboard();
-    });
-  }
-
-  const unlock = $('unlockCta');
-  if(unlock){
-    if(isPaid(user)) unlock.textContent = 'Open my dashboard →';
-    else if(user) unlock.textContent = 'Upgrade to unlock VIP 👑';
-    else unlock.textContent = 'Unlock all 40+ daily VIP picks 👑';
-  }
-}
-
-/* ================= FILTERS ================= */
-function renderFilters(){
-  const wrap = $('filters');
-  let html = `<button class="filter-btn active" data-filter="all">All Leagues</button>`;
-  DB.leagues.forEach(l => {
-    html += `<button class="filter-btn" data-filter="${escapeHTML(l.name)}">${escapeHTML(l.name)}</button>`;
-  });
-  html += `<button class="filter-btn" data-filter="vip">👑 VIP Only</button>`;
-  wrap.innerHTML = html;
-}
-
-/* ================= PREDICTIONS ================= */
-const grid = $('predGrid');
-let currentFilter = 'all';
-
-function cardHTML(m){
-  const accent = m.color || '#a79fc0';
-  const user = currentUser();
-  const paid = isPaid(user);
-
-  if(m.vip && !paid){
-    return `
-    <article class="pred-card" style="--accent:var(--yellow)">
-      <div class="pred-top">
-        <span class="league">${escapeHTML(m.league)}</span>
-        <span class="time">${escapeHTML(m.time)}</span>
-      </div>
-      <div class="teams">
-        <div class="team">${escapeHTML(m.home)}</div>
-        <div class="vs">VS</div>
-        <div class="team">${escapeHTML(m.away)}</div>
-      </div>
-      <div class="pick-wrap" style="min-height:96px">
-        <div class="lock-overlay">
-          <span class="ic">🔒</span>
-          <span class="txt">VIP Only</span>
-          <button type="button" data-unlock="1">Unlock</button>
-        </div>
-      </div>
-    </article>`;
-  }
-
-  const vipTag = m.vip
-    ? `<div class="lock-overlay" style="pointer-events:none;background:transparent;border:none">
-         <span class="unlocked-tag">👑 Unlocked</span>
-       </div>` : '';
-
-  return `
-  <article class="pred-card ${m.vip ? 'is-vip' : ''}" style="--accent:${accent}">
-    <div class="pred-top">
-      <span class="league">${escapeHTML(m.league)}</span>
-      <span class="time">${escapeHTML(m.time)}</span>
-    </div>
-    <div class="teams">
-      <div class="team">${escapeHTML(m.home)}</div>
-      <div class="vs">VS</div>
-      <div class="team">${escapeHTML(m.away)}</div>
-    </div>
-    <div class="pick-wrap">
-      <div class="pick">
-        <div>
-          <div class="pick-label">Our tip</div>
-          <div class="pick-tip">${escapeHTML(m.tip)}</div>
-        </div>
-        <div class="odds">${escapeHTML(m.odds)}</div>
-      </div>
-      <div class="conf">
-        <div class="conf-head"><span>Confidence</span><span>${m.conf}%</span></div>
-        <div class="bar"><i style="width:${m.conf}%"></i></div>
-      </div>
-      ${vipTag}
-    </div>
-  </article>`;
-}
-
-function renderPredGrid(){
-  let list = DB.matches;
-  if(currentFilter === 'vip') list = DB.matches.filter(m => m.vip);
-  else if(currentFilter !== 'all') list = DB.matches.filter(m => m.league === currentFilter);
-
-  if(list.length === 0){
-    grid.innerHTML = `<div class="admin-empty" style="grid-column:1/-1">No games yet for this filter.</div>`;
-    return;
-  }
-  grid.innerHTML = list.map(cardHTML).join('');
-}
-
-grid.addEventListener('click', e => {
-  if(e.target.closest('[data-unlock]')){
-    const user = currentUser();
-    if(!user) openAuth('signup');
-    else document.getElementById('pricing').scrollIntoView({ behavior:'smooth' });
-  }
-});
-
-/* ================= DAILY TABLE ================= */
-const dailyBody = $('dailyTableBody');
-const tableFootStats = $('tableFootStats');
-
-function renderDailyTable(){
-  const user = currentUser();
-  const paid = isPaid(user);
-
-  if(DB.matches.length === 0){
-    dailyBody.innerHTML = `<tr><td colspan="5" class="table-empty">No predictions yet.</td></tr>`;
-    tableFootStats.innerHTML = '';
-    return;
-  }
-
-  dailyBody.innerHTML = DB.matches.map(m => {
-    const hidden = m.vip && !paid;
-    const tipDisplay = hidden
-      ? `<span class="tip-name" style="color:var(--yellow)">🔒 VIP tip</span>
-         <div class="tip-meta"><span class="tip-odds" style="opacity:.5">•••</span> locked</div>`
-      : `<span class="tip-name">${escapeHTML(m.tip)}</span>
-         <div class="tip-meta"><span class="tip-odds">${escapeHTML(m.odds)}</span> odds</div>`;
-    const scoreLine = (!hidden && m.score) ? ` · Final: <b style="color:#fff">${escapeHTML(m.score)}</b>` : '';
-    return `
-    <tr>
-      <td>
-        <div class="match-cell">
-          <div class="match-time">${escapeHTML(m.time)}</div>
-          <div class="match-teams">
-            <b>${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</b>
-            <span>${m.vip ? 'VIP pick' : 'Free daily pick'}${scoreLine}</span>
-          </div>
-        </div>
-      </td>
-      <td><span class="league-chip">${escapeHTML(m.league)}</span></td>
-      <td><div class="tip-cell">${tipDisplay}</div></td>
-      <td>
-        <div class="conf-mini">
-          <div class="cb"><i style="width:${hidden ? 0 : m.conf}%"></i></div>
-          <span>${hidden ? '—' : m.conf + '%'}</span>
-        </div>
-      </td>
-      <td>${statusPillHTML(m.status)}</td>
-    </tr>`;
-  }).join('');
-
-  const won = DB.matches.filter(m => m.status === 'won').length;
-  const lost = DB.matches.filter(m => m.status === 'lost').length;
-  const pending = DB.matches.filter(m => m.status === 'pending').length;
-  const live = DB.matches.filter(m => m.status === 'live').length;
-  const settled = won + lost;
-  const winRate = settled ? Math.round((won / settled) * 100) : 0;
-
-  tableFootStats.innerHTML = `
-    <span class="tf-stat"><i style="background:var(--lime)"></i><b>${won}</b> Won</span>
-    <span class="tf-stat"><i style="background:var(--pink)"></i><b>${lost}</b> Lost</span>
-    <span class="tf-stat"><i style="background:var(--yellow)"></i><b>${pending}</b> Pending</span>
-    <span class="tf-stat"><i style="background:var(--cyan)"></i><b>${live}</b> Live</span>
-    <span class="tf-stat"><i style="background:linear-gradient(135deg,var(--pink),var(--lime))"></i><b>${winRate}%</b> Win rate</span>`;
-
-  const now = new Date();
-  const dateStr = now.toLocaleDateString(undefined, { weekday:'short', day:'numeric', month:'short', year:'numeric' });
-  $('tbDate').textContent = dateStr;
-  $('tableDateLabel').textContent = `Free picks · updated ${dateStr}`;
-}
-
-/* ================= TESTIMONIALS ================= */
-const testiGrid = $('testiGrid');
-function renderTestimonials(){
-  if(DB.feedback.length === 0){
-    testiGrid.innerHTML = `<div class="admin-empty" style="grid-column:1/-1">No member feedback yet.</div>`;
-    return;
-  }
-  testiGrid.innerHTML = DB.feedback.map(f => {
-    const initials = getInitials(f.name);
-    return `
-    <div class="testi">
-      <div class="stars">${'★'.repeat(f.stars)}${'☆'.repeat(5 - f.stars)}</div>
-      <p>"${escapeHTML(f.text)}"</p>
-      <div class="testi-user">
-        <div class="avatar" style="background:${f.color || 'linear-gradient(135deg,var(--pink),var(--orange))'}">${escapeHTML(initials)}</div>
-        <div><b>${escapeHTML(f.name)}</b><span>${escapeHTML(f.role)}</span></div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* ================= FILTER CLICKS ================= */
 $('filters').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if(!btn) return;
+  const btn = e.target.closest('[data-f]');
+  if (!btn) return;
+  currentFilter = btn.dataset.f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  currentFilter = btn.dataset.filter;
   renderPredGrid();
 });
 
-/* ================= PRICING ================= */
-const PRICES = {
-  vip: { weekly:'9.99',  monthly:'29.99', perW:'/wk', perM:'/mo' },
-  pro: { weekly:'19.99', monthly:'59.99', perW:'/wk', perM:'/mo' }
-};
-let billing = 'monthly';
+function renderPredGrid() {
+  let list = DB.matches;
+  if (currentFilter === 'vip') list = list.filter(m => m.vip);
+  else if (currentFilter !== 'all') list = list.filter(m => m.league === currentFilter);
 
-function updatePrices(){
-  const w = billing === 'weekly';
-  $('priceVip').textContent = w ? PRICES.vip.weekly : PRICES.vip.monthly;
-  $('pricePro').textContent = w ? PRICES.pro.weekly : PRICES.pro.monthly;
-  $('perVip').textContent = w ? '/ week' : '/ month';
-  $('perPro').textContent = w ? '/ week' : '/ month';
-  document.querySelectorAll('[data-plan]').forEach(btn => {
-    const key = btn.dataset.plan === 'VIP Pro' ? 'pro' : 'vip';
-    btn.dataset.price = w ? PRICES[key].weekly : PRICES[key].monthly;
-    btn.dataset.period = w ? 'week' : 'month';
-  });
-}
-
-document.querySelector('.billing-toggle').addEventListener('click', e => {
-  const btn = e.target.closest('button[data-billing]');
-  if(!btn) return;
-  billing = btn.dataset.billing;
-  document.querySelectorAll('.billing-toggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  updatePrices();
-});
-updatePrices();
-
-document.querySelectorAll('[data-plan]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const periodLabel = btn.dataset.period === 'week' ? '/wk' : '/mo';
-    openCheckout(btn.dataset.plan, btn.dataset.price, periodLabel);
-  });
-});
-
-/* ================= TICKER ================= */
-const tickerItems = [
-  { t:'Arsenal 2-1 Chelsea', s:'WON' },
-  { t:'Real Madrid 3-0 Sevilla', s:'WON' },
-  { t:'Inter 1-1 Napoli — Under 2.5', s:'WON' },
-  { t:'Bayern 4-2 Dortmund — Over 3.5', s:'WON' },
-  { t:'Man City vs PSG', s:'LIVE', live:true },
-  { t:'Liverpool 3-1 Tottenham', s:'WON' },
-  { t:'Barcelona vs Atletico', s:'TODAY 22:00', live:true },
-  { t:'Juventus 2-1 Milan', s:'WON' }
-];
-const track = $('tickerTrack');
-const itemHTML = arr => arr.map(i =>
-  `<span class="${i.live ? 'live' : ''}">⚽ ${i.t} <b>${i.s}</b></span>`
-).join('');
-track.innerHTML = itemHTML(tickerItems) + itemHTML(tickerItems);
-
-/* ================= MOBILE NAV ================= */
-$('burger').addEventListener('click', () => {
-  $('navLinks').classList.toggle('open');
-});
-document.querySelectorAll('#navLinks a').forEach(a =>
-  a.addEventListener('click', () => $('navLinks').classList.remove('open'))
-);
-
-/* ================= COUNTERS + REVEAL ================= */
-function animateCount(el){
-  const target = parseFloat(el.dataset.count);
-  const suffix = el.dataset.suffix || '';
-  const dur = 1500;
-  const start = performance.now();
-  function tick(now){
-    const p = Math.min((now - start) / dur, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    el.textContent = Math.round(target * eased).toLocaleString() + suffix;
-    if(p < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
-const countObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){ animateCount(entry.target); countObserver.unobserve(entry.target); }
-  });
-}, { threshold: .6 });
-document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
-
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach((entry, i) => {
-    if(entry.isIntersecting){
-      setTimeout(() => entry.target.classList.add('in'), i * 70);
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* ================= ADMIN ================= */
-const adminModal = $('adminModal');
-const adminTrigger = $('adminTrigger');
-
-function openAdmin(){
-  const user = currentUser();
-  if(!user){ openAuth('login'); return; }
-  if(!isAdmin(user)){ showToast('Admin access only.', true); return; }
-  adminModal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderAdminAll();
-}
-function closeAdmin(){
-  adminModal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-$('adminClose').addEventListener('click', closeAdmin);
-adminModal.addEventListener('click', e => { if(e.target === adminModal) closeAdmin(); });
-
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){
-    if(adminModal.classList.contains('open')) closeAdmin();
-    else if(dashModal.classList.contains('open')) closeDashAndRefresh();
-    else if(checkoutModal.classList.contains('open')) { checkoutModal.classList.remove('open'); document.body.style.overflow=''; }
-    else if(authModal.classList.contains('open')) closeAuth();
-  }
-});
-
-document.querySelectorAll('.admin-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
-    const pane = $('pane-' + tab.dataset.tab);
-    if(pane) pane.classList.add('active');
-  });
-});
-
-/* admin games */
-const adminRows = $('adminRows');
-const gameCount = $('gameCount');
-
-function renderAdminList(){
-  gameCount.textContent = `${DB.matches.length} game${DB.matches.length === 1 ? '' : 's'}`;
-  if(DB.matches.length === 0){
-    adminRows.innerHTML = `<div class="admin-empty">No games yet. Add one using the form.</div>`;
+  if (!list.length) {
+    $('predGrid').innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No matches available.</p>`;
     return;
   }
-  adminRows.innerHTML = DB.matches.map((m, i) => `
-    <div class="admin-row">
-      <div class="ar-main">
-        <div class="ar-teams">${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</div>
-        <div class="ar-meta">
-          <span class="ar-league">${escapeHTML(m.league)}</span>
-          <span>${escapeHTML(m.time)}</span>
-          ${m.vip ? '<span class="ar-vip">👑 VIP</span>' : ''}
-          ${statusPillHTML(m.status)}
-        </div>
-      </div>
-      <div class="ar-actions">
-        <button class="ar-btn ar-edit" data-edit="${i}">✏️</button>
-        <button class="ar-btn ar-del" data-index="${i}">🗑</button>
-      </div>
-    </div>`).join('');
-}
 
-adminRows.addEventListener('click', e => {
-  const delBtn = e.target.closest('.ar-del');
-  const editBtn = e.target.closest('.ar-edit');
-  if(delBtn){
-    const idx = +delBtn.dataset.index;
-    if(isNaN(idx) || !DB.matches[idx]) return;
-    const r = DB.matches[idx];
-    DB.matches.splice(idx, 1);
-    saveDB(); renderAll();
-    showToast(`Removed: ${r.home} vs ${r.away}`);
-    return;
-  }
-  if(editBtn){
-    const idx = +editBtn.dataset.edit;
-    if(isNaN(idx) || !DB.matches[idx]) return;
-    const m = DB.matches[idx];
-    populateLeagueSelects();
-    $('aLeague').value = m.league;
-    $('aHome').value = m.home;
-    $('aAway').value = m.away;
-    $('aTime').value = m.time;
-    $('aOdds').value = m.odds;
-    $('aTip').value = m.tip;
-    $('aConf').value = m.conf;
-    $('aColor').value = m.color;
-    $('aVip').checked = !!m.vip;
-    $('aStatus').value = m.status || 'pending';
-    $('aScore').value = m.score || '';
-    $('editIndex').value = String(idx);
-    $('formTitle').textContent = '✏️ Edit game';
-    $('submitBtn').textContent = 'Save changes';
-    $('cancelEditBtn').style.display = 'block';
-    document.querySelector('#pane-games .admin-form').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  }
-});
-
-function populateLeagueSelects(){
-  const sel = $('aLeague');
-  if(sel) sel.innerHTML = DB.leagues.map(l => `<option value="${escapeHTML(l.name)}">${escapeHTML(l.name)}</option>`).join('');
-}
-
-$('addGameForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const home = $('aHome').value.trim();
-  const away = $('aAway').value.trim();
-  if(!home || !away){ showToast('Both team names are required', true); return; }
-  const oddsVal = parseFloat($('aOdds').value);
-  if(isNaN(oddsVal) || oddsVal <= 1){ showToast('Odds must be > 1.00', true); return; }
-  const confVal = parseInt($('aConf').value, 10);
-  if(isNaN(confVal) || confVal < 1 || confVal > 100){ showToast('Confidence must be 1–100', true); return; }
-
-  const game = {
-    league: $('aLeague').value, home, away,
-    time: $('aTime').value.trim() || 'TBD',
-    tip: $('aTip').value.trim() || 'Match prediction',
-    odds: oddsVal.toFixed(2), conf: confVal,
-    color: $('aColor').value, vip: $('aVip').checked,
-    status: $('aStatus').value, score: $('aScore').value.trim()
-  };
-
-  const idx = parseInt($('editIndex').value, 10);
-  if(idx >= 0 && DB.matches[idx]){
-    DB.matches[idx] = game;
-    showToast(`Updated: ${game.home} vs ${game.away}`);
-  } else {
-    DB.matches.push(game);
-    showToast(`Added: ${game.home} vs ${game.away}`);
-  }
-  saveDB(); renderAll(); resetForm();
-});
-
-function resetForm(){
-  $('addGameForm').reset();
-  $('aColor').value = '#ff2d95';
-  $('aStatus').value = 'pending';
-  $('editIndex').value = '-1';
-  $('formTitle').textContent = '➕ Add new game';
-  $('submitBtn').textContent = 'Add game to predictions';
-  $('cancelEditBtn').style.display = 'none';
-}
-$('cancelEditBtn').addEventListener('click', resetForm);
-
-/* admin leagues */
-const leagueGrid = $('leagueGrid');
-const leagueCount = $('leagueCount');
-
-function renderLeagueManager(){
-  leagueCount.textContent = `${DB.leagues.length} league${DB.leagues.length === 1 ? '' : 's'}`;
-  if(DB.leagues.length === 0){
-    leagueGrid.innerHTML = `<div class="admin-empty" style="grid-column:1/-1">No leagues yet. Add one.</div>`;
-    return;
-  }
-  leagueGrid.innerHTML = DB.leagues.map((l, i) => {
-    const count = DB.matches.filter(m => m.league === l.name).length;
+  $('predGrid').innerHTML = list.map(m => {
+    const isLocked = m.tip.includes('Locked VIP');
     return `
-    <div class="league-manage-card">
-      <div>
-        <div class="lm-name"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${l.color};margin-right:7px;vertical-align:middle"></span>${escapeHTML(l.name)}</div>
-        <div class="lm-count">${count} game${count === 1 ? '' : 's'}</div>
-      </div>
-      <div class="lm-actions">
-        <button class="lm-btn edit" data-league-edit="${i}">✏️</button>
-        <button class="lm-btn del" data-league-del="${i}">🗑</button>
-      </div>
-    </div>`;
+      <article class="pred-card" style="--accent:${escapeHTML(m.color || '#ff2d95')}">
+        <div class="pred-top"><span class="league">${escapeHTML(m.league)}</span><span class="time">${escapeHTML(m.time)}</span></div>
+        <div class="teams"><div class="team">${escapeHTML(m.home)}</div><div class="vs">VS</div><div class="team">${escapeHTML(m.away)}</div></div>
+        <div class="pick-wrap" style="min-height:80px">
+          ${isLocked ? `
+            <div class="lock-overlay">
+              <span class="ic">🔒</span><span class="txt">VIP Only</span>
+              <button onclick="document.getElementById('pricing').scrollIntoView()">Unlock</button>
+            </div>
+          ` : `
+            <div class="pick"><div><div class="pick-label">Tip</div><div class="pick-tip">${escapeHTML(m.tip)}</div></div><div class="odds">${escapeHTML(m.odds)}</div></div>
+            <div class="bar"><i style="width:${m.conf}%"></i></div>
+          `}
+        </div>
+      </article>`;
   }).join('');
 }
 
-leagueGrid.addEventListener('click', e => {
-  const delBtn = e.target.closest('[data-league-del]');
-  const editBtn = e.target.closest('[data-league-edit]');
-  if(delBtn){
-    const idx = +delBtn.dataset.leagueDel;
-    if(isNaN(idx) || !DB.leagues[idx]) return;
-    const removed = DB.leagues[idx];
-    if(!confirm(`Delete league "${removed.name}"? Its games become "Uncategorized".`)) return;
-    DB.leagues.splice(idx, 1);
-    DB.matches.forEach(m => { if(m.league === removed.name) m.league = 'Uncategorized'; });
-    saveDB(); renderAll();
-    showToast(`League removed: ${removed.name}`);
-    return;
-  }
-  if(editBtn){
-    const idx = +editBtn.dataset.leagueEdit;
-    if(isNaN(idx) || !DB.leagues[idx]) return;
-    const l = DB.leagues[idx];
-    $('lName').value = l.name;
-    $('lColor').value = l.color;
-    $('editLeagueIndex').value = String(idx);
-    $('leagueFormTitle').textContent = '✏️ Edit league';
-    $('leagueSubmitBtn').textContent = 'Save changes';
-    $('cancelLeagueEditBtn').style.display = 'block';
-    document.querySelector('#pane-leagues .admin-form').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  }
-});
-
-$('leagueForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const name = $('lName').value.trim();
-  if(!name){ showToast('League name required', true); return; }
-  const color = $('lColor').value;
-  const idx = parseInt($('editLeagueIndex').value, 10);
-  if(DB.leagues.some((l, i) => l.name.toLowerCase() === name.toLowerCase() && i !== idx)){
-    showToast('That league already exists', true); return;
-  }
-  if(idx >= 0 && DB.leagues[idx]){
-    const oldName = DB.leagues[idx].name;
-    DB.leagues[idx] = { name, color };
-    DB.matches.forEach(m => { if(m.league === oldName) m.league = name; });
-    showToast(`League updated: ${name}`);
-  } else {
-    DB.leagues.push({ name, color });
-    showToast(`League added: ${name}`);
-  }
-  saveDB(); renderAll(); resetLeagueForm();
-});
-
-function resetLeagueForm(){
-  $('leagueForm').reset();
-  $('lColor').value = '#ff2d95';
-  $('editLeagueIndex').value = '-1';
-  $('leagueFormTitle').textContent = '➕ Add new league';
-  $('leagueSubmitBtn').textContent = 'Add league';
-  $('cancelLeagueEditBtn').style.display = 'none';
-}
-$('cancelLeagueEditBtn').addEventListener('click', resetLeagueForm);
-
-/* admin results */
-const adminResultBody = $('adminResultBody');
-const resultCount = $('resultCount');
-
-function renderAdminResults(){
-  resultCount.textContent = `${DB.matches.length} row${DB.matches.length === 1 ? '' : 's'}`;
-  if(DB.matches.length === 0){
-    adminResultBody.innerHTML = `<tr><td colspan="5" class="admin-empty">No games yet.</td></tr>`;
-    return;
-  }
-  adminResultBody.innerHTML = DB.matches.map((m, i) => {
-    const s = ['won','lost','pending','live'].includes(m.status) ? m.status : 'pending';
-    return `
+function renderDailyTable() {
+  $('dailyTableBody').innerHTML = DB.matches.map(m => `
     <tr>
-      <td>
-        <div class="at-match">${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</div>
-        <div class="at-time">${escapeHTML(m.time)}</div>
-      </td>
+      <td><b>${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</b></td>
       <td><span class="league-chip">${escapeHTML(m.league)}</span></td>
-      <td class="at-tip">${escapeHTML(m.tip)}</td>
-      <td>
-        <select class="status-select ${s}" data-status-index="${i}">
-          <option value="pending" ${s==='pending'?'selected':''}>⏳ Pending</option>
-          <option value="won" ${s==='won'?'selected':''}>✅ Won</option>
-          <option value="lost" ${s==='lost'?'selected':''}>❌ Lost</option>
-          <option value="live" ${s==='live'?'selected':''}>🔴 Live</option>
-        </select>
-      </td>
-      <td><input class="at-score-input" data-score-index="${i}" value="${escapeHTML(m.score || '')}" placeholder="2-1"></td>
-    </tr>`;
-  }).join('');
+      <td>${escapeHTML(m.tip)}</td>
+      <td>${m.conf}%</td>
+      <td><span class="result-pill ${m.status || 'pending'}">${m.status || 'pending'}</span></td>
+    </tr>
+  `).join('');
 }
 
-adminResultBody.addEventListener('change', e => {
-  const sel = e.target.closest('[data-status-index]');
-  if(sel){
-    const idx = +sel.dataset.statusIndex;
-    if(isNaN(idx) || !DB.matches[idx]) return;
-    DB.matches[idx].status = sel.value;
-    saveDB();
-    sel.className = 'status-select ' + sel.value;
-    renderPredGrid(); renderDailyTable(); renderAdminList();
-    showToast(`Result set to "${STATUS_LABELS[sel.value]}"`);
-    return;
-  }
-  const inp = e.target.closest('[data-score-index]');
-  if(inp){
-    const idx = +inp.dataset.scoreIndex;
-    if(isNaN(idx) || !DB.matches[idx]) return;
-    DB.matches[idx].score = inp.value.trim();
-    saveDB(); renderDailyTable(); renderAdminList();
-    showToast('Score updated');
-  }
-});
-
-/* admin subscriptions */
-const subRows = $('subRows');
-function renderSubscriptions(){
-  const subs = DB.users.filter(u => u.role === 'member' && u.plan);
-  const vipCount = subs.filter(u => u.plan === 'VIP Member').length;
-  const proCount = subs.filter(u => u.plan === 'VIP Pro').length;
-  let revenue = 0;
-  subs.forEach(u => {
-    revenue += parseFloat(String(u.planPrice || '').replace(/[^0-9.]/g, '')) || 0;
-  });
-
-  $('subCountVip').textContent = vipCount;
-  $('subCountPro').textContent = proCount;
-  $('subCountTotal').textContent = subs.length;
-  $('subRevenue').textContent = '$' + revenue.toFixed(2);
-  $('subListCount').textContent = `${subs.length} subscriber${subs.length === 1 ? '' : 's'}`;
-
-  if(subs.length === 0){
-    subRows.innerHTML = `<div class="admin-empty">No subscribers yet.</div>`;
-    return;
-  }
-  subRows.innerHTML = subs.map(u => {
-    const exp = u.planExpiry ? new Date(u.planExpiry).toLocaleDateString() : '—';
-    return `
+function renderAdminMatches() {
+  $('adminRows').innerHTML = DB.matches.map(m => `
     <div class="admin-row">
-      <div class="ar-main">
-        <div class="ar-teams">${escapeHTML(u.name)} · ${escapeHTML(u.email)}</div>
-        <div class="ar-meta">
-          <span class="ar-league">${escapeHTML(u.plan)}</span>
-          <span>${escapeHTML(u.planPrice || '')}</span>
-          <span>expires ${escapeHTML(exp)}</span>
-        </div>
-      </div>
+      <div class="ar-main"><b>${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</b><br><small>${escapeHTML(m.league)} · ${escapeHTML(m.tip)}</small></div>
       <div class="ar-actions">
-        <button class="ar-btn ar-del" data-sub-del="${u.id}">🗑</button>
+        <button class="ar-btn ar-del" data-del-match="${m.id}">🗑</button>
       </div>
-    </div>`;
-  }).join('');
+    </div>
+  `).join('');
 }
 
-subRows.addEventListener('click', e => {
-  const btn = e.target.closest('[data-sub-del]');
-  if(!btn) return;
-  const id = btn.dataset.subDel;
-  const idx = DB.users.findIndex(u => u.id === id);
-  if(idx < 0) return;
-  if(!confirm('Remove this subscriber and cancel their plan?')) return;
-  const u = DB.users[idx];
-  u.plan = null; u.planPrice = null; u.planExpiry = null;
-  saveDB(); renderSubscriptions();
-  showToast(`Subscriber removed: ${u.name}`);
-});
-
-/* admin feedback */
-const feedbackRows = $('feedbackRows');
-const feedbackForm = $('feedbackForm');
-
-function renderFeedbackManager(){
-  $('feedbackCount').textContent = `${DB.feedback.length} review${DB.feedback.length === 1 ? '' : 's'}`;
-  if(DB.feedback.length === 0){
-    feedbackRows.innerHTML = `<div class="admin-empty">No feedback yet.</div>`;
-    return;
-  }
-  feedbackRows.innerHTML = DB.feedback.map((f, i) => {
-    const initials = getInitials(f.name);
-    return `
-    <div class="feedback-card">
-      <div class="feedback-top">
-        <div class="feedback-user">
-          <div class="feedback-avatar" style="background:${f.color || 'linear-gradient(135deg,var(--pink),var(--orange))'}">${escapeHTML(initials)}</div>
-          <div>
-            <b>${escapeHTML(f.name)}</b>
-            <span>${escapeHTML(f.role)}</span>
-          </div>
-        </div>
-        <div class="feedback-actions">
-          <button class="fb-btn edit" data-fb-edit="${i}">✏️</button>
-          <button class="fb-btn del" data-fb-del="${i}">🗑</button>
-        </div>
-      </div>
-      <div class="feedback-stars">${'★'.repeat(f.stars)}${'☆'.repeat(5 - f.stars)}</div>
-      <div class="feedback-text">${escapeHTML(f.text)}</div>
-    </div>`;
-  }).join('');
-}
-
-feedbackRows.addEventListener('click', e => {
-  const delBtn = e.target.closest('[data-fb-del]');
-  const editBtn = e.target.closest('[data-fb-edit]');
-  if(delBtn){
-    const idx = +delBtn.dataset.fbDel;
-    if(isNaN(idx) || !DB.feedback[idx]) return;
-    const r = DB.feedback[idx];
-    DB.feedback.splice(idx, 1);
-    saveDB(); renderTestimonials(); renderFeedbackManager();
-    showToast(`Feedback removed from ${r.name}`);
-    return;
-  }
-  if(editBtn){
-    const idx = +editBtn.dataset.fbEdit;
-    if(isNaN(idx) || !DB.feedback[idx]) return;
-    const f = DB.feedback[idx];
-    $('fbName').value = f.name;
-    $('fbRole').value = f.role;
-    $('fbStars').value = String(f.stars);
-    $('fbText').value = f.text;
-    $('fbColor').value = f.color || 'linear-gradient(135deg,var(--pink),var(--orange))';
-    $('editFeedbackIndex').value = String(idx);
-    $('fbFormTitle').textContent = '✏️ Edit feedback';
-    $('fbSubmitBtn').textContent = 'Save changes';
-    $('cancelFeedbackEditBtn').style.display = 'block';
-    document.getElementById('feedbackForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
+$('adminRows').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-del-match]');
+  if (!btn) return;
+  if (!confirm('Delete this game?')) return;
+  try {
+    await apiCall(`/matches/${btn.dataset.delMatch}`, 'DELETE');
+    showToast('Match deleted');
+    loadData();
+  } catch (err) {
+    showToast(err.message, true);
   }
 });
 
-feedbackForm.addEventListener('submit', e => {
+function renderAdminMembers() {
+  $('memberAdminList').innerHTML = DB.members.map(u => `
+    <div class="admin-row">
+      <div class="ar-main"><b>${escapeHTML(u.name)}</b> (${escapeHTML(u.email)})<br><small>Plan: ${escapeHTML(u.plan || 'Free')} · Status: ${escapeHTML(u.vipStatus || 'free')}</small></div>
+      <div class="ar-actions">
+        ${u.vipStatus !== 'active' ? `<button class="btn btn-sm btn-lime" data-act-vip="${u.id}">Activate</button>` : `<button class="btn btn-sm btn-danger" data-rev-vip="${u.id}">Revoke</button>`}
+      </div>
+    </div>
+  `).join('');
+}
+
+$('memberAdminList').addEventListener('click', async e => {
+  const actBtn = e.target.closest('[data-act-vip]');
+  const revBtn = e.target.closest('[data-rev-vip]');
+  if (actBtn) {
+    await apiCall(`/members/${actBtn.dataset.actVip}/vip-status`, 'POST', { action: 'activate', days: 30 });
+    showToast('VIP activated');
+    loadAdminMembers();
+  }
+  if (revBtn) {
+    await apiCall(`/members/${revBtn.dataset.revVip}/vip-status`, 'POST', { action: 'revoke' });
+    showToast('VIP revoked');
+    loadAdminMembers();
+  }
+});
+
+$('addGameForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const name = $('fbName').value.trim();
-  const role = $('fbRole').value.trim();
-  const text = $('fbText').value.trim();
-  if(!name || !role || !text){ showToast('Fill in all feedback fields', true); return; }
-  const data = { name, role, stars: parseInt($('fbStars').value,10), text, color: $('fbColor').value };
-  const idx = parseInt($('editFeedbackIndex').value, 10);
-  if(idx >= 0 && DB.feedback[idx]){
-    DB.feedback[idx] = data;
-    showToast(`Feedback updated for ${name}`);
-  } else {
-    DB.feedback.push(data);
-    showToast(`Feedback added for ${name}`);
+  const payload = {
+    id: $('editId').value || undefined,
+    league: $('aLeague').value,
+    home: $('aHome').value,
+    away: $('aAway').value,
+    time: $('aTime').value,
+    odds: $('aOdds').value,
+    tip: $('aTip').value,
+    conf: $('aConf').value,
+    vip: $('aVip').checked
+  };
+  try {
+    await apiCall('/matches', 'POST', payload);
+    showToast('Match saved successfully');
+    $('addGameForm').reset();
+    loadData();
+  } catch (err) {
+    showToast(err.message, true);
   }
-  saveDB(); renderTestimonials(); renderFeedbackManager();
-  resetFeedbackForm();
 });
 
-function resetFeedbackForm(){
-  feedbackForm.reset();
-  $('fbStars').value = '5';
-  $('fbColor').value = 'linear-gradient(135deg,var(--pink),var(--orange))';
-  $('editFeedbackIndex').value = '-1';
-  $('fbFormTitle').textContent = '➕ Add new feedback';
-  $('fbSubmitBtn').textContent = 'Add feedback';
-  $('cancelFeedbackEditBtn').style.display = 'none';
-}
-$('cancelFeedbackEditBtn').addEventListener('click', resetFeedbackForm);
+$('createMemberForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  try {
+    const res = await apiCall('/members/create', 'POST', {
+      name: $('cmName').value,
+      email: $('cmEmail').value,
+      days: 30
+    });
+    alert(`Member Created!\nEmail: ${res.email}\nPassword: ${res.plainPass}\nUsername: ${res.username}`);
+    $('createMemberForm').reset();
+    loadAdminMembers();
+  } catch (err) {
+    showToast(err.message, true);
+  }
+});
 
-function renderAdminAll(){
-  renderAdminList();
-  renderLeagueManager();
-  renderAdminResults();
-  renderSubscriptions();
-  renderFeedbackManager();
-  populateLeagueSelects();
-}
+// Auth Handlers
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    const tokenResult = await user.getIdTokenResult();
+    const token = await user.getIdToken();
+    try {
+      const profile = await apiCall('/matches');
+      // Admin check
+      isAdminUser = user.email.includes('admin');
+      SESSION = { email: user.email, name: user.displayName || user.email.split('@')[0] };
+    } catch(e){}
+    $('navCta').innerHTML = `<div class="member-chip" id="btnDash"><div class="mc-avatar">👤</div><span>${escapeHTML(user.email.split('@')[0])}</span></div>`;
+    $('btnDash').onclick = openDash;
+  } else {
+    isAdminUser = false;
+    SESSION = null;
+    $('navCta').innerHTML = `<button class="btn btn-ghost btn-sm" id="btnLogin">Log in</button>`;
+    $('btnLogin').onclick = openLogin;
+  }
+  loadData();
+});
 
-/* ================= RENDER ALL ================= */
-function renderAll(){
-  refreshSessionUI();
-  renderFilters();
-  renderPredGrid();
-  renderDailyTable();
-  renderTestimonials();
-  if(isAdmin(currentUser())) renderAdminAll();
-}
-
-/* ================= BOOT ================= */
-(async function boot(){
-  await initData();
-  renderAll();
-
-  $('unlockCta').addEventListener('click', e => {
+function openLogin() {
+  $('authModal').classList.add('open');
+  $('authBody').innerHTML = `
+    <h3>Welcome back</h3>
+    <form id="loginForm" style="margin-top:16px">
+      <div class="field"><label>Email</label><input id="lEmail" type="email" required></div>
+      <div class="field"><label>Password</label><input id="lPass" type="password" required></div>
+      <button type="submit" class="btn btn-primary btn-block">Log in</button>
+    </form>`;
+  $('loginForm').onsubmit = async e => {
     e.preventDefault();
-    const user = currentUser();
-    if(isPaid(user)) openDashboard();
-    else if(user) document.getElementById('pricing').scrollIntoView({ behavior:'smooth' });
-    else openAuth('signup');
-  });
+    try {
+      await signInWithEmailAndPassword(auth, $('lEmail').value, $('lPass').value);
+      $('authModal').classList.remove('open');
+      showToast('Logged in');
+    } catch(err) {
+      showToast(err.message, true);
+    }
+  };
+}
 
-  adminTrigger.addEventListener('click', openAdmin);
+function openDash() {
+  $('dashModal').classList.add('open');
+  $('dashName').textContent = SESSION.name;
+  $('dashEmail').textContent = SESSION.email;
+  $('dashBody').innerHTML = `
+    <div class="dash-plan-card">
+      <div><b>VIP Status</b><p>Active server sync session</p></div>
+      <button class="btn btn-danger btn-sm" id="btnLogout">Log out</button>
+    </div>`;
+  $('btnLogout').onclick = async () => {
+    await signOut(auth);
+    $('dashModal').classList.remove('open');
+  };
+}
+
+$('adminTrigger').onclick = () => {
+  if (!isAdminUser) {
+    showToast('Admin login required.', true);
+    openLogin();
+    return;
+  }
+  $('adminModal').classList.add('open');
+};
+
+$('authClose').onclick = () => $('authModal').classList.remove('open');
+$('dashClose').onclick = () => $('dashModal').classList.remove('open');
+$('adminClose').onclick = () => $('adminModal').classList.remove('open');
+$('btnBuyVip').onclick = () => document.querySelector('.payment-box').scrollIntoView();
+
+document.querySelectorAll('.admin-tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
+    t.classList.add('active');
+    $('pane-' + t.dataset.tab).classList.add('active');
+  };
+});
+
+// Boot Initializer
+(async function init() {
+  $('bootBar').classList.add('show');
+  await loadData();
+  $('bootBar').classList.remove('show');
 })();
 </script>
 </body>
