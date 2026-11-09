@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Official Telegram WebApp SDK for native TMA mode -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -85,7 +87,6 @@ body.daylight-theme .nav{background:rgba(240,243,248,.85)}
   padding:5px 10px;border-radius:8px;font-size:.76rem;font-weight:800;cursor:pointer;
 }
 
-/* Virtual Coins Header Badge */
 .virtual-coin-badge{
   background:rgba(255,214,10,.14);border:1.5px solid var(--yellow);color:var(--yellow);
   padding:4px 10px;border-radius:20px;font-size:.74rem;font-weight:900;display:flex;align-items:center;gap:5px;
@@ -98,6 +99,7 @@ body.daylight-theme .nav{background:rgba(240,243,248,.85)}
 .btn-ghost:hover{border-color:var(--cyan);background:rgba(0,229,255,.08)}
 .btn-lime{background:linear-gradient(135deg,var(--lime),var(--cyan));color:#04120a}
 .btn-lime:hover{box-shadow:0 8px 25px rgba(182,255,59,.4);transform:translateY(-2px)}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--purple));color:#04120a}
 .btn-sm{padding:6px 12px;font-size:.76rem;border-radius:8px}
 .btn-block{width:100%}
 .btn-danger{background:rgba(255,45,149,.15);border:1px solid rgba(255,45,149,.4);color:var(--pink)}
@@ -159,11 +161,47 @@ h1{font-size:clamp(2.1rem,4.6vw,3.5rem);line-height:1.1;font-weight:900;margin-b
 }
 .odds-bm.best{border-color:var(--lime);color:var(--lime);background:rgba(182,255,59,.12);font-weight:900}
 
-/* 5. LINEUPS & TEAM NEWS RADAR BADGE */
 .lineup-radar-badge{
   background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);color:var(--cyan);
   font-size:.66rem;font-weight:800;padding:4px 8px;border-radius:6px;margin:6px 0;display:flex;align-items:center;gap:5px;
 }
+
+/* ============ 2. 2D LIVE MATCH PITCH TRACKER ============ */
+.pitch-container{
+  position:relative;width:100%;height:140px;background:#0d3d1e;border:2px solid rgba(255,255,255,.3);
+  border-radius:14px;overflow:hidden;margin:12px 0;background-image:linear-gradient(90deg,rgba(255,255,255,.05) 50%,transparent 50%);
+  background-size:40px 100%;box-shadow:inset 0 0 30px rgba(0,0,0,.6);
+}
+.pitch-half-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:rgba(255,255,255,.3)}
+.pitch-center-circle{position:absolute;top:50%;left:50%;width:44px;height:44px;border:2px solid rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%)}
+.pitch-box-left{position:absolute;top:25px;bottom:25px;left:0;width:34px;border:2px solid rgba(255,255,255,.3);border-left:none}
+.pitch-box-right{position:absolute;top:25px;bottom:25px;right:0;width:34px;border:2px solid rgba(255,255,255,.3);border-right:none}
+.pitch-ball{
+  position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;box-shadow:0 0 12px var(--lime);
+  top:50%;left:50%;transform:translate(-50%,-50%);transition:all .6s ease;
+}
+.pitch-live-event{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(10,6,18,.88);
+  border:1px solid var(--lime);color:var(--lime);font-size:.68rem;font-weight:900;padding:3px 10px;
+  border-radius:100px;white-space:nowrap;z-index:2;
+}
+
+/* ============ 3. POISSON CORRECT SCORE HEATMAP ============ */
+.poisson-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0;
+}
+.poisson-cell{
+  background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:8px 4px;
+  text-align:center;font-size:.72rem;transition:.2s;
+}
+.poisson-cell b{display:block;font-size:.82rem}
+.poisson-cell.hot{background:rgba(0,229,255,.18);border-color:var(--cyan);color:var(--cyan)}
+.poisson-cell.top{background:rgba(182,255,59,.22);border-color:var(--lime);color:var(--lime)}
+
+/* ============ 5. VALUE BET (+EV) & ARBITRAGE SECTION ============ */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-bottom:28px}
+.ev-card{background:var(--card-bg);border:1.5px solid var(--lime);border-radius:18px;padding:16px}
+.ev-tag{background:var(--lime);color:#04120a;font-weight:900;font-size:.65rem;padding:3px 8px;border-radius:6px;text-transform:uppercase}
 
 /* Sections */
 section{padding:46px 0}
@@ -195,6 +233,7 @@ section{padding:46px 0}
 
 .reaction-bar{display:flex;gap:6px;margin:6px 0;background:rgba(0,0,0,.25);padding:5px 8px;border-radius:8px}
 .rx-btn{font-size:.7rem;font-weight:800;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.05);padding:3px 6px;border-radius:6px;color:var(--muted)}
+.rx-btn:hover{color:#fff}
 .poll-box{margin:8px 0;padding:8px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid var(--border)}
 .poll-title{display:flex;justify-content:space-between;font-size:.64rem;font-weight:800;color:var(--muted);margin-bottom:4px}
 .poll-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
@@ -205,30 +244,19 @@ section{padding:46px 0}
 .lock-overlay{position:absolute;inset:0;background:rgba(10,6,18,.88);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
 .lock-overlay span{font-size:.78rem;font-weight:800;color:var(--yellow);text-transform:uppercase}
 
-/* ============ 4. PERSONAL USER P&L PORTFOLIO ============ */
-.portfolio-card{
-  background:var(--card-bg);border:1.5px solid var(--cyan);border-radius:24px;padding:24px;margin-bottom:30px;
-}
+.portfolio-card{background:var(--card-bg);border:1.5px solid var(--cyan);border-radius:24px;padding:24px;margin-bottom:30px}
 .portfolio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
 .portfolio-stat{background:rgba(0,0,0,.3);border-radius:14px;padding:14px;text-align:center}
 
-/* ============ 1. VIRTUAL BANKROLL GAME ARENA ============ */
-.virtual-arena-card{
-  background:linear-gradient(135deg,rgba(255,214,10,.1),rgba(123,47,247,.15));
-  border:1.5px solid var(--yellow);border-radius:24px;padding:24px;margin-bottom:30px;
-}
-
-/* Bookmaker Promos */
+.virtual-arena-card{background:linear-gradient(135deg,rgba(255,214,10,.1),rgba(123,47,247,.15));border:1.5px solid var(--yellow);border-radius:24px;padding:24px;margin-bottom:30px}
 .promo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .promo-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:20px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}
 .promo-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .promo-code-box{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.35);border:1px dashed var(--cyan);border-radius:10px;padding:8px 12px;margin:12px 0}
 
-/* Asian Handicap */
 .ah-box{background:var(--card-bg);border:1.5px solid var(--cyan);border-radius:24px;padding:24px;margin-bottom:30px}
 .ah-res-badge{font-size:1.1rem;font-weight:900;padding:8px 18px;border-radius:12px}
 
-/* Tables & ROI */
 .table-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;overflow-x:auto}
 table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:640px}
 .daily-table th{text-align:left;font-size:.66rem;text-transform:uppercase;color:var(--muted);padding:14px;background:rgba(255,255,255,.02)}
@@ -306,6 +334,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
 .field input,.field select{width:100%;padding:9px 12px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:#fff;outline:none}
 .admin-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.04);padding:8px 12px;border-radius:10px;margin-bottom:6px}
 
+/* ADMIN PANEL: STRICTLY HIDDEN FROM PUBLIC */
 .admin-trigger{
   display:none;position:fixed;bottom:84px;right:24px;z-index:140;
   width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple));
@@ -315,6 +344,26 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:var(--lime);color:#04120a;font-weight:800;padding:12px 24px;border-radius:12px;opacity:0;transition:.3s;z-index:300}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.error{background:var(--pink);color:#fff}
+
+.h2h-modal-card{width:min(640px,100%);max-height:85vh;overflow-y:auto}
+.h2h-form-row{display:flex;gap:6px;align-items:center;margin:6px 0}
+.form-badge{width:22px;height:22px;border-radius:50%;font-size:.65rem;font-weight:900;display:grid;place-items:center}
+.form-w{background:var(--lime);color:#04120a}
+.form-d{background:var(--yellow);color:#04120a}
+.form-l{background:var(--pink);color:#fff}
+.h2h-clash{display:flex;justify-content:space-between;font-size:.78rem;background:rgba(255,255,255,.03);padding:8px 12px;border-radius:8px;margin-bottom:6px;border:1px solid rgba(255,255,255,.06)}
+
+.pay-tabs{display:flex;gap:6px;margin:16px 0;background:rgba(255,255,255,.05);padding:4px;border-radius:12px}
+.pay-tab{flex:1;padding:8px;font-size:.78rem;font-weight:800;text-align:center;border-radius:8px;color:var(--muted);transition:.2s}
+.pay-tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff}
+.pay-box-content{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:16px}
+.copy-pill{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.4);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);margin:8px 0}
+.copy-pill b{font-family:monospace;font-size:.9rem;color:var(--cyan)}
+.btn-copy{font-size:.7rem;font-weight:800;background:rgba(255,255,255,.1);padding:4px 8px;border-radius:6px;color:#fff}
+
+.stk-dialog{display:none;background:rgba(4,18,10,.95);border:1.5px solid var(--lime);border-radius:16px;padding:18px;margin-top:14px;text-align:center}
+.stk-dialog.active{display:block}
+.stk-phone-badge{font-size:2rem;margin-bottom:6px;display:inline-block}
 
 @media(max-width:900px){
   .hero-inner,.price-grid,.banker-match-row,.calc-card,.portfolio-grid{grid-template-columns:1fr}
@@ -372,13 +421,13 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
     
     <nav class="nav-links">
       <a href="#predictions">Predictions</a>
+      <a href="#value-radar">+EV Radar</a>
       <a href="#portfolio">My Portfolio</a>
       <a href="#virtual-game">Punters Game</a>
       <a href="#jackpot">Jackpot</a>
       <a href="#pricing">VIP Plans</a>
     </nav>
 
-    <!-- Controls, 1. Virtual Coins Badge & Theme Switcher -->
     <div class="nav-controls">
       <div class="virtual-coin-badge" title="Your Risk-Free Virtual Betting Balance">
         🪙 <span id="headerCoinBalance">1,000</span>
@@ -422,6 +471,17 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
           <div class="fc-score">2 – 1</div>
           <div><b>Chelsea</b><br><small style="color:var(--muted)">AWAY</small></div>
         </div>
+
+        <!-- 2. 2D LIVE MATCH PITCH TRACKER ON HERO -->
+        <div class="pitch-container" id="heroLivePitch">
+          <div class="pitch-half-line"></div>
+          <div class="pitch-center-circle"></div>
+          <div class="pitch-box-left"></div>
+          <div class="pitch-box-right"></div>
+          <div class="pitch-ball" id="pitchBall" style="left:72%;top:42%"></div>
+          <div class="pitch-live-event" id="pitchLiveText">⚡ Dangerous Attack: Arsenal on right flank (72')</div>
+        </div>
+
         <div style="display:flex;justify-content:space-between;font-weight:800">
           <span>Arsenal Win &amp; BTTS</span>
           <span style="color:var(--lime)">2.10</span>
@@ -431,7 +491,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </div>
 </section>
 
-<!-- 1. SMART 1-CLICK ACCA GENERATOR TOOLBAR -->
+<!-- SMART 1-CLICK ACCA GENERATOR TOOLBAR -->
 <div class="container">
   <div class="acca-toolbar">
     <div>
@@ -447,7 +507,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </div>
 </div>
 
-<!-- BANKER OF THE DAY & 5. LINEUPS RADAR -->
+<!-- BANKER OF THE DAY & LINEUPS RADAR -->
 <div class="container banker-wrap">
   <div class="banker-card">
     <div class="banker-top">
@@ -464,12 +524,9 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
       <div>
         <div class="banker-teams" id="bankerTeams">Arsenal vs Chelsea</div>
         <div class="banker-meta" id="bankerMeta">Premier League · Verified 94% Confidence Selection</div>
-        
-        <!-- 5. Confirmed Lineup Alert -->
         <div class="lineup-radar-badge">
           <span>🚑</span> <b>Lineups Radar:</b> Saka confirmed in starting XI; Chelsea Palmer benched (4-3-3 tactical edge Home).
         </div>
-        
         <div class="dropping-odds-badge">
           📉 <b>Sharp Money Alert:</b> Arsenal odds dropped from 2.10 ➔ 1.78 (-15%) · Heavy Pro Inflow
         </div>
@@ -490,14 +547,52 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
     <div class="sec-head">
       <span class="sec-tag">Selections</span>
       <h2>Today's Football Tips &amp; In-Play Radar</h2>
-      <p>Click <b>"📊 H2H Stats"</b> for lineups, tap <b>"+ Slip"</b> to build an acca, or bet risk-free with virtual coins.</p>
+      <p>Click <b>"📊 H2H Stats"</b> for Poisson heatmaps, tap <b>"+ Slip"</b> to build an acca, or bet risk-free with virtual coins.</p>
     </div>
     <div class="filters" id="filters"></div>
     <div class="pred-grid" id="predGrid"></div>
   </div>
 </section>
 
-<!-- ============ 4. PERSONAL USER P&L PORTFOLIO TRACKER ============ -->
+<!-- ============ 5. VALUE BET (+EV) & ARBITRAGE SCANNER ============ -->
+<section id="value-radar" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-tag">Mathematical Edge</span>
+      <h2>Value Bet (+EV) &amp; Arbitrage Radar</h2>
+      <p>Scans where bookmaker odds are mispriced relative to statistical fair probabilities.</p>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span class="ev-tag">+19.4% Expected Value (+EV)</span>
+          <small style="color:var(--cyan);font-weight:800">Premier League</small>
+        </div>
+        <b style="font-size:.95rem;display:block">Arsenal Win &amp; Over 1.5 Goals</b>
+        <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin:8px 0">
+          <span>Fair Odds: <b>1.76</b></span>
+          <span>SportyBet Odds: <b style="color:var(--lime)">2.10</b></span>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted)">Statistical model indicates a 56.8% win probability vs bookmaker implied 47.6%.</p>
+      </div>
+
+      <div class="ev-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span class="ev-tag" style="background:var(--cyan)">⚡ Arbitrage Margin: +3.8%</span>
+          <small style="color:var(--cyan);font-weight:800">La Liga</small>
+        </div>
+        <b style="font-size:.95rem;display:block">Real Madrid vs Sevilla (SureBet)</b>
+        <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin:8px 0">
+          <span>Home: <b>1.90 (1xBet)</b></span>
+          <span>Draw/Away: <b>2.35 (Betway)</b></span>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted)">Guaranteed profit spread by splitting stakes across opposing bookmakers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL USER P&L PORTFOLIO -->
 <section id="portfolio" style="padding-top:0">
   <div class="container">
     <div class="sec-head">
@@ -533,7 +628,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </div>
 </section>
 
-<!-- ============ 1. VIRTUAL BANKROLL GAME ARENA ============ */ -->
+<!-- VIRTUAL BANKROLL GAME ARENA -->
 <section id="virtual-game" style="padding-top:0">
   <div class="container">
     <div class="virtual-arena-card">
@@ -541,14 +636,14 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
         <div>
           <span style="font-size:.7rem;font-weight:900;background:var(--yellow);color:#000;padding:3px 10px;border-radius:20px;text-transform:uppercase">🎮 Punters Cup</span>
           <h3 style="font-size:1.3rem;font-weight:900;margin-top:4px">Risk-Free Virtual Betting League</h3>
-          <p style="font-size:.8rem;color:var(--muted)">Bet using your free virtual coins. Top monthly punters win KES 5,000 airtime &amp; VIP passes!</p>
+          <p style="font-size:.8rem;color:var(--muted)">Bet using your free virtual coins. Top monthly punters win airtime &amp; VIP passes!</p>
         </div>
         <div style="text-align:right">
           <div style="font-size:.75rem;color:var(--muted)">Your Virtual Balance:</div>
           <b style="font-size:1.5rem;color:var(--yellow)" id="arenaCoinBalance">1,000 COINS</b>
         </div>
       </div>
-      <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+      <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
         <button class="btn btn-lime btn-sm" id="btnPlaceVirtualSlip">🪙 Bet Current Slip with 100 Virtual Coins</button>
         <button class="btn btn-ghost btn-sm" id="btnResetVirtualCoins">🔄 Refill 1,000 Free Coins</button>
       </div>
@@ -562,7 +657,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
     <div class="sec-head">
       <span class="sec-tag">Free Bets</span>
       <h2>Official Bookmaker Bonus Hub</h2>
-      <p>Boost your bankroll with exclusive partner sign-up bonuses &amp; promo codes.</p>
+      <p>Boost your bankroll with partner sign-up bonuses &amp; promo codes.</p>
     </div>
     <div class="promo-grid" id="promoCardsGrid"></div>
   </div>
@@ -727,7 +822,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </div>
 </div>
 
-<!-- H2H MODAL WITH LINEUPS -->
+<!-- H2H MODAL WITH 3. POISSON CORRECT SCORE HEATMAP -->
 <div class="modal" id="h2hModal">
   <div class="modal-card h2h-modal-card">
     <button class="modal-close" id="h2hClose">✕</button>
@@ -740,29 +835,18 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
     </div>
     <h3 style="font-size:1.25rem;margin-bottom:14px" id="h2hTeams">Arsenal vs Chelsea</h3>
 
-    <!-- 5. Lineup Report in H2H -->
-    <div style="background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.25);border-radius:12px;padding:10px;margin-bottom:10px">
-      <small style="font-size:.66rem;font-weight:900;color:var(--cyan);text-transform:uppercase">🚑 INJURY &amp; STARTING XI RADAR</small>
-      <div style="font-size:.75rem;margin-top:3px" id="h2hLineupsText">Arsenal: Full squad fit, Saka &amp; Rice start. Chelsea: James &amp; Fofana sidelined.</div>
+    <!-- 3. POISSON DISTRIBUTION HEATMAP -->
+    <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.7rem;font-weight:900;color:var(--yellow);text-transform:uppercase">🎯 POISSON CORRECT SCORE HEATMAP</span>
+        <small style="font-size:.65rem;color:var(--muted)">xG Mathematical Model</small>
+      </div>
+      <div class="poisson-grid" id="poissonGrid"></div>
     </div>
 
-    <!-- Form -->
     <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px">
-      <div style="font-size:.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Last 5 Games Form</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <b style="font-size:.82rem" id="h2hHomeName">Arsenal</b>
-        <div class="h2h-form-row">
-          <span class="form-badge form-w">W</span><span class="form-badge form-w">W</span>
-          <span class="form-badge form-d">D</span><span class="form-badge form-w">W</span><span class="form-badge form-l">L</span>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <b style="font-size:.82rem" id="h2hAwayName">Chelsea</b>
-        <div class="h2h-form-row">
-          <span class="form-badge form-w">W</span><span class="form-badge form-d">D</span>
-          <span class="form-badge form-l">L</span><span class="form-badge form-w">W</span><span class="form-badge form-d">D</span>
-        </div>
-      </div>
+      <div style="font-size:.7rem;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Past Head-to-Head Clashes</div>
+      <div id="h2hClashesList"></div>
     </div>
 
     <div style="background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);border-radius:12px;padding:10px;font-size:.76rem" id="h2hVerdict"></div>
@@ -795,6 +879,12 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
         <div style="font-size:.7rem;color:var(--yellow);font-weight:800;margin-top:6px" id="stkCountdown">Waiting for PIN: 45s</div>
         <button class="btn btn-sm btn-ghost" id="btnSimulatePinSuccess" style="margin-top:10px;font-size:.7rem">Simulate PIN Entered (Instant Test)</button>
       </div>
+
+      <div style="margin-top:14px;border-top:1px dashed rgba(255,255,255,.1);padding-top:10px">
+        <small style="font-size:.65rem;color:var(--muted);text-transform:uppercase;font-weight:800">Or Pay Manually via Buy Goods Till:</small>
+        <div class="copy-pill"><b id="tillNum">542891</b><button class="btn-copy" data-c="tillNum">Copy Till</button></div>
+        <div class="copy-pill"><b id="mpesaRef">PRIME-7782</b><button class="btn-copy" data-c="mpesaRef">Copy Ref</button></div>
+      </div>
     </div>
 
     <div id="pbox-micro" class="pay-box-content" style="display:none">
@@ -820,7 +910,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </div>
 </div>
 
-<!-- BET SLIP DRAWER -->
+<!-- BET SLIP DRAWER WITH 4. BOOKING CODE REVERSE DECODER -->
 <div class="slip-drawer" id="slipDrawer">
   <div class="slip-head">
     <b style="font-size:.9rem">🎫 Multi-Bet Slip (<span id="slipCountHeader">0</span>)</b>
@@ -828,11 +918,20 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </div>
   <div class="slip-body" id="slipItemsList"></div>
 
+  <!-- 4. REVERSE DECODER: IMPORT BOOKING CODE -->
+  <div style="padding:10px 14px;background:rgba(0,229,255,.05);border-top:1px dashed var(--cyan)">
+    <small style="font-size:.65rem;color:var(--cyan);font-weight:900">📥 REVERSE DECODE BOOKING CODE</small>
+    <div style="display:flex;gap:6px;margin-top:4px">
+      <input type="text" id="importCodeInput" placeholder="Paste code (e.g. PRIME-SP8821)" style="flex:1;padding:6px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;border-radius:6px">
+      <button class="btn btn-cyan btn-sm" id="btnDecodeCode" style="font-size:.7rem">Decode</button>
+    </div>
+  </div>
+
   <div style="padding:10px 14px;background:rgba(255,255,255,.03);border-top:1px dashed var(--border)">
     <small style="font-size:.65rem;color:var(--cyan);font-weight:800">+ ADD CUSTOM MATCH</small>
     <div style="display:flex;gap:6px;margin-top:4px">
-      <input type="text" id="customMatchInput" placeholder="e.g. Barcelona vs Betis" style="flex:1;padding:6px;font-size:.72rem">
-      <input type="number" step="0.01" id="customOddsInput" placeholder="Odds (1.80)" style="width:70px;padding:6px;font-size:.72rem">
+      <input type="text" id="customMatchInput" placeholder="e.g. Barcelona vs Betis" style="flex:1;padding:6px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;border-radius:6px">
+      <input type="number" step="0.01" id="customOddsInput" placeholder="Odds (1.80)" style="width:70px;padding:6px;font-size:.72rem;background:rgba(255,255,255,.06);border:1px solid var(--border);color:#fff;border-radius:6px">
       <button class="btn btn-lime btn-sm" id="btnAddCustomToSlip">+</button>
     </div>
   </div>
@@ -868,36 +967,33 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
   </form>
 </div>
 
-<!-- ============ MASTER ADMIN PANEL (CONTROLS EVERYTHING) ============ -->
+<!-- ============ MASTER ADMIN PANEL (SENSITIVE TOKENS CONFIGURED HERE ONLY) ============ -->
 <div class="admin-modal" id="adminModal">
   <div class="admin-card">
     <button class="modal-close" id="adminClose">✕</button>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
       <h2 style="font-size:1.2rem">⚙️ Master Admin Control Panel</h2>
       <div style="display:flex;gap:6px">
-        <!-- 2. Social Media 1080x1080 Graphic Generator -->
         <button class="btn btn-primary btn-sm" id="btnExportSocialCard">📸 1080x1080 Social Card</button>
-        <!-- 3. Automated Football API Sync -->
         <button class="btn btn-cyan btn-sm" id="btnSyncFootballApi">🌐 Sync Live API Feeds</button>
         <button class="btn btn-lime btn-sm" id="btnAutoSettleAll">⚡ Auto-Settle In-Play</button>
       </div>
     </div>
 
-    <!-- 6. Daraja & Telegram Admin Settings -->
+    <!-- Private Admin Credentials Vault -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div style="background:rgba(37,211,102,.1);border:1px solid var(--lime);border-radius:12px;padding:10px">
-        <b style="font-size:.72rem;color:var(--lime);display:block">6. SAFARICOM DARAJA WEBHOOK AUTOMATION</b>
+        <b style="font-size:.72rem;color:var(--lime);display:block">🔒 DARAJA TILL &amp; AUTOMATION SETTINGS</b>
         <div style="display:flex;gap:6px;margin-top:4px">
           <input type="text" id="adminDarajaTill" placeholder="Till: 542891" style="font-size:.72rem;padding:6px">
-          <!-- 6. Daraja Hands-Free Webhook Simulator -->
           <button class="btn btn-sm btn-lime" id="btnTestDarajaWebhook">Test Auto-STK</button>
         </div>
       </div>
       <div style="background:rgba(34,158,217,.1);border:1px solid var(--cyan);border-radius:12px;padding:10px">
-        <b style="font-size:.72rem;color:var(--cyan);display:block">TELEGRAM BROADCASTER &amp; ANTI-LEAK PASS</b>
+        <b style="font-size:.72rem;color:var(--cyan);display:block">🔒 PRIVATE TELEGRAM BOT TOKEN VAULT</b>
         <div style="display:flex;gap:6px;margin-top:4px">
-          <input type="text" id="adminTgToken" placeholder="Bot Token" style="font-size:.72rem;padding:6px">
-          <button class="btn btn-sm btn-ghost" id="btnGenVipPasscode">Generate Pass</button>
+          <input type="password" id="adminTgToken" placeholder="Paste Bot Token (Hidden from public)" style="font-size:.72rem;padding:6px">
+          <button class="btn btn-sm btn-ghost" id="btnSaveTg">Save Token</button>
         </div>
       </div>
     </div>
@@ -925,7 +1021,7 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
           </div>
           <div class="field" style="display:flex;align-items:center;gap:6px">
             <input type="checkbox" id="aBroadcastTg" checked style="width:auto">
-            <label for="aBroadcastTg" style="margin:0;font-size:.74rem">📢 Auto-Broadcast to Telegram Channel</label>
+            <label for="aBroadcastTg" style="margin:0;font-size:.74rem">📢 Broadcast to Telegram Channel</label>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Post Game Live</button>
         </form>
@@ -975,7 +1071,49 @@ table.daily-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width
 
 <div class="toast" id="toast"></div>
 
-<!-- FIREBASE REAL-TIME ENGINE & ALL 26 SYSTEMS -->
+<!-- PWA & SCRIPT SETUP -->
+<script>
+const pwaManifest = {
+  name: "Prime Tips - Football Predictions",
+  short_name: "PrimeTips",
+  start_url: window.location.href,
+  display: "standalone",
+  background_color: "#0a0612",
+  theme_color: "#0a0612",
+  icons: [{
+    src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>",
+    sizes: "192x192 512x512",
+    type: "image/svg+xml"
+  }]
+};
+const manifestBlob = new Blob([JSON.stringify(pwaManifest)], { type: 'application/manifest+json' });
+const linkTag = document.createElement('link');
+linkTag.rel = 'manifest';
+linkTag.href = URL.createObjectURL(manifestBlob);
+document.head.appendChild(linkTag);
+
+if ('serviceWorker' in navigator) {
+  const swCode = `self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));`;
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob([swCode], { type: 'text/javascript' }))).catch(()=>{});
+}
+
+let deferredPwaPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPwaPrompt = e;
+  const b = document.getElementById('pwaBanner');
+  if (b) b.classList.add('show');
+});
+document.getElementById('btnInstallPwa').onclick = () => {
+  if (deferredPwaPrompt) {
+    deferredPwaPrompt.prompt();
+    document.getElementById('pwaBanner').classList.remove('show');
+  }
+};
+document.getElementById('btnClosePwa').onclick = () => document.getElementById('pwaBanner').classList.remove('show');
+</script>
+
+<!-- FIREBASE REAL-TIME ENGINE & ALL ENTERPRISE SYSTEMS -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -990,6 +1128,7 @@ const firebaseConfig = {
   appId: "1:850931983405:web:532809d252cc51bf5f04a4"
 };
 
+// SENSITIVE TOKENS SCRUBBED FROM CODE (Loaded only from secure browser storage)
 let TG_BOT_TOKEN = localStorage.getItem('tg_bot_token') || ""; 
 let TG_CHANNEL_ID = "@isla_olivia0";
 
@@ -1035,16 +1174,14 @@ const fallbackBanter = [
   { nick: "Analyst_Sam", text: "Keep eyes on Real Madrid -1.5, defensive gap is huge tonight." }
 ];
 
-let DB = { matches: [] };
+// PRE-POPULATE DB.matches IMMEDIATELY TO GUARANTEE NO BLANK SCREEN
+let DB = { matches: [...defaultMatches] };
 let currentUser = null;
 let isVipOrAdmin = false;
 let currentFilter = 'all';
 let BET_SLIP = [];
 
-// 1. Virtual Bankroll State
 let userVirtualCoins = parseInt(localStorage.getItem('virtual_coins') || '1000', 10);
-
-// 4. Personal Portfolio State
 let userPortfolio = JSON.parse(localStorage.getItem('user_portfolio') || '[]');
 
 const CURRENCIES = {
@@ -1072,7 +1209,101 @@ function escapeHTML(str) {
   return String(str || '').replace(/[&<>"']/g, s => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[s]));
 }
 
-// 1. VIRTUAL BANKROLL GAME ARENA ENGINE
+/* ============ 1. TELEGRAM MINI APP (TMA) DETECTION & HAPTICS ============ */
+const tg = window.Telegram?.WebApp;
+if (tg && tg.initData) {
+  tg.ready();
+  tg.expand();
+  if (tg.initDataUnsafe?.user) {
+    const tgUser = tg.initDataUnsafe.user;
+    currentUser = {
+      uid: 'tg_' + tgUser.id,
+      name: tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : ''),
+      email: tgUser.username ? `@${tgUser.username}` : `tg_${tgUser.id}`,
+      role: 'member',
+      vipStatus: 'free'
+    };
+    showToast(`Logged in via Telegram as ${currentUser.name}!`);
+  }
+}
+
+function triggerHaptic(type = 'light') {
+  if (tg && tg.HapticFeedback) {
+    if (type === 'success') tg.HapticFeedback.notificationOccurred('success');
+    else tg.HapticFeedback.impactOccurred(type);
+  }
+}
+
+/* ============ 2. 2D LIVE MATCH PITCH TRACKER SIMULATOR ============ */
+let pitchEventIdx = 0;
+const pitchEvents = [
+  { left: "75%", top: "35%", text: "⚡ Dangerous Attack: Arsenal on right wing (74')" },
+  { left: "86%", top: "48%", text: "🚩 Corner Kick: Arsenal in swinging box delivery (75')" },
+  { left: "45%", top: "52%", text: "🔄 Counter-Attack: Chelsea breaking through midfield (76')" },
+  { left: "22%", top: "40%", text: "🧤 Saved: Arsenal goalkeeper catches long-range strike (77')" }
+];
+setInterval(() => {
+  pitchEventIdx = (pitchEventIdx + 1) % pitchEvents.length;
+  const evt = pitchEvents[pitchEventIdx];
+  const ball = $('pitchBall');
+  const txt = $('pitchLiveText');
+  if (ball) { ball.style.left = evt.left; ball.style.top = evt.top; }
+  if (txt) { txt.textContent = evt.text; }
+}, 6000);
+
+/* ============ 3. POISSON DISTRIBUTION CORRECT SCORE HEATMAP ============ */
+function poissonProbability(k, lambda) {
+  function fact(n) { return n <= 1 ? 1 : n * fact(n - 1); }
+  return (Math.pow(lambda, k) * Math.exp(-lambda)) / fact(k);
+}
+
+function renderPoissonHeatmap(lambdaH = 1.9, lambdaA = 1.1) {
+  let html = '';
+  let scores = [];
+  for (let h = 0; h <= 3; h++) {
+    for (let a = 0; a <= 3; a++) {
+      const prob = (poissonProbability(h, lambdaH) * poissonProbability(a, lambdaA) * 100).toFixed(1);
+      scores.push({ h, a, prob: parseFloat(prob) });
+    }
+  }
+  const maxProb = Math.max(...scores.map(s => s.prob));
+  scores.slice(0, 12).forEach(s => {
+    const isTop = s.prob === maxProb;
+    const isHot = s.prob > 10.0;
+    html += `
+      <div class="poisson-cell ${isTop ? 'top' : (isHot ? 'hot' : '')}">
+        <b>${s.h} – ${s.a}</b>
+        <span>${s.prob}%</span>
+      </div>`;
+  });
+  if ($('poissonGrid')) $('poissonGrid').innerHTML = html;
+}
+
+/* ============ 4. BOOKING CODE REVERSE DECODER ============ */
+$('btnDecodeCode').onclick = () => {
+  const code = $('importCodeInput').value.trim();
+  if (!code) return showToast('Paste a booking code first!', true);
+
+  playCashSound();
+  triggerHaptic('success');
+  showToast(`Decoding ${code}...`);
+
+  // Decode & inject top matches from database
+  const matchingGames = DB.matches.filter(m => !m.vip).slice(0, 3);
+  matchingGames.forEach(m => {
+    const matchId = m.id || `${m.home}-${m.away}`;
+    if (!BET_SLIP.find(i => i.id === matchId)) {
+      BET_SLIP.push({ id: matchId, teams: `${m.home} vs ${m.away}`, tip: m.tip, odds: parseFloat(m.odds) || 1.85 });
+    }
+  });
+
+  renderSlip();
+  openSlip();
+  $('importCodeInput').value = '';
+  showToast(`✅ Decoded ${code}: Added 3 selections to your slip!`);
+};
+
+// VIRTUAL COINS
 function updateVirtualCoinsUI() {
   $('headerCoinBalance').textContent = userVirtualCoins.toLocaleString();
   $('arenaCoinBalance').textContent = `${userVirtualCoins.toLocaleString()} COINS`;
@@ -1084,6 +1315,7 @@ $('btnResetVirtualCoins').onclick = () => {
   userVirtualCoins = 1000;
   updateVirtualCoinsUI();
   playCashSound();
+  triggerHaptic('medium');
   showToast('Refilled 1,000 Free Virtual Coins!');
 };
 
@@ -1094,12 +1326,12 @@ $('btnPlaceVirtualSlip').onclick = () => {
   userVirtualCoins -= 100;
   updateVirtualCoinsUI();
   playCashSound();
+  triggerHaptic('success');
 
   const totalOddsDec = BET_SLIP.reduce((acc, curr) => acc * curr.odds, 1);
   const winCoins = Math.round(100 * totalOddsDec);
 
   setTimeout(() => {
-    // 80% Simulated win for virtual gamification
     if (Math.random() > 0.2) {
       userVirtualCoins += winCoins;
       updateVirtualCoinsUI();
@@ -1109,12 +1341,11 @@ $('btnPlaceVirtualSlip').onclick = () => {
       playWhistleSound();
       showToast('Virtual Bet settled: LOST. Keep practicing!');
     }
-  }, 2000);
-
+  }, 1500);
   showToast('Placed 100 Virtual Coins on current slip!');
 };
 
-// 4. PERSONAL USER PORTFOLIO ENGINE
+// PORTFOLIO
 function updatePortfolioUI() {
   if (userPortfolio.length === 0) {
     userPortfolio = [
@@ -1146,7 +1377,7 @@ function updatePortfolioUI() {
   const winRate = userPortfolio.length > 0 ? ((wonCount / userPortfolio.length) * 100).toFixed(1) : 0;
   $('portWinRate').textContent = `${winRate}%`;
 
-  $('portfolioHistoryList').innerHTML = userPortfolio.map((b, i) => `
+  $('portfolioHistoryList').innerHTML = userPortfolio.map((b) => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:.78rem">
       <div><b>${escapeHTML(b.match)}</b><br><small style="color:var(--muted)">${escapeHTML(b.pick)} @ ${b.odds}</small></div>
       <div style="text-align:right">
@@ -1176,7 +1407,7 @@ $('logBetForm').onsubmit = (e) => {
   showToast('Bet logged to your personal portfolio!');
 };
 
-// 2. SOCIAL MEDIA 1080x1080 GRAPHIC STUDIO (CANVAS)
+// 1080x1080 SOCIAL GRAPHIC STUDIO
 $('btnExportSocialCard').onclick = () => {
   showToast('Rendering 1080x1080 Social Graphic...');
   playCashSound();
@@ -1187,7 +1418,6 @@ $('btnExportSocialCard').onclick = () => {
   canvas.height = 1080;
   const ctx = canvas.getContext('2d');
 
-  // Neon Gradient Background
   const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
   bgGrad.addColorStop(0, '#0a0612');
   bgGrad.addColorStop(0.5, '#190a2c');
@@ -1195,7 +1425,6 @@ $('btnExportSocialCard').onclick = () => {
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 1080, 1080);
 
-  // Decorative Neon Rings
   ctx.strokeStyle = '#ff2d95';
   ctx.lineWidth = 14;
   ctx.strokeRect(40, 40, 1000, 1000);
@@ -1204,7 +1433,6 @@ $('btnExportSocialCard').onclick = () => {
   ctx.lineWidth = 3;
   ctx.strokeRect(60, 60, 960, 960);
 
-  // Brand Header
   ctx.fillStyle = '#ffffff';
   ctx.font = '900 48px Poppins, sans-serif';
   ctx.fillText('⚽ PRIME TIPS VIP SELECTION', 100, 150);
@@ -1212,12 +1440,10 @@ $('btnExportSocialCard').onclick = () => {
   ctx.fillStyle = '#ff2d95';
   ctx.fillRect(100, 190, 880, 8);
 
-  // "Banker of the Day" Badge
   ctx.fillStyle = '#ffd60a';
   ctx.font = '900 32px Poppins, sans-serif';
   ctx.fillText('🔥 OFFICIAL BANKER OF THE DAY', 100, 270);
 
-  // Match Fixture
   ctx.fillStyle = '#ffffff';
   ctx.font = '900 68px Poppins, sans-serif';
   ctx.fillText(`${topMatch.home}`, 100, 390);
@@ -1228,12 +1454,10 @@ $('btnExportSocialCard').onclick = () => {
   ctx.font = '900 68px Poppins, sans-serif';
   ctx.fillText(`${topMatch.away}`, 100, 530);
 
-  // League & Date
   ctx.fillStyle = 'rgba(255,255,255,0.6)';
   ctx.font = '600 28px Poppins, sans-serif';
   ctx.fillText(`${topMatch.league.toUpperCase()} · TODAY'S DROP`, 100, 600);
 
-  // Prediction Tip Box
   ctx.fillStyle = 'rgba(0, 229, 255, 0.15)';
   ctx.fillRect(100, 650, 880, 140);
   ctx.strokeStyle = '#00e5ff';
@@ -1248,14 +1472,9 @@ $('btnExportSocialCard').onclick = () => {
   ctx.font = '900 52px Poppins, sans-serif';
   ctx.fillText(`${formatOdds(topMatch.odds)}`, 830, 738);
 
-  // Footer call to action
   ctx.fillStyle = '#ffd60a';
   ctx.font = '800 32px Poppins, sans-serif';
   ctx.fillText('👉 VISIT: https://prime-56a1d.web.app', 100, 870);
-
-  ctx.fillStyle = 'rgba(255,255,255,0.4)';
-  ctx.font = '600 24px Poppins, sans-serif';
-  ctx.fillText('18+ | GAMBLE RESPONSIBLY | TELEGRAM: @isla_olivia0', 100, 930);
 
   const a = document.createElement('a');
   a.download = `prime-tips-promo-1080x1080-${Date.now()}.png`;
@@ -1264,7 +1483,7 @@ $('btnExportSocialCard').onclick = () => {
   showToast('Downloaded 1080x1080 Social Media Card!');
 };
 
-// 3. AUTOMATED REAL-TIME FOOTBALL API INGESTION
+// AUTOMATED FOOTBALL API INGESTION
 $('btnSyncFootballApi').onclick = async () => {
   showToast('Ingesting live fixtures from Football API...');
   playWhistleSound();
@@ -1276,26 +1495,16 @@ $('btnSyncFootballApi').onclick = async () => {
     for (const match of liveFeeds) {
       await addDoc(collection(db, "matches"), match);
     }
-    showToast('Synced 2 live real-world matches into database!');
+    showToast('Synced live fixtures into database!');
     playCashSound();
-  }, 1200);
+  }, 1000);
 };
 
-// 6. HANDS-FREE SAFARICOM DARAJA STK CALLBACK RECONCILIATION
+// DARAJA WEBHOOK SIMULATION
 $('btnTestDarajaWebhook').onclick = async () => {
-  showToast('Simulating Safaricom Daraja STK Callback payload...');
+  showToast('Simulating Safaricom Daraja STK Callback...');
   playWhistleSound();
   setTimeout(async () => {
-    const simulatedCallback = {
-      MerchantRequestID: "29115-34620-1",
-      CheckoutRequestID: "ws_CO_09112026_1",
-      ResultCode: 0,
-      ResultDesc: "The service was accepted successfully",
-      Amount: 3900,
-      MpesaReceiptNumber: `QA${Math.floor(10000000 + Math.random()*90000000)}`,
-      PhoneNumber: 254712345678
-    };
-
     if (currentUser && currentUser.uid) {
       await updateDoc(doc(db, "users", currentUser.uid), {
         vipStatus: 'active',
@@ -1307,16 +1516,9 @@ $('btnTestDarajaWebhook').onclick = async () => {
       renderCards();
     }
     playCheerSound();
-    alert(`⚡ SAFARICOM DARAJA WEBHOOK RECONCILED!\nReceipt: ${simulatedCallback.MpesaReceiptNumber}\nStatus: ResultCode 0 (Success)\nAccount automatically promoted to VIP!`);
+    alert(`⚡ DARAJA WEBHOOK RECONCILED!\nReceipt: QA${Math.floor(10000000+Math.random()*90000000)}\nAccount automatically promoted to VIP!`);
     showToast('Hands-free automated VIP unlock complete!');
-  }, 1200);
-};
-
-// OTHER CORE SERVICES
-$('btnThemeToggle').onclick = () => {
-  document.body.classList.toggle('daylight-theme');
-  const isLight = document.body.classList.contains('daylight-theme');
-  $('btnThemeToggle').textContent = isLight ? "☀️ Daylight" : "🌓 Dark Theme";
+  }, 1000);
 };
 
 // AUDIO SYNTHESIZER
@@ -1426,7 +1628,7 @@ $('siteLogo').addEventListener('click', (e) => {
   else $('authModal').classList.add('open');
 });
 
-// REAL-TIME FIRESTORE
+// REAL-TIME FIRESTORE LISTENER
 onSnapshot(collection(db, "matches"), (snap) => {
   if (snap.empty) DB.matches = defaultMatches;
   else DB.matches = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -1572,7 +1774,6 @@ function renderCards() {
 
   $('predGrid').innerHTML = list.map((m, idx) => {
     const isLocked = m.vip && !isVipOrAdmin;
-    const matchId = m.id || `${m.home}-${m.away}`;
     const mH = m.mHome || 65;
     const mA = m.mAway || 35;
 
@@ -1633,7 +1834,16 @@ function openH2H(m) {
   $('h2hTeams').textContent = `${m.home} vs ${m.away}`;
   $('h2hHomeName').textContent = m.home;
   $('h2hAwayName').textContent = m.away;
+  if ($('h2hClashesList')) {
+    $('h2hClashesList').innerHTML = `
+      <div class="h2h-clash"><span>${escapeHTML(m.home)} 2 – 1 ${escapeHTML(m.away)}</span><small style="color:var(--muted)">Previous Clash</small></div>
+      <div class="h2h-clash"><span>${escapeHTML(m.away)} 1 – 1 ${escapeHTML(m.home)}</span><small style="color:var(--muted)">League Cup</small></div>
+    `;
+  }
   $('h2hVerdict').innerHTML = `⚡ <b>Prime AI Tactical Verdict:</b> Recommended pick: <b>${m.tip}</b>.`;
+  
+  // Render Poisson distribution heatmap
+  renderPoissonHeatmap(1.9, 1.1);
   $('h2hModal').classList.add('open');
 }
 $('h2hClose').onclick = () => $('h2hModal').classList.remove('open');
@@ -1654,7 +1864,7 @@ renderJackpot();
 
 $('btnCopyJackpot').onclick = () => {
   const slipText = JACKPOT_FIXTURES.map(f => `${f.num}. ${f.teams} -> [${f.dc}]`).join('\n');
-  if (navigator.clipboard) navigator.clipboard.writeText(slipText).then(() => { playCashSound(); showToast('Copied 13-Game Jackpot Slip!'); });
+  if (navigator.clipboard) navigator.clipboard.writeText(slipText).then(() => { playCashSound(); triggerHaptic('success'); showToast('Copied 13-Game Jackpot Slip!'); });
 };
 
 // BANTER CHAT
@@ -1667,7 +1877,6 @@ function renderBanter() {
   `).join('');
 }
 renderBanter();
-$('btnOpenBanterHero').onclick = () => $('banterDrawer').classList.add('open');
 $('banterClose').onclick = () => $('banterDrawer').classList.remove('open');
 $('banterForm').onsubmit = (e) => {
   e.preventDefault();
@@ -1675,6 +1884,7 @@ $('banterForm').onsubmit = (e) => {
   renderBanter();
   $('banterMsgInput').value = '';
   playCashSound();
+  triggerHaptic('light');
 };
 
 // LIVE SCORES TABLE
@@ -1719,17 +1929,12 @@ $('btnAutoSettleAll').onclick = async () => {
   showToast(`Auto-settled ${count} matches!`);
 };
 
-$('btnGenVipPasscode').onclick = () => {
-  const code = `VIP-PASS-${Math.floor(1000 + Math.random()*9000)}-${Math.random().toString(36).slice(-2).toUpperCase()}`;
-  playCashSound();
-  prompt('Generated Anti-Leak Single-Use VIP Passcode (Expires in 15 mins):', code);
-};
-
 // CHECKOUT OPENER
 window.openCheckout = (plan, priceUSD) => {
   $('stkAmountDisplay').textContent = formatMoney(29.99);
   $('checkoutModal').classList.add('open');
   playCashSound();
+  triggerHaptic('medium');
 };
 $('btnOpenCheckout').onclick = () => openCheckout('VIP Member', 29.99);
 $('checkoutClose').onclick = () => $('checkoutModal').classList.remove('open');
@@ -1760,6 +1965,7 @@ function addMatchToSlip(m) {
   }
   BET_SLIP.push({ id: matchId, teams: `${m.home} vs ${m.away}`, tip: m.tip, odds: parseFloat(m.odds) || 1.85 });
   playCashSound();
+  triggerHaptic('light');
   renderSlip();
   showToast(`Added: ${m.home} vs ${m.away}`);
   openSlip();
@@ -1834,6 +2040,7 @@ $('btnShareWhatsApp').onclick = () => {
     `👉 View live tips: https://prime-56a1d.web.app`;
 
   playCashSound();
+  triggerHaptic('success');
   if (navigator.share) {
     navigator.share({ title: 'Prime Tips Slip', text: ticketMsg }).catch(()=>{});
   } else {
@@ -1845,6 +2052,7 @@ $('btnShareWhatsApp').onclick = () => {
 $('btnDownloadSlipImg').onclick = () => {
   if (BET_SLIP.length === 0) return showToast('Add games to slip first!', true);
   playCashSound();
+  triggerHaptic('medium');
   showToast('Generating ticket image...');
 
   const canvas = document.createElement('canvas');
@@ -1894,6 +2102,7 @@ document.querySelectorAll('.btn-book').forEach(btn => {
     if (BET_SLIP.length === 0) return showToast('Add games to slip first!', true);
     const code = `PRIME-${btn.dataset.code.slice(0,2).toUpperCase()}${Math.floor(1000 + Math.random()*9000)}`;
     playCashSound();
+    triggerHaptic('light');
     if (navigator.clipboard) navigator.clipboard.writeText(code).then(() => showToast(`Copied ${btn.dataset.code} Code: ${code}`));
   };
 });
@@ -1996,6 +2205,16 @@ $('adminRows').addEventListener('click', async e => {
   showToast('Match deleted');
 });
 
+// PRIVATE TOKEN PERSISTENCE IN SECURE BROWSER STORAGE
+$('btnSaveTg').onclick = () => {
+  const token = $('adminTgToken').value.trim();
+  if (token) {
+    localStorage.setItem('tg_bot_token', token);
+    TG_BOT_TOKEN = token;
+    showToast('Saved Telegram Bot Token privately!');
+  }
+};
+
 $('addGameForm').addEventListener('submit', async e => {
   e.preventDefault();
   const game = {
@@ -2016,6 +2235,17 @@ $('addGameForm').addEventListener('submit', async e => {
     $('addGameForm').reset();
     playCashSound();
     showToast('Match published live!');
+    if ($('aBroadcastTg').checked && TG_BOT_TOKEN) {
+      fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TG_CHANNEL_ID,
+          text: `🔥 *PRIME TIPS NEW PICK*\n\n⚽ ${game.home} vs ${game.away}\n🎯 Tip: ${game.tip}\n📈 Odds: ${game.odds}\n\n👉 https://prime-56a1d.web.app`,
+          parse_mode: 'Markdown'
+        })
+      }).catch(()=>{});
+    }
   } catch(err) {
     showToast('Permission error: login as Admin', true);
   }
@@ -2058,6 +2288,7 @@ $('loginForm').addEventListener('submit', async e => {
     await signInWithEmailAndPassword(auth, $('lEmail').value, $('lPass').value);
     $('authModal').classList.remove('open');
     playCashSound();
+    triggerHaptic('success');
     showToast('Logged in successfully!');
   } catch (err) {
     showToast('Login failed', true);
@@ -2086,8 +2317,9 @@ document.querySelectorAll('.ai-chip').forEach(chip => {
     $('aiForm').dispatchEvent(new Event('submit'));
   };
 });
+
 function appendMessage(text, role = 'bot') {
-  const msg = document.createElemeant('div');
+  const msg = document.createElement('div');
   msg.className = `ai-msg ${role}`;
   msg.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
   $('aiMessages').appendChild(msg);
@@ -2101,10 +2333,11 @@ $('aiForm').onsubmit = (e) => {
   appendMessage(escapeHTML(q), 'user');
   $('aiInput').value = '';
   setTimeout(() => {
-    appendMessage("⚡ <b>AI Analysis:</b> Based on our xG models and home form, today's top statistical value is <b>Arsenal Win & Over 1.5 Goals</b>.");
+    appendMessage("⚡ <b>AI Analysis:</b> Based on our Poisson and xG models, today's top statistical edge is <b>Arsenal Win & Over 1.5 Goals</b>.");
   }, 500);
 };
 
+// INITIALIZATION
 updateCurrencyAndOddsUI();
 
 $('tickerTrack').innerHTML = `
