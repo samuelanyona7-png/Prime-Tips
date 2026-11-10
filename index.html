@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -804,7 +803,7 @@ table.admin-table td { padding:9px 10px; vertical-align:middle; }
       <div style="text-align:center; padding:20px 0;">
         <div class="badge badge-warning" style="margin-bottom:12px;">🔒 Admin Access</div>
         <h2 style="font-family:var(--font-display); font-size:clamp(1.2rem,3vw,1.5rem); font-weight:900; margin-bottom:6px;">Prime Tips Admin Console</h2>
-        <p style="font-size:0.76rem; color:var(--text-muted); margin-bottom:18px;">Sign in with an admin account (custom claim: <code>admin</code>)</p>
+        <p style="font-size:0.76rem; color:var(--text-muted); margin-bottom:18px;">Sign in with your master admin account</p>
 
         <div id="adminAuthError" style="display:none; background:var(--danger-bg); border:1px solid var(--danger); color:var(--danger); padding:10px; border-radius:var(--radius-sm); font-size:0.74rem; margin-bottom:14px;"></div>
 
@@ -1180,6 +1179,11 @@ const firebaseConfig = {
   measurementId: "G-K56EM52L7Z"
 };
 
+// MASTER ADMIN LIST
+const ADMIN_UIDS = [
+  "xYFVBUfUxUPbhReHYPsgXhyxWXH2" // Your master admin UID
+];
+
 const TODAY_KEY = new Date().toISOString().slice(0, 10);
 let activeDate = "ALL";
 let activeCategory = "ALL";
@@ -1223,9 +1227,9 @@ function playGoalChime() {
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
-    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2); // G5
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2);
     gain.gain.setValueAtTime(0.2, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
     osc.start();
@@ -1241,7 +1245,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupOfflineDetection();
   registerServiceWorker();
 
-  // Second-by-second real-time countdown updates
   setInterval(updateCountdowns, 1000);
 
   setTimeout(() => { if (!FIREBASE_READY) useDemoData(); }, 2500);
@@ -1315,9 +1318,11 @@ function initFirebase() {
       if (user) {
         try {
           const token = await user.getIdTokenResult();
-          isAdmin = !!token.claims.admin;
+          isAdmin = !!token.claims.admin || ADMIN_UIDS.includes(user.uid);
           if (isAdmin && $('adminBtn')) $('adminBtn').style.borderColor = 'var(--electric)';
-        } catch(e) { isAdmin = false; }
+        } catch(e) {
+          isAdmin = ADMIN_UIDS.includes(user.uid);
+        }
         loadUserDashboard(user);
         loadFavorites(user);
       } else {
@@ -1326,7 +1331,6 @@ function initFirebase() {
       }
     });
 
-    // Real-Time Subscriptions
     subscribeToMatches();
     subscribeToLeaderboard();
 
@@ -1359,7 +1363,6 @@ function subscribeToMatches() {
         const data = { id: doc.id, ...doc.data() };
         list.push(data);
 
-        // Track real-time changes
         if (ALL_MATCHES.length > 0) {
           const old = ALL_MATCHES.find(m => m.id === doc.id);
           if (old) {
@@ -1379,17 +1382,15 @@ function subscribeToMatches() {
       ALL_MATCHES = list;
       refreshAll();
 
-      // Highlight changed rows
       updatedMatchIds.forEach(id => {
         const row = document.querySelector(`tr[data-id="${id}"]`);
         if (row) {
           row.classList.remove('row-pulse');
-          void row.offsetWidth; // trigger reflow
+          void row.offsetWidth;
           row.classList.add('row-pulse');
         }
       });
 
-      // Synchronize open detail modal in real time
       if (CURRENT_MODAL_MATCH && $('matchDetailPage').classList.contains('open')) {
         const updatedModalMatch = ALL_MATCHES.find(m => m.id === CURRENT_MODAL_MATCH.id);
         if (updatedModalMatch) {
@@ -1532,6 +1533,7 @@ function updateAuthUI(user) {
 async function signOutUser() {
   if (!FIREBASE_READY) { showToast('Firebase not configured'); return; }
   await firebase.auth().signOut();
+  isAdmin = false;
   $('dashboard').style.display = 'none';
   showToast('Signed out');
 }
@@ -1701,7 +1703,7 @@ function tierBadge(conf) {
   return '<span class="badge badge-tier-low">ℹ️ Low</span>';
 }
 
-/* ---- PRECISE REAL-TIME COUNTDOWN ---- */
+/* ---- REAL-TIME COUNTDOWN ---- */
 function countdown(kickoffISO) {
   const now = new Date();
   const d = new Date(kickoffISO);
@@ -1977,16 +1979,21 @@ function openTelegram() {
 /* ---- ADMIN CONSOLE ---- */
 function openAdminPanel() {
   $('adminPanelModal').classList.add('open');
+  // Check if current user is master admin
+  if (currentUser && ADMIN_UIDS.includes(currentUser.uid)) {
+    isAdmin = true;
+  }
   if (isAdmin) {
     $('adminAuthGate').classList.add('hidden');
     $('adminConsole').classList.remove('hidden');
-    $('adminEmailDisplay').innerText = currentUser?.email || '';
+    $('adminEmailDisplay').innerText = currentUser?.email || 'Admin';
     refreshAdminData();
   } else {
     $('adminAuthGate').classList.remove('hidden');
     $('adminConsole').classList.add('hidden');
   }
 }
+
 async function adminLogin() {
   if (!FIREBASE_READY) return adminAuthError('Firebase not initialized.');
   const email = $('adminEmail').value.trim();
@@ -1997,7 +2004,11 @@ async function adminLogin() {
   try {
     const cred = await firebase.auth().signInWithEmailAndPassword(email, password);
     const token = await cred.user.getIdTokenResult();
-    if (!token.claims.admin) {
+    
+    // Check if user has admin claim OR is in the master admin UIDs list
+    const hasAdminAccess = !!token.claims.admin || ADMIN_UIDS.includes(cred.user.uid);
+
+    if (!hasAdminAccess) {
       adminAuthError('This account does not have admin permissions.');
       await firebase.auth().signOut();
     } else {
@@ -2234,4 +2245,3 @@ document.addEventListener('keydown', (e) => {
 </script>
 </body>
 </html>
-```
