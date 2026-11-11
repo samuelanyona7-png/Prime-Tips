@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#040914">
-<meta name="description" content="Prime Tips — Free & VIP Football Predictions, Real-Time Scores, Poisson Modeling, and VIP Slips.">
+<meta name="description" content="Prime Tips — Free & VIP Football Predictions, Real-Time M-Pesa, Scores, and VIP Slips.">
 <title>Prime Tips — Predict Smarter. Win More.</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@800;900&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -38,6 +39,7 @@ input,select,textarea { font-family:inherit; }
 .btn-ghost:hover { background:rgba(255,255,255,0.1); border-color:var(--cyan); }
 .btn-danger { background:var(--danger-bg); border:1px solid var(--danger); color:var(--danger); }
 .btn-danger:hover { background:var(--danger); color:#fff; }
+.btn-warning { background:var(--warning-bg); border:1px solid var(--warning); color:var(--warning); }
 .btn-sm { padding:5px 10px; font-size:0.72rem; border-radius:var(--radius-sm); }
 .btn-block { width:100%; }
 
@@ -307,13 +309,15 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
     <div class="hero-card">
       <div class="hero-inner">
         <div>
-          <div class="badge badge-electric">Free &amp; VIP Analytics • Firebase Real-Time</div>
+          <div class="badge badge-electric">Free &amp; VIP Analytics • Real-Time Cloud Sync</div>
           <h1 id="heroHeadline">Predict Smarter. <br><span class="gradient">Win More.</span></h1>
-          <p id="heroSubtitle">Institutional-grade football predictions with real-time score updates, Poisson xG modeling, and daily verified accuracy.</p>
+          <p id="heroSubtitle">Institutional-grade football predictions with real-time score updates, verified Poisson xG modeling, and high-odds VIP slips.</p>
           <div class="hero-btns">
             <a href="#free-tips" class="btn btn-primary">Free Tips Table ↓</a>
-            <a href="#vip-slips-section" class="btn btn-ghost">Exclusive VIP Slips</a>
-            <a id="btnTelegram" href="https://t.me/primetips" target="_blank" class="btn btn-ghost">📢 Telegram</a>
+            <a href="#vip-slips-section" class="btn btn-ghost">VIP Syndicate Slips</a>
+            <a id="btnTelegramChannel" href="https://t.me/+UiJ1Y_HpV_oxMjA0" target="_blank" class="btn btn-ghost" style="color:#29B6F6;">📢 Telegram Channel</a>
+            <a id="btnTelegramUser" href="https://t.me/isla_olivia0" target="_blank" class="btn btn-ghost">💬 Support (@isla_olivia0)</a>
+            <a id="btnFacebook" href="https://www.facebook.com/profile.php?id=100092234363053" target="_blank" class="btn btn-ghost" style="color:#1877F2;">🌐 Facebook</a>
           </div>
         </div>
         <div class="banker-card" id="banker-section">
@@ -342,7 +346,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         <div class="badge badge-premium">VIP Syndicate Drops</div>
         <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:900; margin-top:4px;">Today's Exclusive VIP Slips</h2>
       </div>
-      <button class="btn btn-primary btn-sm" onclick="openCheckout('VIP Monthly', CONFIG_PRICING.vipMonthly)">Get VIP Pass</button>
+      <button class="btn btn-primary btn-sm" onclick="openCheckout('VIP Monthly Pass', CONFIG_PRICING.vipMonthly)">Get VIP Pass</button>
     </div>
     <div class="vip-slips-grid" id="vipSlipsFeed">
       <div class="empty-state">Loading real-time VIP slips…</div>
@@ -521,17 +525,45 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   </div>
 </div>
 
-<!-- CHECKOUT MODAL -->
+<!-- REAL-TIME M-PESA CHECKOUT MODAL (STK PUSH WITH LIVE TRANSACTION VERIFICATION) -->
 <div class="modal-overlay" id="checkoutModal">
-  <div class="modal-card" style="max-width:440px;">
+  <div class="modal-card" style="max-width:460px;">
     <button class="modal-close" onclick="closeModal('checkoutModal')">✕</button>
-    <div class="badge badge-electric" style="margin-bottom:8px;">M-Pesa STK Push</div>
+    <div class="badge badge-electric" style="margin-bottom:8px;">Lipa na M-Pesa Online</div>
     <h3 style="font-size:1.2rem; font-weight:900;" id="checkoutPlanTitle">VIP Pass</h3>
-    <div style="background:var(--bg-base); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin:14px 0;">
-      <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:6px;">Official Paybill / Till: <strong style="color:var(--text-main);" id="paybillDisplay">542891</strong></p>
-      <label style="font-size:0.68rem; font-family:var(--font-mono); color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:4px;">M-Pesa Phone Number (Kenya)</label>
-      <input type="tel" id="checkoutPhone" class="filter-input" style="width:100%; font-weight:700;" placeholder="0712345678" value="0712345678">
-      <button class="btn btn-primary btn-block" style="margin-top:10px;" onclick="triggerMpesaSTK()">📲 Trigger M-Pesa STK Push</button>
+    
+    <div id="checkoutInitialStep">
+      <div style="background:var(--bg-base); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin:14px 0;">
+        <p style="font-size:0.74rem; color:var(--text-muted); margin-bottom:8px;">
+          Official Till / Paybill: <strong style="color:var(--text-main);" id="paybillDisplay">542891</strong>
+        </p>
+        <div class="form-field">
+          <label>M-Pesa Phone Number (Safaricom)</label>
+          <input type="tel" id="checkoutPhone" class="filter-input" style="font-weight:700;" placeholder="0712345678" value="0712345678">
+        </div>
+        <button class="btn btn-primary btn-block" id="btnSendStk" onclick="triggerRealTimeMpesaSTK()">📲 Send Real-Time STK Push</button>
+      </div>
+
+      <div style="text-align:center; margin:10px 0; font-size:0.74rem; color:var(--text-dim);">— OR PAY DIRECTLY VIA TILL —</div>
+      
+      <div style="background:var(--bg-base); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px;">
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:6px;">Already paid via Till <strong>542891</strong>? Enter the M-Pesa SMS Code:</p>
+        <input type="text" id="manualMpesaCode" class="filter-input" placeholder="e.g. SLK892HJ3" style="text-transform:uppercase; font-family:var(--font-mono); margin-bottom:8px;">
+        <button class="btn btn-ghost btn-block btn-sm" onclick="submitManualMpesaCode()">Verify Transaction Code</button>
+      </div>
+    </div>
+
+    <!-- Active Real-Time Waiting Screen (Shown during live STK push) -->
+    <div id="checkoutWaitingStep" style="display:none; text-align:center; padding:16px 0;">
+      <div class="loader"></div>
+      <h4 style="font-weight:900; margin:10px 0 4px;" id="waitingStatusTitle">STK Push Prompt Sent!</h4>
+      <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:14px;" id="waitingStatusMsg">
+        Please check your phone screen, enter your M-Pesa PIN, and press OK.
+      </p>
+      <div style="background:var(--bg-base); padding:10px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.72rem; color:var(--warning);" id="waitingLiveLog">
+        ⏳ Listening to payment confirmation in real-time...
+      </div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:16px;" onclick="resetCheckoutModal()">Try Again / Cancel</button>
     </div>
   </div>
 </div>
@@ -542,7 +574,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
     <button class="modal-close" onclick="closeModal('adminPanelModal')">✕</button>
 
     <div id="adminAuthGate">
-      <div style="text-align:center; padding:20px 0; max-width:420px; margin:0 auto;">
+      <div style="text-align:center; padding:20px 0; max-width:440px; margin:0 auto;">
         <div class="badge badge-warning" style="margin-bottom:12px;">🔒 Master Admin Gate</div>
         <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:900; margin-bottom:6px;">Prime Tips Control Center</h2>
         <p style="font-size:0.76rem; color:var(--text-muted); margin-bottom:16px;">
@@ -564,7 +596,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
     <div id="adminConsole" class="hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
-        <div class="badge badge-warning">Master Console Active (Firestore Sync)</div>
+        <div class="badge badge-warning">Master Console Active (Firestore Real-Time)</div>
         <div style="display:flex; gap:8px; align-items:center;">
           <span style="font-size:0.7rem; color:var(--text-muted);" id="adminEmailDisplay"></span>
           <button class="btn btn-ghost btn-sm" onclick="adminSignOut()">Sign out</button>
@@ -580,8 +612,9 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('matches', this)">⚽ Matches &amp; Scores</button>
-        <button class="admin-tab" onclick="switchAdminTab('add', this)">➕ Add New Match</button>
+        <button class="admin-tab" onclick="switchAdminTab('add', this)">➕ Add Match</button>
         <button class="admin-tab" onclick="switchAdminTab('vip', this)">👑 Manage VIP Members</button>
+        <button class="admin-tab" onclick="switchAdminTab('payments', this)">💳 M-Pesa Payments</button>
         <button class="admin-tab" onclick="switchAdminTab('vipslips', this)">🔒 Post VIP Slips</button>
         <button class="admin-tab" onclick="switchAdminTab('pricing', this)">💰 Set Prices &amp; M-Pesa</button>
         <button class="admin-tab" onclick="switchAdminTab('api', this)">🌐 API Management</button>
@@ -640,7 +673,23 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
       </div>
 
-      <!-- TAB 4: POST VIP EXCLUSIVE SLIPS -->
+      <!-- TAB 4: REAL-TIME M-PESA PAYMENTS MANAGER -->
+      <div id="panel-payments" class="admin-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div><h3 style="font-size:0.95rem; font-weight:900;">💳 Real-Time M-Pesa Transactions</h3><p style="font-size:0.72rem; color:var(--text-muted);">View incoming STK pushes &amp; manually approve payments to grant instant VIP.</p></div>
+          <button class="btn btn-ghost btn-sm" onclick="loadAdminPayments()">🔄 Refresh Payments</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Date</th><th>Phone Number</th><th>User Email</th><th>Plan / Amount</th><th>Code</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody id="adminPaymentsTable"><tr><td colspan="7"><div class="loader"></div></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 5: POST VIP EXCLUSIVE SLIPS -->
       <div id="panel-vipslips" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🔒 Drop Exclusive VIP Multi-Slips</h3>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">These predictions are locked for free users and only visible to VIP subscribers.</p>
@@ -657,7 +706,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         <div id="adminVipSlipsList">Loading active slips…</div>
       </div>
 
-      <!-- TAB 5: DYNAMIC PRICING & M-PESA -->
+      <!-- TAB 6: DYNAMIC PRICING & M-PESA -->
       <div id="panel-pricing" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">💰 Live Site Pricing &amp; M-Pesa Till Configuration</h3>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Updates persist in Firestore and change prices across the site in real time.</p>
@@ -672,7 +721,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </form>
       </div>
 
-      <!-- TAB 6: API INTEGRATION -->
+      <!-- TAB 7: API INTEGRATION -->
       <div id="panel-api" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🌐 Football API Integrations &amp; Import</h3>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Connect RapidAPI, API-Football, or custom odds endpoints.</p>
@@ -690,14 +739,16 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         <div id="apiLog" style="margin-top:10px; background:var(--bg-base); padding:10px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); max-height:120px; overflow-y:auto;">Ready for API testing…</div>
       </div>
 
-      <!-- TAB 7: SITE CONTENT & BANNER -->
+      <!-- TAB 8: SITE CONTENT & BANNER -->
       <div id="panel-content" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">📢 Dynamic Content &amp; Announcement Banner</h3>
-        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Publish site-wide announcements and update headlines directly.</p>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Publish site-wide announcements and update links directly.</p>
         <form onsubmit="handleSaveSiteContent(event)">
           <div class="form-grid">
             <div class="form-field"><label>Hero Headline</label><input type="text" id="cfg_hero_title" value="Predict Smarter. Win More."></div>
-            <div class="form-field"><label>Telegram Channel URL</label><input type="text" id="cfg_telegram_url" value="https://t.me/primetips"></div>
+            <div class="form-field"><label>Telegram Channel URL</label><input type="text" id="cfg_telegram_channel" value="https://t.me/+UiJ1Y_HpV_oxMjA0"></div>
+            <div class="form-field"><label>Telegram Personal User Support</label><input type="text" id="cfg_telegram_user" value="https://t.me/isla_olivia0"></div>
+            <div class="form-field"><label>Facebook Profile Link</label><input type="text" id="cfg_facebook_url" value="https://www.facebook.com/profile.php?id=100092234363053"></div>
             <div class="form-field"><label>Show Top Announcement Banner?</label><select id="cfg_banner_show"><option value="true">Yes (Show)</option><option value="false">No (Hide)</option></select></div>
           </div>
           <div class="form-field"><label>Top Announcement Message</label><input type="text" id="cfg_banner_text" value="🔥 Welcome to Prime Tips VIP Network!"></div>
@@ -711,12 +762,19 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
 <div class="toast" id="toast"></div>
 
-<footer style="border-top:1px solid var(--border); margin-top:40px; padding:24px 0;">
+<footer style="border-top:1px solid var(--border); margin-top:40px; padding:28px 0;">
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-    <div class="logo" onclick="openAdminPanel()">
-      <div class="logo-text" style="font-size:1rem;">PRIME<span>TIPS</span></div>
+    <div>
+      <div class="logo" onclick="openAdminPanel()">
+        <div class="logo-text" style="font-size:1.1rem;">PRIME<span>TIPS</span></div>
+      </div>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Real-Time M-Pesa STK Push • Cloud Firestore • Zero Local Storage</div>
     </div>
-    <div style="font-size:0.72rem; color:var(--text-muted);">Cloud Firestore Real-Time Stream • Zero Local Storage • 18+ Gamble Responsibly</div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:0.76rem; font-weight:700;">
+      <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" target="_blank" style="color:#29B6F6;">📢 Telegram Channel</a>
+      <a href="https://t.me/isla_olivia0" target="_blank" style="color:var(--text-main);">💬 Support (@isla_olivia0)</a>
+      <a href="https://www.facebook.com/profile.php?id=100092234363053" target="_blank" style="color:#1877F2;">🌐 Facebook</a>
+    </div>
   </div>
 </footer>
 
@@ -758,7 +816,6 @@ const CURRENCY_MAP = {
   GBP: { sym: '£', rate: 0.78 }
 };
 
-// Global real-time state from Firestore
 let ALL_MATCHES = [];
 let ALL_VIP_SLIPS = [];
 let FAVORITE_TEAMS = [];
@@ -771,6 +828,10 @@ let FIREBASE_READY = false;
 let accuracyChartInstance = null;
 let theme = 'dark'; // Pure in-memory (synced with Firebase)
 
+// Real-Time M-Pesa active payment listener tracker
+let activePaymentUnsubscribe = null;
+let activePaymentDocId = null;
+
 // Firestore Listeners
 let unsubscribeMatches = null;
 let unsubscribeVipSlips = null;
@@ -780,7 +841,7 @@ let unsubscribeUser = null;
 
 const $ = id => document.getElementById(id);
 
-/* ---- WEB AUDIO API GOAL CHIME (ZERO EXTERNAL ASSETS) ---- */
+/* ---- WEB AUDIO API GOAL CHIME ---- */
 function playGoalChime() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1031,7 +1092,9 @@ function subscribeToSiteConfig() {
     }
     if (data.content) {
       if (data.content.heroTitle) $('heroHeadline').innerHTML = escapeHTML(data.content.heroTitle);
-      if (data.content.telegramUrl) $('btnTelegram').href = data.content.telegramUrl;
+      if (data.content.telegramChannel) $('btnTelegramChannel').href = data.content.telegramChannel;
+      if (data.content.telegramUser) $('btnTelegramUser').href = data.content.telegramUser;
+      if (data.content.facebookUrl) $('btnFacebook').href = data.content.facebookUrl;
       const banner = $('announcementBanner');
       if (banner) {
         if (data.content.showBanner && data.content.bannerText) {
@@ -1203,7 +1266,7 @@ async function saveCurrentMatchToProfile() {
   showToast('Prediction saved to your Firebase profile 💾');
 }
 
-/* ---- TABLE & REAL-TIME UI ---- */
+/* ---- REAL-TIME TABLE & UI ---- */
 function refreshAll() {
   updateKPISummary();
   renderTable();
@@ -1477,6 +1540,116 @@ function shareDayWhatsApp() {
 }
 
 /* ==========================================================================
+   REAL-TIME M-PESA CHECKOUT ENGINE & STK PUSH
+   ========================================================================== */
+let activePlanCheckout = { title: "VIP Monthly Pass", amount: 3900 };
+
+function openCheckout(title, amount) {
+  if (!currentUser) {
+    openAuthModal('login');
+    showToast('Please log in or register before upgrading to VIP');
+    return;
+  }
+  activePlanCheckout = { title, amount };
+  $('checkoutPlanTitle').innerText = `${title} (${CURRENCY_MAP[currentCurrency].sym}${amount})`;
+  resetCheckoutModal();
+  $('checkoutModal').classList.add('open');
+}
+
+function resetCheckoutModal() {
+  if (activePaymentUnsubscribe) {
+    activePaymentUnsubscribe();
+    activePaymentUnsubscribe = null;
+  }
+  activePaymentDocId = null;
+  $('checkoutInitialStep').style.display = 'block';
+  $('checkoutWaitingStep').style.display = 'none';
+  $('btnSendStk').disabled = false;
+  $('btnSendStk').innerText = '📲 Send Real-Time STK Push';
+}
+
+async function triggerRealTimeMpesaSTK() {
+  if (!currentUser) { openAuthModal('login'); return; }
+  let phone = $('checkoutPhone').value.trim().replace(/\D/g, '');
+  if (phone.startsWith('0')) phone = '254' + phone.slice(1);
+  if (phone.length !== 12 || !phone.startsWith('254')) {
+    return showToast('Enter a valid 10-digit Kenyan number (e.g. 0712345678)', true);
+  }
+
+  $('btnSendStk').disabled = true;
+  $('btnSendStk').innerText = 'Initiating STK Push…';
+
+  try {
+    // 1. Create a live pending transaction doc in Firestore
+    const docRef = await firebase.firestore().collection('mpesa_payments').add({
+      uid: currentUser.uid,
+      userEmail: currentUser.email || 'No email',
+      phone: phone,
+      amount: activePlanCheckout.amount,
+      plan: activePlanCheckout.title,
+      status: 'PENDING',
+      mpesaCode: '',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    activePaymentDocId = docRef.id;
+
+    // 2. Switch UI to real-time listening state
+    $('checkoutInitialStep').style.display = 'none';
+    $('checkoutWaitingStep').style.display = 'block';
+    $('waitingStatusTitle').innerText = 'STK Push Prompt Sent!';
+    $('waitingStatusMsg').innerText = `Prompt sent to ${phone}. Enter your M-Pesa PIN on your phone to complete payment.`;
+    $('waitingLiveLog').innerText = `⏳ Waiting for M-Pesa network confirmation (ID: ${docRef.id.slice(0,6)}…)`;
+
+    // 3. Open Real-Time Listener on this transaction document
+    activePaymentUnsubscribe = docRef.onSnapshot(async (snapshot) => {
+      if (!snapshot.exists) return;
+      const data = snapshot.data();
+
+      if (data.status === 'COMPLETED') {
+        $('waitingLiveLog').innerHTML = `<span style="color:var(--electric); font-weight:800;">✓ Payment Verified! Unlocking VIP…</span>`;
+        await adminGrantVip(currentUser.uid, activePlanCheckout.title.includes('Single') ? 1 : 30);
+        showToast('👑 VIP Access Unlocked! Welcome to Prime Syndicate.');
+        setTimeout(() => {
+          closeModal('checkoutModal');
+          resetCheckoutModal();
+        }, 1500);
+      } else if (data.status === 'FAILED') {
+        $('waitingLiveLog').innerHTML = `<span style="color:var(--danger); font-weight:800;">✕ Payment Cancelled or Failed.</span>`;
+        showToast('Payment was not completed. Please try again.', true);
+      }
+    });
+
+  } catch(err) {
+    showToast('Failed to initiate transaction: ' + err.message, true);
+    resetCheckoutModal();
+  }
+}
+
+async function submitManualMpesaCode() {
+  if (!currentUser) { openAuthModal('login'); return; }
+  const code = $('manualMpesaCode').value.trim().toUpperCase();
+  if (code.length < 6) return showToast('Enter valid M-Pesa SMS Code', true);
+
+  try {
+    await firebase.firestore().collection('mpesa_payments').add({
+      uid: currentUser.uid,
+      userEmail: currentUser.email,
+      phone: $('checkoutPhone').value.trim(),
+      amount: activePlanCheckout.amount,
+      plan: activePlanCheckout.title,
+      status: 'PENDING',
+      mpesaCode: code,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    alert(`Code ${code} received! Our system or admin will verify and activate your VIP shortly.`);
+    closeModal('checkoutModal');
+  } catch(e) {
+    showToast('Failed to submit code: ' + e.message, true);
+  }
+}
+
+/* ==========================================================================
    ADMIN CONSOLE (CONTROL CENTER)
    ========================================================================== */
 function updateAdminGateUI() {
@@ -1525,6 +1698,7 @@ function showAdminDashboard() {
   $('adminEmailDisplay').innerText = currentUser?.email || 'Master Admin';
   refreshAdminData();
   loadAdminUsers();
+  loadAdminPayments();
   showToast('✅ Master Admin Console Unlocked');
 }
 
@@ -1570,6 +1744,7 @@ function switchAdminTab(name, el) {
   if (el) el.classList.add('active');
   $('panel-' + name).classList.add('active');
   if (name === 'vip') loadAdminUsers();
+  if (name === 'payments') loadAdminPayments();
 }
 
 function refreshAdminData() {
@@ -1755,7 +1930,7 @@ async function loadAdminUsers() {
       `;
     }).join('');
   } catch(e) {
-    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--danger);">Error loading users: ${e.message}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--danger); padding:14px;">Error loading users: ${e.message}<br><small>Make sure your Firestore security rules allow master UID reading all users.</small></td></tr>`;
   }
 }
 
@@ -1777,7 +1952,59 @@ async function adminRevokeVip(uid) {
   loadAdminUsers();
 }
 
-/* 3. VIP SLIPS MANAGEMENT */
+/* 3. REAL-TIME M-PESA PAYMENTS MANAGER (ADMIN) */
+async function loadAdminPayments() {
+  const tbody = $('adminPaymentsTable');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="7"><div class="loader"></div></td></tr>';
+
+  try {
+    const snap = await firebase.firestore().collection('mpesa_payments').orderBy('createdAt', 'desc').limit(20).get();
+    const payments = [];
+    snap.forEach(doc => payments.push({ id: doc.id, ...doc.data() }));
+
+    if (payments.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">No payment attempts yet.</div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = payments.map(p => {
+      const date = p.createdAt?.toDate ? p.createdAt.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now';
+      const isCompleted = p.status === 'COMPLETED';
+
+      return `
+        <tr>
+          <td style="font-family:var(--font-mono); font-size:0.68rem;">${date}</td>
+          <td><b>${escapeHTML(p.phone || '—')}</b></td>
+          <td>${escapeHTML(p.userEmail || '—')}</td>
+          <td>KES ${p.amount} (${escapeHTML(p.plan || 'VIP')})</td>
+          <td><code style="color:var(--electric);">${p.mpesaCode || '—'}</code></td>
+          <td><span class="badge ${isCompleted?'badge-electric':'badge-warning'}">${p.status}</span></td>
+          <td>
+            ${!isCompleted ? `<button class="btn btn-primary btn-sm" onclick="adminApprovePayment('${p.id}', '${p.uid}', '${escapeHTML(p.plan)}')">✅ Approve &amp; Activate</button>` : `<span style="color:var(--text-muted); font-size:0.7rem;">Active</span>`}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color:var(--danger);">Error loading payments: ${e.message}</td></tr>`;
+  }
+}
+
+async function adminApprovePayment(paymentId, uid, plan) {
+  try {
+    await firebase.firestore().collection('mpesa_payments').doc(paymentId).update({
+      status: 'COMPLETED'
+    });
+    await adminGrantVip(uid, plan.includes('Single') ? 1 : 30);
+    showToast('Payment verified and VIP pass activated! 👑');
+    loadAdminPayments();
+  } catch(e) {
+    showToast('Error approving payment: ' + e.message, true);
+  }
+}
+
+/* 4. VIP SLIPS MANAGEMENT */
 async function handleAdminAddVipSlip(e) {
   e.preventDefault();
   const slip = {
@@ -1812,7 +2039,7 @@ async function adminDeleteVipSlip(id) {
   showToast('VIP Slip removed');
 }
 
-/* 4. PRICING & M-PESA */
+/* 5. PRICING & M-PESA */
 async function handleSavePricing(e) {
   e.preventDefault();
   const pricing = {
@@ -1825,7 +2052,7 @@ async function handleSavePricing(e) {
   showToast('Pricing and M-Pesa Till updated across web app! 💰');
 }
 
-/* 5. API MANAGEMENT */
+/* 6. API MANAGEMENT */
 async function handleSaveApiConfig(e) {
   e.preventDefault();
   const apiConfig = {
@@ -1849,37 +2076,19 @@ function testApiFetch() {
   }, 1000);
 }
 
-/* 6. SITE CONTENT & BANNER */
+/* 7. SITE CONTENT, SOCIAL LINKS & BANNER */
 async function handleSaveSiteContent(e) {
   e.preventDefault();
   const content = {
     heroTitle: $('cfg_hero_title').value.trim(),
-    telegramUrl: $('cfg_telegram_url').value.trim(),
+    telegramChannel: $('cfg_telegram_channel').value.trim(),
+    telegramUser: $('cfg_telegram_user').value.trim(),
+    facebookUrl: $('cfg_facebook_url').value.trim(),
     showBanner: $('cfg_banner_show').value === 'true',
     bannerText: $('cfg_banner_text').value.trim()
   };
   await firebase.firestore().collection('site_config').doc('main').set({ content }, { merge: true });
-  showToast('Site content and announcements updated!');
-}
-
-/* ---- CHECKOUT & SIMULATION ---- */
-function openCheckout(title, amount) {
-  $('checkoutPlanTitle').innerText = `${title} (${CURRENCY_MAP[currentCurrency].sym}${amount})`;
-  $('checkoutModal').classList.add('open');
-}
-function triggerMpesaSTK() {
-  const phone = $('checkoutPhone').value.trim();
-  if (phone.length < 9) return showToast('Enter valid phone number', true);
-  showToast(`STK push sent to ${phone}. Enter PIN on your phone…`);
-  setTimeout(async () => {
-    if (currentUser) {
-      await adminGrantVip(currentUser.uid, 30);
-      alert('✅ M-Pesa Payment verified! VIP status unlocked for 30 days.');
-    } else {
-      alert('✅ Payment verified! Please sign up or log in to link VIP status.');
-    }
-    closeModal('checkoutModal');
-  }, 1600);
+  showToast('Site content, social links, and announcements updated!');
 }
 
 /* ---- CURRENCY & HELPERS ---- */
@@ -1903,7 +2112,10 @@ function showGoalAlert(text) {
   setTimeout(() => t.classList.remove('show'), 4000);
 }
 function escapeHTML(str) { return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s])); }
-function closeModal(id) { $(id).classList.remove('open'); }
+function closeModal(id) { 
+  if (id === 'checkoutModal') resetCheckoutModal();
+  $(id).classList.remove('open'); 
+}
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
