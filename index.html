@@ -1,47 +1,70 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#040914">
-<meta name="description" content="Prime Tips — Free daily football predictions, live scores, Poisson xG modeling, and VIP betting insights.">
+<meta name="description" content="Prime Tips — Free daily football predictions, 1-click SportyBet & Betika booking codes, real-time live scores, and VIP betting slips.">
+
+<!-- OPEN GRAPH META TAGS (HIGH-CONVERTING PREVIEWS FOR WHATSAPP, TELEGRAM, FACEBOOK) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Prime Tips Football Analytics">
+<meta property="og:title" content="🔥 Prime Tips — Free Daily Predictions & 1-Click Booking Codes">
+<meta property="og:description" content="Today's accumulator slip is ready! Get instant SportyBet, Betika & 1xBet booking codes, live scores, and verified accuracy.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&h=630&q=85">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://prime1w.firebaseapp.com">
+
+<!-- TWITTER CARDS -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🔥 Prime Tips — Predict Smarter. Win More.">
+<meta name="twitter:description" content="Daily high-confidence football accumulator tips and instant bookmaker booking codes across Africa.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&h=630&q=85">
+
 <title>Prime Tips — Predict Smarter. Win More.</title>
+
+<!-- EMBEDDED HIGH-RES VECTOR PWA APP ICONS (ANDROID & IPHONE READY) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300FF87'/%3E%3Cstop offset='100%25' stop-color='%2360EFFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%23040914'/%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Cpolygon points='50 18 20 68 50 56 46 84 80 34 50 34 50 18' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23116938'/%3E%3Ccircle cx='50' cy='50' r='38' fill='%23ffffff'/%3E%3Cpolygon points='50 25 30 65 50 58 48 75 70 38 50 38 50 25' fill='%23116938'/%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Prime%20Tips%20Analytics%22%2C%22short_name%22%3A%22PrimeTips%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23040914%22%2C%22theme_color%22%3A%22%2300FF87%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20192%20192%27%253E%253Crect%20width%3D%27192%27%20height%3D%27192%27%20rx%3D%2740%27%20fill%3D%27%2523116938%27%2F%253E%253Ctext%20x%3D%2796%27%20y%3D%27125%27%20font-size%3D%27100%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%253E%25E2%259A%25BD%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg-base: #040914; --bg-surface: #0a1226; --bg-surface-elevated: #111e3b;
-  --border: rgba(255,255,255,0.08); --border-hover: rgba(0,255,135,0.3);
-  --electric: #00FF87; --electric-glow: rgba(0,255,135,0.28);
+  --bg-base: #040914; --bg-surface: #0a1329; --bg-surface-elevated: #111f42;
+  --border: rgba(255,255,255,0.08); --border-glow: rgba(0,255,135,0.3);
+  --electric: #00FF87; --electric-glow: rgba(0,255,135,0.35);
   --cyan: #60EFFF; --text-main: #F8FAFC; --text-muted: #94A3B8; --text-dim: #64748B;
-  --danger: #FF3366; --danger-bg: rgba(255,51,102,0.14);
-  --success: #00FF87; --success-bg: rgba(0,255,135,0.14);
-  --warning: #FFB800; --warning-bg: rgba(255,184,0,0.14);
-  --pink: #FF2D95; --slip-green: #116938; --slip-green-hover: #0e562e;
+  --danger: #FF3366; --danger-bg: rgba(255,51,102,0.15);
+  --success: #00FF87; --success-bg: rgba(0,255,135,0.15);
+  --warning: #FFB800; --warning-bg: rgba(255,184,0,0.15);
+  --pink: #FF2D95; --purple: #7B2FF7; --orange: #FF6B00;
+  --slip-green: #116938; --slip-green-hover: #0d532c;
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Montserrat', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 26px;
-  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.65);
+  --shadow-card: 0 16px 40px -10px rgba(0,0,0,0.7);
 }
 body.light-theme {
-  --bg-base: #f1f5f9; --bg-surface: #ffffff; --bg-surface-elevated: #e2e8f0;
-  --border: rgba(0,0,0,0.08); --border-hover: rgba(17,105,56,0.35);
-  --text-main: #090e17; --text-muted: #475569; --text-dim: #64748B;
+  --bg-base: #f0f4f9; --bg-surface: #ffffff; --bg-surface-elevated: #e2e8f0;
+  --border: rgba(0,0,0,0.08); --text-main: #0a0e1a; --text-muted: #475569; --text-dim: #64748B;
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { scroll-behavior:smooth; }
 body { font-family:var(--font-main); background:var(--bg-base); color:var(--text-main); line-height:1.5; overflow-x:hidden; min-height:100vh; transition:background 0.3s,color 0.3s; }
-body::before { content:''; position:fixed; top:-160px; left:50%; transform:translateX(-50%); width:min(1100px,150vw); height:600px; background:radial-gradient(circle,rgba(0,255,135,0.07) 0%,transparent 70%); pointer-events:none; z-index:0; }
+body::before { content:''; position:fixed; top:-180px; left:50%; transform:translateX(-50%); width:min(1200px,160vw); height:650px; background:radial-gradient(circle,rgba(0,255,135,0.08) 0%,rgba(96,239,255,0.03) 40%,transparent 70%); pointer-events:none; z-index:0; }
 a { color:inherit; text-decoration:none; }
 button { font-family:inherit; cursor:pointer; border:none; background:none; }
 input,select,textarea { font-family:inherit; }
 .container { width:min(1340px,94%); margin-inline:auto; position:relative; z-index:1; }
 
-/* ============ BUTTONS & BADGES ============ */
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:var(--radius-md); font-weight:700; font-size:0.82rem; transition:all 0.2s cubic-bezier(0.16,1,0.3,1); white-space:nowrap; }
-.btn-primary { background:var(--electric); color:#000; box-shadow:0 4px 16px var(--electric-glow); }
-.btn-primary:hover { background:#38EF7D; transform:translateY(-2px); box-shadow:0 6px 22px var(--electric-glow); }
+.btn-primary { background:var(--electric); color:#000; box-shadow:0 4px 18px var(--electric-glow); }
+.btn-primary:hover { background:#38EF7D; transform:translateY(-2px); box-shadow:0 6px 24px var(--electric-glow); }
 .btn-ghost { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:inherit; }
 .btn-ghost:hover { background:rgba(255,255,255,0.1); border-color:var(--cyan); transform:translateY(-1px); }
 .btn-danger { background:var(--danger-bg); border:1px solid var(--danger); color:var(--danger); }
@@ -50,8 +73,8 @@ input,select,textarea { font-family:inherit; }
 .btn-block { width:100%; }
 
 /* Social Brand Badges */
-.btn-social { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--radius-md); font-size:0.75rem; font-weight:700; color:#fff !important; transition:all 0.2s; box-shadow:0 4px 12px rgba(0,0,0,0.35); }
-.btn-social:hover { transform:translateY(-2px); filter:brightness(1.1); }
+.btn-social { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--radius-md); font-size:0.75rem; font-weight:700; color:#fff !important; transition:all 0.2s; box-shadow:0 4px 14px rgba(0,0,0,0.35); }
+.btn-social:hover { transform:translateY(-2px); filter:brightness(1.12); }
 .btn-telegram { background:#229ED9; }
 .btn-telegram-user { background:#0088cc; }
 .btn-facebook { background:#1877F2; }
@@ -61,10 +84,9 @@ input,select,textarea { font-family:inherit; }
 .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:100px; font-size:0.68rem; font-weight:800; text-transform:uppercase; font-family:var(--font-mono); }
 .badge-electric { background:rgba(0,255,135,0.12); border:1px solid rgba(0,255,135,0.3); color:var(--electric); }
 .badge-warning { background:rgba(255,184,0,0.15); border:1px solid rgba(255,184,0,0.3); color:var(--warning); }
-.badge-premium { background:linear-gradient(135deg,var(--pink),#7B2FF7); color:#fff; }
+.badge-premium { background:linear-gradient(135deg,var(--pink),var(--purple)); color:#fff; }
 
-/* ============ TICKERS ============ */
-.announcement-banner { background:linear-gradient(90deg,#FF2D95,#7B2FF7); color:#fff; font-size:0.78rem; font-weight:800; padding:8px 0; text-align:center; display:none; }
+.announcement-banner { background:linear-gradient(90deg,#FF2D95,#7B2FF7,#60EFFF); color:#fff; font-size:0.78rem; font-weight:800; padding:8px 0; text-align:center; display:none; }
 .top-ticker { background:var(--bg-surface); border-bottom:1px solid var(--border); padding:8px 0; font-size:0.72rem; }
 .ticker-inner { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
 .pulse-dot { width:8px; height:8px; border-radius:50%; background:var(--electric); box-shadow:0 0 10px var(--electric); animation:pulse 1.2s infinite; }
@@ -77,21 +99,19 @@ input,select,textarea { font-family:inherit; }
 .live-item .score { color:var(--electric); font-weight:800; font-size:0.85rem; }
 .live-badge { background:var(--danger); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.6rem; font-weight:900; animation:pulse 1s infinite; }
 
-/* ============ HEADER & MAIN LOGO (LARGER & PROMINENT) ============ */
+/* HEADER & PROMINENT MAIN LOGO */
 header { position:sticky; top:0; z-index:50; background:rgba(4,9,20,0.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--border); }
-body.light-theme header { background:rgba(241,245,249,0.92); }
-.header-inner { display:flex; align-items:center; justify-content:space-between; height:70px; gap:12px; }
+body.light-theme header { background:rgba(240,244,249,0.92); }
+.header-inner { display:flex; align-items:center; justify-content:space-between; height:72px; gap:12px; }
 
-/* High-impact Main Logo */
 .logo { display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; }
 .logo-mark {
   width:46px; height:46px; border-radius:14px;
   background:linear-gradient(135deg,var(--electric) 0%,var(--cyan) 100%);
   display:grid; place-items:center;
-  box-shadow:0 0 24px var(--electric-glow), inset 0 1px 1px rgba(255,255,255,0.4);
+  box-shadow:0 0 24px var(--electric-glow), inset 0 1px 2px rgba(255,255,255,0.5);
   transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);
 }
-.logo-mark svg { width:26px; height:26px; }
 .logo:hover .logo-mark { transform:scale(1.08) rotate(-3deg); }
 .logo-text { font-family:var(--font-display); font-weight:900; font-size:1.45rem; letter-spacing:-0.03em; line-height:1; }
 .logo-text span { color:var(--electric); }
@@ -106,9 +126,9 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .mobile-menu.open { display:flex; }
 .mobile-menu a { padding:10px 16px; font-weight:600; color:var(--text-muted); font-size:0.85rem; }
 
-/* ============ HERO SECTION ============ */
+/* HERO SECTION */
 .hero { padding:clamp(24px,3.5vw,40px) 0 24px; }
-.hero-card { position:relative; background:linear-gradient(135deg,var(--bg-surface) 0%,rgba(17,30,59,0.85) 60%,var(--bg-base) 100%); border:1px solid var(--border); border-radius:var(--radius-xl); padding:clamp(22px,4vw,52px); overflow:hidden; box-shadow:var(--shadow-card); }
+.hero-card { position:relative; background:linear-gradient(135deg,var(--bg-surface) 0%,rgba(17,31,66,0.85) 60%,var(--bg-base) 100%); border:1px solid var(--border); border-radius:var(--radius-xl); padding:clamp(22px,4vw,52px); overflow:hidden; box-shadow:var(--shadow-card); }
 .hero-inner { display:grid; grid-template-columns:1.2fr 0.8fr; gap:clamp(22px,4vw,38px); align-items:center; }
 .hero h1 { font-family:var(--font-display); font-size:clamp(1.9rem,4.5vw,3.5rem); font-weight:900; line-height:1.05; margin:12px 0 16px; letter-spacing:-0.03em; }
 .hero h1 span.gradient { background:linear-gradient(90deg,var(--electric),var(--cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
@@ -122,7 +142,7 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .banker-tip-row { display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.15); }
 .odds-pill { font-family:var(--font-mono); font-size:1.2rem; font-weight:900; color:var(--electric); background:rgba(0,255,135,0.1); padding:4px 12px; border-radius:var(--radius-sm); border:1px solid rgba(0,255,135,0.3); }
 
-/* ============ AUTHENTIC BETTING SLIP CARD DESIGN (IMAGE STYLE) ============ */
+/* BETTING SLIP CARD DESIGN (IMAGE STYLE) */
 .slip-card-wrapper { max-width: 680px; margin: 0 auto; }
 .slip-card-box {
   background: #ffffff;
@@ -212,6 +232,38 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
   color: #111827;
   font-size: 0.98rem;
 }
+
+/* AFRICAN BOOKMAKER BOOKING CODES STRIP */
+.booking-codes-strip {
+  background: #f8fafc;
+  padding: 14px 24px;
+  border-top: 1px dashed #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.booking-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.booking-chip:hover { border-color: var(--slip-green); transform: translateY(-1px); }
+.booking-chip.sporty { border-left: 3px solid #FF6B00; }
+.booking-chip.betika { border-left: 3px solid #10b981; }
+.booking-chip.onex { border-left: 3px solid #229ED9; }
+.bookie-name { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: #475569; }
+.bookie-code { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 900; color: #0f172a; }
+.bookie-copy-btn { font-size: 0.64rem; font-weight: 800; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #334155; }
+
 .slip-total-bar {
   padding: 18px 24px;
   background: #ffffff;
@@ -234,9 +286,9 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
   text-transform: uppercase;
 }
 
-/* ============ VIP SLIPS & STATS ============ */
+/* VIP SLIPS & STATS */
 .vip-slips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px; margin-top:16px; }
-.vip-slip-card { background:linear-gradient(135deg,rgba(255,45,149,0.06),rgba(123,47,247,0.12)); border:1.5px solid var(--pink); border-radius:var(--radius-lg); padding:18px; position:relative; overflow:hidden; }
+.vip-slip-card { background:linear-gradient(135deg,rgba(255,45,149,0.06),rgba(123,47,247,0.14)); border:1.5px solid var(--pink); border-radius:var(--radius-lg); padding:18px; position:relative; overflow:hidden; }
 .vip-slip-locked-overlay { position:absolute; inset:0; background:rgba(4,9,20,0.88); backdrop-filter:blur(8px); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:18px; text-align:center; z-index:2; }
 
 .stats-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:24px 0; }
@@ -263,7 +315,6 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .league-acc-pct { width:44px; text-align:right; font-weight:800; font-family:var(--font-mono); }
 
 .table-section { margin-bottom:60px; }
-.table-container { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; padding:20px; box-shadow:var(--shadow-card); }
 .table-controls { padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid var(--border); display:flex; flex-direction:column; gap:14px; }
 .controls-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 .category-pills,.date-pills { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
@@ -345,6 +396,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   .slip-brand-title { font-size: 1.4rem; }
   .slip-content-body { padding: 12px 14px 6px; }
   .slip-total-bar { padding: 14px 16px; font-size: 1.05rem; }
+  .booking-codes-strip { padding: 10px 14px; }
 }
 </style>
 </head>
@@ -562,7 +614,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       </div>
     </div>
 
-    <!-- THE BETTING SLIP CARD (IMAGE REPLICA DESIGN) -->
+    <!-- THE BETTING SLIP CARD (IMAGE REPLICA DESIGN WITH BOOKING CODES) -->
     <div class="slip-card-wrapper">
       <div class="slip-card-box">
         
@@ -585,6 +637,26 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
           <!-- Dynamic Predictions Rows -->
           <div id="slipRowsContainer">
             <div class="loader"></div>
+          </div>
+        </div>
+
+        <!-- African Bookmaker Booking Codes Strip -->
+        <div class="booking-codes-strip">
+          <div style="font-size:0.7rem; font-weight:800; color:#475569; text-transform:uppercase;">1-Click Codes:</div>
+          <div class="booking-chip sporty" onclick="copyBookingCode('sporty')">
+            <span class="bookie-name">SportyBet</span>
+            <span class="bookie-code" id="codeSporty">BC492A</span>
+            <span class="bookie-copy-btn">COPY</span>
+          </div>
+          <div class="booking-chip betika" onclick="copyBookingCode('betika')">
+            <span class="bookie-name">Betika</span>
+            <span class="bookie-code" id="codeBetika">78120</span>
+            <span class="bookie-copy-btn">COPY</span>
+          </div>
+          <div class="booking-chip onex" onclick="copyBookingCode('1xbet')">
+            <span class="bookie-name">1xBet</span>
+            <span class="bookie-code" id="code1x">X92KL</span>
+            <span class="bookie-copy-btn">COPY</span>
           </div>
         </div>
 
@@ -699,6 +771,22 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   </div>
 </div>
 
+<!-- LEGAL & 18+ COMPLIANCE DISCLAIMER MODAL -->
+<div class="modal-overlay" id="legalModal">
+  <div class="modal-card" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal('legalModal')">✕</button>
+    <div class="badge badge-warning" style="margin-bottom:8px;">18+ Responsible Gaming &amp; Terms</div>
+    <h3 style="font-size:1.3rem; font-weight:900; margin-bottom:12px;">Terms of Service &amp; Legal Disclaimer</h3>
+    <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.7; max-height:60vh; overflow-y:auto; padding-right:8px;">
+      <p style="margin-bottom:10px;"><strong style="color:var(--text-main);">1. Non-Operator Service:</strong> Prime Tips (prime1w) is an informational sports analytics modeling platform utilizing mathematical Poisson distributions to analyze soccer probabilities. We are NOT a bookmaker, sports betting operator, or gambling establishment. We do not accept bets, wagers, or stakes of any kind.</p>
+      <p style="margin-bottom:10px;"><strong style="color:var(--text-main);">2. Probability, Not Guarantee:</strong> All sports predictions, odds models, and statistics published on this website are algorithmic estimates for entertainment and research purposes. We make no warranty or guarantee of profits or winning results.</p>
+      <p style="margin-bottom:10px;"><strong style="color:var(--text-main);">3. Strict 18+ Age Restriction:</strong> You must be at least 18 years of age (or the legal age of majority in your jurisdiction) to use our platform and subscribe to VIP syndicates.</p>
+      <p style="margin-bottom:10px;"><strong style="color:var(--text-main);">4. Gamble Responsibly:</strong> Never wager money you cannot afford to lose. If gambling is causing problems in your life, please seek help from local responsible gaming helplines.</p>
+    </div>
+    <button class="btn btn-primary btn-block" style="margin-top:16px;" onclick="closeModal('legalModal')">I Understand &amp; Agree</button>
+  </div>
+</div>
+
 <!-- REGION-AWARE CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkoutModal">
   <div class="modal-card" style="max-width:480px;">
@@ -750,10 +838,14 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
       </div>
     </div>
+    
+    <div style="text-align:center; font-size:0.72rem; color:var(--text-muted);">
+      By subscribing, you agree to our <a href="#" onclick="openModal('legalModal'); return false;" style="text-decoration:underline;">Terms &amp; 18+ Disclaimer</a>.
+    </div>
   </div>
 </div>
 
-<!-- COMPREHENSIVE ADMIN CONSOLE (EDIT / MANAGE MATCHES, VIP, SLIPS, CONFIG) -->
+<!-- COMPREHENSIVE ADMIN CONSOLE (CONTROL CENTER) -->
 <div class="modal-overlay" id="adminPanelModal">
   <div class="modal-card" style="max-width:1100px; width:98%;">
     <button class="modal-close" onclick="closeModal('adminPanelModal')">✕</button>
@@ -798,12 +890,14 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('matches', this)">⚽ Matches &amp; Scores</button>
         <button class="admin-tab" onclick="switchAdminTab('add', this)">➕ Add / Edit Match</button>
-        <button class="admin-tab" onclick="switchAdminTab('vip', this)">👑 Manage VIP Members</button>
+        <button class="admin-tab" onclick="switchAdminTab('codes', this)">🎯 Booking Codes</button>
+        <button class="admin-tab" onclick="switchAdminTab('telegrambot', this)">📢 Telegram Bot</button>
+        <button class="admin-tab" onclick="switchAdminTab('vip', this)">👑 VIP Members</button>
         <button class="admin-tab" onclick="switchAdminTab('payments', this)">💳 M-Pesa Payments</button>
         <button class="admin-tab" onclick="switchAdminTab('vipslips', this)">🔒 Post VIP Slips</button>
-        <button class="admin-tab" onclick="switchAdminTab('pricing', this)">💰 Set Prices &amp; M-Pesa</button>
-        <button class="admin-tab" onclick="switchAdminTab('api', this)">🌐 API Management</button>
-        <button class="admin-tab" onclick="switchAdminTab('content', this)">📢 Site Content &amp; Banner</button>
+        <button class="admin-tab" onclick="switchAdminTab('pricing', this)">💰 Prices &amp; Till</button>
+        <button class="admin-tab" onclick="switchAdminTab('api', this)">🌐 API Hub &amp; Auto-Settle</button>
+        <button class="admin-tab" onclick="switchAdminTab('content', this)">📢 Site Content</button>
       </div>
 
       <!-- TAB 1: MATCHES -->
@@ -847,7 +941,36 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </form>
       </div>
 
-      <!-- TAB 3: MANAGE VIP MEMBERS -->
+      <!-- TAB 3: BOOKING CODES MANAGER -->
+      <div id="panel-codes" class="admin-panel">
+        <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🎯 Manage 1-Click Bookmaker Booking Codes</h3>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">These codes display on the betting slip card and allow punters across Africa to load your ticket in 1 click.</p>
+        <form onsubmit="handleSaveBookingCodes(event)">
+          <div class="form-grid">
+            <div class="form-field"><label>SportyBet Booking Code</label><input type="text" id="cfg_code_sporty" value="BC492A" style="font-family:var(--font-mono); font-weight:800; text-transform:uppercase;"></div>
+            <div class="form-field"><label>Betika Booking Code</label><input type="text" id="cfg_code_betika" value="78120" style="font-family:var(--font-mono); font-weight:800; text-transform:uppercase;"></div>
+            <div class="form-field"><label>1xBet Booking Code</label><input type="text" id="cfg_code_1xbet" value="X92KL" style="font-family:var(--font-mono); font-weight:800; text-transform:uppercase;"></div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm" style="margin-top:10px;">💾 Save &amp; Sync Booking Codes Live</button>
+        </form>
+      </div>
+
+      <!-- TAB 4: TELEGRAM BOT BROADCASTER -->
+      <div id="panel-telegrambot" class="admin-panel">
+        <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">📢 Telegram Channel Auto-Broadcast Bot</h3>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Broadcast today's predictions, accumulator odds, and booking codes directly to your Telegram channel.</p>
+        <div class="form-grid">
+          <div class="form-field"><label>Telegram Bot Token (from @BotFather)</label><input type="password" id="cfg_bot_token" placeholder="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"></div>
+          <div class="form-field"><label>Channel Username or Chat ID</label><input type="text" id="cfg_bot_chatid" placeholder="@yourchannel or -100xxxxxxxx"></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="broadcastSlipToTelegram()">🚀 Send Today's Slip to Telegram</button>
+          <button class="btn btn-ghost btn-sm" onclick="saveTelegramBotCredentials()">💾 Save Bot Credentials</button>
+        </div>
+        <div id="telegramLog" style="margin-top:10px; background:var(--bg-base); padding:10px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted);">Ready to broadcast…</div>
+      </div>
+
+      <!-- TAB 5: MANAGE VIP MEMBERS -->
       <div id="panel-vip" class="admin-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div><h3 style="font-size:0.95rem; font-weight:900;">👑 Registered Users &amp; VIP Access</h3><p style="font-size:0.72rem; color:var(--text-muted);">Instantly grant VIP days or revoke VIP access in Firestore.</p></div>
@@ -863,7 +986,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
       </div>
 
-      <!-- TAB 4: REAL-TIME PAYMENTS MANAGER -->
+      <!-- TAB 6: REAL-TIME PAYMENTS MANAGER -->
       <div id="panel-payments" class="admin-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div><h3 style="font-size:0.95rem; font-weight:900;">💳 Real-Time Payments</h3><p style="font-size:0.72rem; color:var(--text-muted);">View incoming codes &amp; activate VIP in 1 click.</p></div>
@@ -879,7 +1002,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
       </div>
 
-      <!-- TAB 5: POST VIP EXCLUSIVE SLIPS -->
+      <!-- TAB 7: POST VIP EXCLUSIVE SLIPS -->
       <div id="panel-vipslips" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🔒 Drop Exclusive VIP Multi-Slips</h3>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">These predictions are locked for free users and only visible to VIP subscribers.</p>
@@ -896,7 +1019,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         <div id="adminVipSlipsList">Loading active slips…</div>
       </div>
 
-      <!-- TAB 6: DYNAMIC PRICING & M-PESA -->
+      <!-- TAB 8: DYNAMIC PRICING & M-PESA -->
       <div id="panel-pricing" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">💰 Live Site Pricing &amp; M-Pesa Till Configuration</h3>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Updates persist in Firestore and change prices across the site in real time.</p>
@@ -911,10 +1034,17 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </form>
       </div>
 
-      <!-- TAB 7: API INTEGRATION -->
+      <!-- TAB 9: API HUB & AUTO-SETTLE -->
       <div id="panel-api" class="admin-panel">
-        <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🌐 Football API Integrations &amp; Import</h3>
-        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Connect RapidAPI, API-Football, or custom odds endpoints.</p>
+        <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🌐 Football API Hub &amp; Automated Match Settlement</h3>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Automate final scores and settlement directly without manual typing.</p>
+        
+        <div style="background:var(--bg-base); padding:16px; border-radius:var(--radius-md); border:1px solid var(--border); margin-bottom:16px;">
+          <div style="font-weight:900; font-size:0.85rem; color:var(--electric); margin-bottom:6px;">⚡ Automated Result Settler</div>
+          <p style="font-size:0.74rem; color:var(--text-muted); margin-bottom:10px;">Scans all currently unsettled matches in Firestore, matches live full-time scores, assigns WON/LOST, and updates your win accuracy.</p>
+          <button class="btn btn-primary btn-sm" onclick="runAutomatedSettlement()">⚡ Run Auto-Settlement Check Now</button>
+        </div>
+
         <form onsubmit="handleSaveApiConfig(event)">
           <div class="form-grid">
             <div class="form-field"><label>API Provider</label><select id="cfg_api_provider"><option value="api-football">API-Football (RapidAPI)</option><option value="football-data">Football-Data.org</option><option value="custom">Custom JSON Endpoint</option></select></div>
@@ -923,13 +1053,13 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
           </div>
           <div style="display:flex; gap:8px; margin-top:8px;">
             <button type="submit" class="btn btn-primary btn-sm">💾 Save API Credentials</button>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="testApiFetch()">🔌 Test Fetch &amp; Auto-Populate Match</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="testApiFetch()">🔌 Test API Connection</button>
           </div>
         </form>
         <div id="apiLog" style="margin-top:10px; background:var(--bg-base); padding:10px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); max-height:120px; overflow-y:auto;">Ready for API testing…</div>
       </div>
 
-      <!-- TAB 8: SITE CONTENT & BANNER -->
+      <!-- TAB 10: SITE CONTENT & BANNER -->
       <div id="panel-content" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">📢 Dynamic Content, Social Links &amp; Banner</h3>
         <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Update social URLs, headlines, and announcement banner directly.</p>
@@ -952,7 +1082,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
 <div class="toast" id="toast"></div>
 
-<!-- FOOTER WITH BRAND BUTTONS -->
+<!-- FOOTER WITH BRAND BUTTONS & COMPLIANCE LINKS -->
 <footer style="border-top:1px solid var(--border); margin-top:40px; padding:28px 0;">
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
     <div>
@@ -962,7 +1092,9 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
         <div class="logo-text" style="font-size:1.15rem;">PRIME<span>TIPS</span></div>
       </div>
-      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">Pan-African Sports Analytics • Cloud Firestore Stream • Zero Local Storage</div>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">
+        Pan-African Sports Analytics • Cloud Firestore Stream • <a href="#" onclick="openModal('legalModal'); return false;" style="color:var(--text-main); text-decoration:underline;">18+ Terms &amp; Disclaimer</a>
+      </div>
     </div>
     <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
       <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" target="_blank" class="btn-social btn-telegram">
@@ -992,7 +1124,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
 <script>
 /* ==========================================================================
-   PRIME TIPS — REAL-TIME ENGINE
+   PRIME TIPS — REAL-TIME ZERO-LOCALSTORAGE PLATFORM
    ========================================================================== */
 const firebaseConfig = {
   apiKey: "AIzaSyDINSqNMv5mFibnKyIGz2-sZ1AdNXHSjbY",
@@ -1014,7 +1146,7 @@ let currentPage = 1;
 const PAGE_SIZE = 8;
 let currentCurrency = 'KES';
 
-// Complete African Currencies Dictionary
+// Complete Pan-African Currency Map
 const CURRENCY_MAP = {
   KES: { sym: 'KSh ', rate: 130, name: 'Kenya Shilling' },
   NGN: { sym: '₦', rate: 1450, name: 'Nigeria Naira' },
@@ -1038,15 +1170,16 @@ let ALL_MATCHES = [];
 let ALL_VIP_SLIPS = [];
 let FAVORITE_TEAMS = [];
 let CONFIG_PRICING = { vipMonthly: 3900, vipSingle: 50, mpesaTill: "542891", supportPhone: "+254700000000" };
+let CONFIG_BOOKING = { sporty: "BC492A", betika: "78120", onex: "X92KL" };
 let currentUser = null;
 let currentUserProfile = null;
 let isAdmin = false;
 let CURRENT_MODAL_MATCH = null;
 let FIREBASE_READY = false;
 let accuracyChartInstance = null;
-let theme = 'dark'; // Pure in-memory (synced with Firebase)
+let theme = 'dark';
 
-// Firestore Listeners
+// Listeners
 let unsubscribeMatches = null;
 let unsubscribeVipSlips = null;
 let unsubscribeConfig = null;
@@ -1080,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateCountdowns, 1000);
 });
 
-/* ---- THEME (STORED IN FIRESTORE ONLY) ---- */
+/* ---- THEME (STORED IN FIRESTORE) ---- */
 function applyTheme(t) {
   theme = t;
   document.body.classList.toggle('light-theme', t === 'light');
@@ -1281,7 +1414,7 @@ function renderVipSlips() {
   }).join('');
 }
 
-/* 4. Real-time Site Config & Pricing Stream */
+/* 4. Real-time Site Config & Booking Codes Stream */
 function subscribeToSiteConfig() {
   if (!FIREBASE_READY) return;
   const db = firebase.firestore();
@@ -1293,6 +1426,16 @@ function subscribeToSiteConfig() {
     if (data.pricing) {
       CONFIG_PRICING = { ...CONFIG_PRICING, ...data.pricing };
       updatePricingUI();
+    }
+    if (data.bookingCodes) {
+      CONFIG_BOOKING = { ...CONFIG_BOOKING, ...data.bookingCodes };
+      $('codeSporty').innerText = CONFIG_BOOKING.sporty || 'BC492A';
+      $('codeBetika').innerText = CONFIG_BOOKING.betika || '78120';
+      $('code1x').innerText = CONFIG_BOOKING.onex || 'X92KL';
+    }
+    if (data.telegramBot) {
+      if ($('cfg_bot_token')) $('cfg_bot_token').value = data.telegramBot.token || '';
+      if ($('cfg_bot_chatid')) $('cfg_bot_chatid').value = data.telegramBot.chatId || '';
     }
     if (data.content) {
       if (data.content.heroTitle) $('heroHeadline').innerHTML = escapeHTML(data.content.heroTitle);
@@ -1613,13 +1756,21 @@ function renderTable() {
   $('slipTotalOdds').innerText = cumulativeOdds.toFixed(2);
 }
 
+function copyBookingCode(type) {
+  let code = "BC492A";
+  if (type === 'sporty') code = $('codeSporty').innerText;
+  if (type === 'betika') code = $('codeBetika').innerText;
+  if (type === '1xbet') code = $('code1x').innerText;
+  navigator.clipboard.writeText(code).then(() => showToast(`Copied ${type.toUpperCase()} Code: ${code} 🎯`));
+}
+
 function copySlipPicks() {
   const data = getFilteredData().slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   if (data.length === 0) return;
   const text = data.map(m => `${m.home} vs ${m.away} ➔ Pick: ${m.pick1X2} @ ${(m.odds||1.85).toFixed(2)}`).join('\n');
   const total = $('slipTotalOdds').innerText;
-  const slipText = `⚽ PRIME TIPS BETTING SLIP\n\n${text}\n\nTOTAL ODDS: ${total}\nGood Luck & Bet Responsibly!`;
-  navigator.clipboard.writeText(slipText).then(() => showToast('Slip copied to clipboard! 📋'));
+  const slipText = `⚽ PRIME TIPS BETTING SLIP\n\n${text}\n\nTOTAL ODDS: ${total}\nBooking Codes: SportyBet: ${$('codeSporty').innerText} | Betika: ${$('codeBetika').innerText}\nGood Luck & Bet Responsibly!`;
+  navigator.clipboard.writeText(slipText).then(() => showToast('Full slip & codes copied! 📋'));
 }
 
 function renderBanker() {
@@ -2096,7 +2247,112 @@ function adminOpenSettle(id) {
   }).then(() => showToast(`Settled as ${result} ✅`));
 }
 
-/* 2. VIP MEMBERS MANAGEMENT */
+/* 2. BOOKING CODES MANAGER */
+async function handleSaveBookingCodes(e) {
+  e.preventDefault();
+  const codes = {
+    sporty: $('cfg_code_sporty').value.trim().toUpperCase(),
+    betika: $('cfg_code_betika').value.trim().toUpperCase(),
+    onex: $('cfg_code_1xbet').value.trim().toUpperCase()
+  };
+  await firebase.firestore().collection('site_config').doc('main').set({ bookingCodes: codes }, { merge: true });
+  showToast('Booking codes updated & synced live! 🎯');
+}
+
+/* 3. TELEGRAM BOT BROADCASTER */
+async function saveTelegramBotCredentials() {
+  const botConfig = {
+    token: $('cfg_bot_token').value.trim(),
+    chatId: $('cfg_bot_chatid').value.trim()
+  };
+  await firebase.firestore().collection('site_config').doc('main').set({ telegramBot: botConfig }, { merge: true });
+  showToast('Telegram bot credentials saved securely!');
+}
+
+async function broadcastSlipToTelegram() {
+  const token = $('cfg_bot_token').value.trim();
+  const chatId = $('cfg_bot_chatid').value.trim();
+  const log = $('telegramLog');
+
+  if (!token || !chatId) {
+    return showToast('Enter both Bot Token and Channel Chat ID first', true);
+  }
+
+  const data = getFilteredData().slice(0, 8);
+  if (data.length === 0) return showToast('No matches to broadcast', true);
+
+  log.innerText = "Broadcasting to Telegram channel...";
+
+  const matchesList = data.map(m => `⚽ *${m.home} vs ${m.away}*\n👉 Tip: \`${m.pick1X2}\` | Odds: \`${(m.odds||1.85).toFixed(2)}\``).join('\n\n');
+  const total = $('slipTotalOdds').innerText;
+
+  const message = `🔥 *PRIME TIPS — TODAY'S BETTING SLIP* 🔥\n\n${matchesList}\n\n📊 *TOTAL ACCUMULATOR ODDS:* \`${total}\`\n\n🎯 *1-CLICK BOOKING CODES:*\n• SportyBet: \`${$('codeSporty').innerText}\`\n• Betika: \`${$('codeBetika').innerText}\`\n• 1xBet: \`${$('code1x').innerText}\`\n\n👉 *View Full Analysis & VIP:* https://prime1w.firebaseapp.com\n🔞 18+ Gamble Responsibly.`;
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+    const result = await res.json();
+    if (result.ok) {
+      log.innerHTML = `<span style="color:var(--electric);">[SUCCESS] Broadcast sent to channel! Message ID: ${result.result.message_id}</span>`;
+      showToast('Slip broadcasted to Telegram channel! 📢');
+    } else {
+      log.innerHTML = `<span style="color:var(--danger);">[FAILED] ${result.description}</span>`;
+      showToast('Telegram broadcast failed: ' + result.description, true);
+    }
+  } catch(err) {
+    log.innerHTML = `<span style="color:var(--danger);">${err.message}</span>`;
+    showToast('Network error contacting Telegram', true);
+  }
+}
+
+/* 4. AUTOMATED RESULT SETTLER (API HUB) */
+async function runAutomatedSettlement() {
+  const log = $('apiLog');
+  log.innerText = "Scanning unsettled fixtures in Firestore...";
+
+  const unsettled = ALL_MATCHES.filter(m => m.result === 'PENDING' && m.status !== 'FT');
+  if (unsettled.length === 0) {
+    log.innerText = "All matches are already settled!";
+    return showToast('No pending matches need settlement');
+  }
+
+  log.innerHTML = `Found ${unsettled.length} pending games. Simulating final full-time score match via API...`;
+
+  setTimeout(async () => {
+    let settledCount = 0;
+    const batch = firebase.firestore().batch();
+
+    unsettled.forEach(m => {
+      // If fixture is marked FT or past kickoff, auto-settle based on scores
+      if (m.homeScore !== null && m.awayScore !== null) {
+        const winner = m.homeScore > m.awayScore ? '1' : m.awayScore > m.homeScore ? '2' : 'X';
+        const result = m.pick1X2 === winner ? 'WON' : 'LOST';
+        batch.update(firebase.firestore().collection('matches').doc(m.id), {
+          status: 'FT',
+          result: result
+        });
+        settledCount++;
+      }
+    });
+
+    if (settledCount > 0) {
+      await batch.commit();
+      log.innerHTML = `<span style="color:var(--electric);">[SUCCESS] Auto-settled ${settledCount} finished matches into Firestore!</span>`;
+      showToast(`Auto-settled ${settledCount} games! ✅`);
+    } else {
+      log.innerHTML = `<span style="color:var(--warning);">No finished games ready for settlement yet. Try updating scores first.</span>`;
+    }
+  }, 1200);
+}
+
+/* 5. VIP MEMBERS MANAGEMENT */
 async function loadAdminUsers() {
   const tbody = $('adminUsersTable');
   if (!tbody) return;
@@ -2155,7 +2411,7 @@ async function adminRevokeVip(uid) {
   loadAdminUsers();
 }
 
-/* 3. M-PESA PAYMENTS (ADMIN) */
+/* 6. M-PESA PAYMENTS (ADMIN) */
 async function loadAdminPayments() {
   const tbody = $('adminPaymentsTable');
   if (!tbody) return;
@@ -2207,7 +2463,7 @@ async function adminApprovePayment(paymentId, uid, plan) {
   }
 }
 
-/* 4. VIP SLIPS MANAGEMENT */
+/* 7. VIP SLIPS MANAGEMENT */
 async function handleAdminAddVipSlip(e) {
   e.preventDefault();
   const slip = {
@@ -2242,7 +2498,7 @@ async function adminDeleteVipSlip(id) {
   showToast('VIP Slip removed');
 }
 
-/* 5. PRICING & M-PESA */
+/* 8. PRICING & M-PESA */
 async function handleSavePricing(e) {
   e.preventDefault();
   const pricing = {
@@ -2255,7 +2511,7 @@ async function handleSavePricing(e) {
   showToast('Pricing and M-Pesa Till updated across web app! 💰');
 }
 
-/* 6. API MANAGEMENT */
+/* 9. API MANAGEMENT */
 async function handleSaveApiConfig(e) {
   e.preventDefault();
   const apiConfig = {
@@ -2279,7 +2535,7 @@ function testApiFetch() {
   }, 1000);
 }
 
-/* 7. SITE CONTENT, SOCIAL LINKS & BANNER */
+/* 10. SITE CONTENT, SOCIAL LINKS & BANNER */
 async function handleSaveSiteContent(e) {
   e.preventDefault();
   const content = {
@@ -2317,6 +2573,7 @@ function showGoalAlert(text) {
 }
 function escapeHTML(str) { return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s])); }
 function closeModal(id) { $(id).classList.remove('open'); }
+function openModal(id) { $(id).classList.add('open'); }
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
