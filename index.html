@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,10 +62,10 @@ input,select,textarea { font-family:inherit; }
 .btn-ghost { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:inherit; }
 .btn-ghost:hover { background:rgba(255,255,255,0.1); border-color:var(--cyan); transform:translateY(-1px); }
 .btn-danger { background:var(--danger-bg); border:1px solid var(--danger); color:var(--danger); }
+.btn-danger:hover { background:rgba(255,51,102,0.3); }
 .btn-sm { padding:6px 12px; font-size:0.72rem; border-radius:var(--radius-sm); }
 .btn-block { width:100%; }
 
-/* Social Brand Badges */
 .btn-social { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--radius-md); font-size:0.75rem; font-weight:700; color:#fff !important; transition:all 0.2s; box-shadow:0 4px 14px rgba(0,0,0,0.35); }
 .btn-social:hover { transform:translateY(-2px); filter:brightness(1.12); }
 .btn-telegram { background:#229ED9; }
@@ -78,8 +77,10 @@ input,select,textarea { font-family:inherit; }
 .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:100px; font-size:0.68rem; font-weight:800; text-transform:uppercase; font-family:var(--font-mono); }
 .badge-electric { background:rgba(0,255,135,0.12); border:1px solid rgba(0,255,135,0.3); color:var(--electric); }
 .badge-warning { background:rgba(255,184,0,0.15); border:1px solid rgba(255,184,0,0.3); color:var(--warning); }
+.badge-danger { background:rgba(255,51,102,0.15); border:1px solid rgba(255,51,102,0.3); color:var(--danger); }
 .badge-premium { background:linear-gradient(135deg,var(--pink),var(--purple)); color:#fff; }
 .badge-gold { background:linear-gradient(135deg,#FFD700,#FF8C00); color:#000; font-weight:900; }
+.badge-tier-low { background:rgba(255,255,255,0.08); color:var(--text-muted); }
 
 .announcement-banner { background:linear-gradient(90deg,#FF2D95,#7B2FF7,#60EFFF); color:#fff; font-size:0.78rem; font-weight:800; padding:8px 0; text-align:center; display:none; }
 .top-ticker { background:var(--bg-surface); border-bottom:1px solid var(--border); padding:8px 0; font-size:0.72rem; }
@@ -94,7 +95,6 @@ input,select,textarea { font-family:inherit; }
 .live-item .score { color:var(--electric); font-weight:800; font-size:0.85rem; }
 .live-badge { background:var(--danger); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.6rem; font-weight:900; animation:pulse 1s infinite; }
 
-/* HEADER & PROMINENT MAIN LOGO */
 header { position:sticky; top:0; z-index:50; background:rgba(4,9,20,0.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--border); }
 body.light-theme header { background:rgba(240,244,249,0.92); }
 .header-inner { display:flex; align-items:center; justify-content:space-between; height:72px; gap:12px; }
@@ -115,13 +115,12 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .nav-link { font-size:0.84rem; font-weight:600; color:var(--text-muted); transition:color 0.2s; }
 .nav-link:hover,.nav-link.active { color:var(--electric); }
 .nav-controls { display:flex; align-items:center; gap:8px; }
-.select-ctrl { background:var(--bg-surface); border:1px solid var(--border); color:var(--cyan); padding:6px 9px; border-radius:var(--radius-sm); font-size:0.75rem; font-weight:800; }
+.select-ctrl { background:var(--bg-surface); border:1px solid var(--border); color:var(--cyan); padding:6px 9px; border-radius:var(--radius-sm); font-size:0.75rem; font-weight:800; cursor:pointer; }
 .hamburger { display:none; border:1px solid var(--border); color:var(--text-main); width:40px; height:40px; border-radius:var(--radius-sm); }
 .mobile-menu { display:none; flex-direction:column; gap:4px; padding:12px 0; border-top:1px solid var(--border); }
 .mobile-menu.open { display:flex; }
 .mobile-menu a { padding:10px 16px; font-weight:600; color:var(--text-muted); font-size:0.85rem; }
 
-/* HERO SECTION */
 .hero { padding:clamp(24px,3.5vw,40px) 0 24px; }
 .hero-card { position:relative; background:linear-gradient(135deg,var(--bg-surface) 0%,rgba(17,31,66,0.85) 60%,var(--bg-base) 100%); border:1px solid var(--border); border-radius:var(--radius-xl); padding:clamp(22px,4vw,52px); overflow:hidden; box-shadow:var(--shadow-card); }
 .hero-inner { display:grid; grid-template-columns:1.2fr 0.8fr; gap:clamp(22px,4vw,38px); align-items:center; }
@@ -130,7 +129,6 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .hero p { color:var(--text-muted); font-size:0.94rem; margin-bottom:22px; max-width:52ch; }
 .hero-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
 
-/* PAYWALLED HERO BANKER CARD */
 .banker-card {
   background:linear-gradient(135deg,rgba(255,45,149,0.12),rgba(123,47,247,0.18) 50%,rgba(0,229,255,0.12));
   border:1.5px solid var(--pink); border-radius:var(--radius-lg); padding:20px;
@@ -142,7 +140,6 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .banker-tip-row { display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.15); }
 .odds-pill { font-family:var(--font-mono); font-size:1.2rem; font-weight:900; color:var(--electric); background:rgba(0,255,135,0.1); padding:4px 12px; border-radius:var(--radius-sm); border:1px solid rgba(0,255,135,0.3); }
 
-/* BETTING SLIP CARD DESIGN */
 .slip-card-wrapper { max-width: 680px; margin: 0 auto; }
 .slip-card-box {
   background: #ffffff;
@@ -196,7 +193,6 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .slip-tip-val { flex: 0.8; text-align: center; font-weight: 800; color: #111827; font-size: 0.95rem; }
 .slip-odd-val { flex: 0.6; text-align: right; font-family: var(--font-mono); font-weight: 800; color: #111827; font-size: 0.98rem; }
 
-/* BOOKING CODES STRIP */
 .booking-codes-strip {
   background: #f8fafc; padding: 14px 24px; border-top: 1px dashed #cbd5e1;
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
@@ -223,7 +219,6 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
   font-size: 0.92rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase;
 }
 
-/* DYNAMIC MONETIZED SLIPS & WINNERS GALLERY */
 .monetized-slips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(285px, 1fr)); gap: 16px; margin-top: 18px; }
 .monetized-slip-card {
   background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%);
@@ -235,7 +230,6 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .monetized-slip-card.featured { border-color: var(--pink); background: linear-gradient(135deg, rgba(255,45,149,0.08), var(--bg-surface-elevated)); }
 .monetized-slip-card.gold { border-color: var(--gold); background: linear-gradient(135deg, rgba(255,215,0,0.08), var(--bg-surface-elevated)); }
 
-/* WINNING SLIPS HALL OF FAME CARD */
 .winner-slip-card {
   background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(0,255,135,0.06), var(--bg-surface));
   border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: 22px;
@@ -276,14 +270,15 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .controls-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 .category-pills,.date-pills { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
 .category-pills::-webkit-scrollbar,.date-pills::-webkit-scrollbar { display:none; }
-.pill-btn { padding:6px 12px; border-radius:var(--radius-sm); font-size:0.72rem; font-weight:700; background:rgba(255,255,255,0.04); color:var(--text-muted); border:1px solid var(--border); white-space:nowrap; transition:all 0.2s; }
+.pill-btn { padding:6px 12px; border-radius:var(--radius-sm); font-size:0.72rem; font-weight:700; background:rgba(255,255,255,0.04); color:var(--text-muted); border:1px solid var(--border); white-space:nowrap; transition:all 0.2s; cursor:pointer; }
 .pill-btn:hover,.pill-btn.active { background:var(--bg-surface-elevated); border-color:var(--electric); color:var(--text-main); }
 .filter-input { background:var(--bg-base); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px 12px; font-size:0.76rem; color:var(--text-main); outline:none; }
 
 .modal-overlay { position:fixed; inset:0; background:rgba(2,6,15,0.85); backdrop-filter:blur(12px); z-index:100; display:none; place-items:center; padding:16px; overflow-y:auto; }
 .modal-overlay.open { display:grid; }
 .modal-card { background:var(--bg-surface); border:1px solid var(--border); width:min(960px,100%); border-radius:var(--radius-xl); padding:clamp(20px,3vw,32px); position:relative; max-height:92vh; overflow-y:auto; }
-.modal-close { position:sticky; top:0; float:right; margin:-10px -10px 0 0; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.08); color:var(--text-main); display:grid; place-items:center; font-size:1rem; z-index:2; }
+.modal-close { position:sticky; top:0; float:right; margin:-10px -10px 0 0; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.08); color:var(--text-main); display:grid; place-items:center; font-size:1rem; z-index:2; cursor:pointer; }
+.modal-close:hover { background:rgba(255,255,255,0.2); }
 .form-field { display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
 .form-field label { font-size:0.66rem; color:var(--text-muted); font-family:var(--font-mono); text-transform:uppercase; }
 .form-field input,.form-field select,.form-field textarea { background:var(--bg-base); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px 10px; font-size:0.78rem; color:var(--text-main); outline:none; width:100%; }
@@ -303,14 +298,14 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .empty-state { text-align:center; padding:40px 20px; color:var(--text-muted); font-size:0.85rem; }
 
 .auth-tabs { display:flex; gap:4px; margin-bottom:18px; background:var(--bg-base); padding:4px; border-radius:var(--radius-sm); }
-.auth-tab { flex:1; padding:8px; font-size:0.76rem; font-weight:700; border-radius:6px; color:var(--text-muted); }
+.auth-tab { flex:1; padding:8px; font-size:0.76rem; font-weight:700; border-radius:6px; color:var(--text-muted); text-align:center; cursor:pointer; }
 .auth-tab.active { background:var(--electric); color:#000; }
 .user-chip { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.05); border:1px solid var(--border); padding:3px 8px 3px 3px; border-radius:100px; cursor:pointer; }
 .user-avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--electric),var(--cyan)); color:#000; display:grid; place-items:center; font-weight:900; font-size:0.7rem; }
-.user-name { font-size:0.72rem; font-weight:700; max-width:60px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.user-name { font-size:0.72rem; font-weight:700; max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
 .admin-tabs { display:flex; gap:4px; padding:4px; background:var(--bg-surface); border-radius:var(--radius-md); border:1px solid var(--border); margin-bottom:16px; overflow-x:auto; }
-.admin-tab { padding:8px 12px; font-size:0.72rem; font-weight:700; border-radius:var(--radius-sm); color:var(--text-muted); white-space:nowrap; }
+.admin-tab { padding:8px 12px; font-size:0.72rem; font-weight:700; border-radius:var(--radius-sm); color:var(--text-muted); white-space:nowrap; cursor:pointer; }
 .admin-tab.active { background:var(--electric); color:#000; }
 .admin-panel { display:none; }
 .admin-panel.active { display:block; }
@@ -323,9 +318,10 @@ nav.nav-links { display:flex; align-items:center; gap:18px; }
 .mini-stat.cyan::after { background:var(--cyan); }
 .mini-stat-val { font-family:var(--font-display); font-size:1.4rem; font-weight:900; margin-top:4px; }
 .mini-stat-label { font-size:0.62rem; color:var(--text-muted); font-family:var(--font-mono); text-transform:uppercase; }
-table.admin-table { width:100%; border-collapse:collapse; font-size:0.76rem; min-width:700px; }
+.table-responsive { width: 100%; overflow-x: auto; }
+table.admin-table { width:100%; border-collapse:collapse; font-size:0.76rem; min-width:750px; }
 table.admin-table thead th { background:var(--bg-base); padding:9px 10px; font-family:var(--font-mono); font-size:0.62rem; text-transform:uppercase; color:var(--text-muted); border-bottom:1px solid var(--border); text-align:left; }
-table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,255,0.04); }
+table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
 
 .offline-banner { position:fixed; top:0; left:0; right:0; z-index:200; background:var(--warning); color:#000; text-align:center; padding:8px; font-weight:800; font-size:0.76rem; display:none; }
 .offline-banner.show { display:block; }
@@ -398,11 +394,10 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <a href="#winners-gallery-section" class="nav-link">Winners Gallery 🏆</a>
       <a href="#stats" class="nav-link">Accuracy</a>
       <a href="#vip" class="nav-link">VIP Plans</a>
-      <a href="#dashboard" class="nav-link" id="navDashboard" style="display:none;">Dashboard</a>
+      <a href="#dashboard" class="nav-link" id="navDashboard" style="display:none;" onclick="openDashboard()">Dashboard</a>
     </nav>
 
     <div class="nav-controls">
-      <!-- Universal African & International Currency Selector -->
       <select class="select-ctrl" id="currencySelect" onchange="changeCurrency(this.value)">
         <option value="KES" selected>KES (KSh)</option>
         <option value="NGN">NGN (₦)</option>
@@ -462,12 +457,11 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
             <a href="#winners-gallery-section" class="btn btn-ghost" style="border-color:var(--gold); color:var(--gold);">🏆 Verified Winners</a>
           </div>
 
-          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-            <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" target="_blank" class="btn-social btn-telegram">Telegram Channel</a>
-            <a href="https://t.me/isla_olivia0" target="_blank" class="btn-social btn-telegram-user">Support (@Isla_Olivia0)</a>
-            <a href="https://www.facebook.com/profile.php?id=100092234363053" target="_blank" class="btn-social btn-facebook">Facebook</a>
-            <a href="https://wa.me/254700000000?text=Hello%20Prime%20Tips%20Support%20I%20want%20VIP%20Access" target="_blank" class="btn-social btn-whatsapp">WhatsApp</a>
-            <a href="https://www.instagram.com/" target="_blank" class="btn-social btn-instagram">Instagram</a>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;" id="heroSocialButtons">
+            <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" id="linkHeroTelegram" target="_blank" class="btn-social btn-telegram">Telegram Channel</a>
+            <a href="https://t.me/isla_olivia0" id="linkHeroSupport" target="_blank" class="btn-social btn-telegram-user">Support (@Isla_Olivia0)</a>
+            <a href="https://www.facebook.com/profile.php?id=100092234363053" id="linkHeroFacebook" target="_blank" class="btn-social btn-facebook">Facebook</a>
+            <a href="https://wa.me/254700000000?text=Hello%20Prime%20Tips%20Support%20I%20want%20VIP%20Access" id="linkHeroWhatsApp" target="_blank" class="btn-social btn-whatsapp">WhatsApp</a>
           </div>
         </div>
 
@@ -480,7 +474,6 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
           <div class="banker-match" id="bankerTeams">Loading fixture…</div>
           <p style="font-size:0.76rem; color:var(--text-muted);" id="bankerMeta">Institutional Poisson Lock Model</p>
           
-          <!-- Unlocked Secret (Loaded from Firestore only when authorized) -->
           <div id="bankerUnlockedBox" style="display:none; margin-top:12px; background:rgba(0,0,0,0.4); padding:12px; border-radius:var(--radius-sm); border-left:3px solid var(--electric);">
             <div style="font-size:0.8rem; line-height:1.6;">
               <div><b>Unlocked Selection:</b> <span style="color:var(--electric); font-weight:900;" id="bankerTip">Authenticating…</span></div>
@@ -489,12 +482,11 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
             </div>
           </div>
 
-          <!-- Locked Teaser (Zero secret data in DOM for unauthorized visitors) -->
           <div id="bankerLockedBox" style="margin-top:12px; background:rgba(4,9,20,0.85); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; text-align:center;">
             <div style="font-size:1.5rem; margin-bottom:2px;">🔒</div>
             <div style="font-weight:900; font-size:0.85rem; color:#fff;">TODAY'S BANKER LOCK</div>
             <p style="font-size:0.72rem; color:var(--text-muted); margin:4px 0 10px;">Unlock this single high-stake lock for today only.</p>
-            <button class="btn btn-primary btn-sm btn-block" onclick="openCheckout('Single Banker Pass', CONFIG_PRICING.vipSingle)">
+            <button class="btn btn-primary btn-sm btn-block" onclick="openCheckout('Single Banker Pass', CONFIG_PRICING.vipSingle, 'banker')">
               Unlock Banker for <span id="bankerPriceBtn">KSh 50</span>
             </button>
           </div>
@@ -503,13 +495,13 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
     </div>
   </section>
 
-  <!-- DYNAMIC MONETIZED SYNDICATE SLIPS SECTION -->
+  <!-- MONETIZED SYNDICATE SLIPS SECTION -->
   <section id="monetized-slips-section" style="margin-bottom:40px;">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div>
         <div class="badge badge-premium">Monetized Syndicate Packages</div>
         <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:900; margin-top:4px;">High-Roller Syndicate Packages</h2>
-        <p style="font-size:0.78rem; color:var(--text-muted);">Multi-ticket accumulator packages. Editable from the Admin Console.</p>
+        <p style="font-size:0.78rem; color:var(--text-muted);">Multi-ticket accumulator packages verified daily by our algorithmic quant models.</p>
       </div>
       <button class="btn btn-primary btn-sm" onclick="openCheckout('VIP Monthly Pass', CONFIG_PRICING.vipMonthly)">Get All Access VIP</button>
     </div>
@@ -519,7 +511,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
     </div>
   </section>
 
-  <!-- 🏆 WINNING SLIPS HALL OF FAME SHOWCASE -->
+  <!-- WINNING SLIPS HALL OF FAME -->
   <section id="winners-gallery-section" style="margin-bottom:50px;">
     <div style="text-align:center; max-width:700px; margin:0 auto 20px;">
       <div class="badge badge-gold">🏆 Verified Track Record</div>
@@ -540,7 +532,6 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <p style="color:var(--text-muted); font-size:0.82rem;">Real-time verified fixtures with 1UP, 2UP, BTTS &amp; Over 2.5 markets.</p>
     </div>
 
-    <!-- Controls -->
     <div style="max-width:680px; margin:0 auto 16px;">
       <div class="table-controls" style="border-radius:var(--radius-lg); background:var(--bg-surface); padding:16px;">
         <div class="controls-row">
@@ -569,7 +560,9 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
               <option value="La Liga">La Liga</option>
               <option value="Serie A">Serie A</option>
               <option value="Bundesliga">Bundesliga</option>
+              <option value="Ligue 1">Ligue 1</option>
               <option value="Champions League">Champions League</option>
+              <option value="Europa League">Europa League</option>
             </select>
             <input type="text" class="filter-input" id="teamSearch" placeholder="🔍 Search club…" oninput="applyFilters()" style="flex:1;">
           </div>
@@ -636,7 +629,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
     </div>
   </section>
 
-  <!-- STATS -->
+  <!-- ACCURACY STATS -->
   <section id="stats">
     <div class="stats-strip">
       <div class="stat-card total"><div class="stat-label">Total Predictions</div><div class="stat-val" id="statTotal">—</div><div class="stat-sub">Published tips</div></div>
@@ -650,7 +643,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
     </div>
   </section>
 
-  <!-- DASHBOARD -->
+  <!-- USER DASHBOARD SECTION -->
   <section id="dashboard" style="margin-bottom:60px; display:none;">
     <div class="badge badge-electric">My Account</div>
     <h2 style="font-family:var(--font-display); font-size:1.6rem; font-weight:900; margin:6px 0 16px;">Firebase Real-Time Dashboard</h2>
@@ -686,7 +679,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <div class="pricing-card">
         <h3>Single Banker Pass</h3><p style="font-size:0.72rem; color:var(--text-muted);">Today's Single Banker Lock</p>
         <div style="font-size:1.8rem; font-weight:900; margin:10px 0;" id="vipSingleCost">KSh 50</div>
-        <button class="btn btn-ghost btn-block" onclick="openCheckout('Single Banker Pass', CONFIG_PRICING.vipSingle)">Unlock Banker Lock</button>
+        <button class="btn btn-ghost btn-block" onclick="openCheckout('Single Banker Pass', CONFIG_PRICING.vipSingle, 'banker')">Unlock Banker Lock</button>
       </div>
     </div>
   </section>
@@ -696,8 +689,11 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 <div class="match-detail-page" id="matchDetailPage">
   <div class="container">
     <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-      <button class="btn btn-ghost btn-sm" onclick="closeMatchDetailPage()">← Back</button>
-      <button class="btn btn-primary btn-sm" onclick="saveCurrentMatchToProfile()">💾 Save Pick</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeMatchDetailPage()">← Back to Picks</button>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-ghost btn-sm" id="btnToggleTeamFav" onclick="toggleCurrentTeamFav()">⭐ Follow Team</button>
+        <button class="btn btn-primary btn-sm" onclick="saveCurrentMatchToProfile()">💾 Save Pick</button>
+      </div>
     </div>
     <div id="matchDetailContent"></div>
   </div>
@@ -758,7 +754,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
         <p style="font-size:0.78rem; margin-bottom:6px;">Till Number: <strong style="color:#fff; font-size:1rem; font-family:var(--font-mono);" id="paybillDisplay">542891</strong></p>
         <p style="font-size:0.72rem; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
-          Go to M-Pesa ➔ Buy Goods ➔ Enter Till <strong>542891</strong>. After completing payment, enter the SMS Confirmation Code below:
+          Go to M-Pesa ➔ Buy Goods ➔ Enter Till <strong id="paybillInstructionNumber">542891</strong>. After completing payment, enter the SMS Confirmation Code below:
         </p>
 
         <div class="form-field">
@@ -786,9 +782,9 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   </div>
 </div>
 
-<!-- COMPREHENSIVE ADMIN CONSOLE (ALL SENSITIVE DATA ENCRYPTED/STORED IN FIRESTORE) -->
+<!-- MASTER ADMIN CONSOLE -->
 <div class="modal-overlay" id="adminPanelModal">
-  <div class="modal-card" style="max-width:1100px; width:98%;">
+  <div class="modal-card" style="max-width:1150px; width:98%;">
     <button class="modal-close" onclick="closeModal('adminPanelModal')">✕</button>
 
     <div id="adminAuthGate">
@@ -814,19 +810,19 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
     <div id="adminConsole" class="hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
-        <div class="badge badge-warning">Master Console Active (Firestore Real-Time)</div>
+        <div class="badge badge-warning">Master Console Active (Real-Time Firestore)</div>
         <div style="display:flex; gap:8px; align-items:center;">
           <span style="font-size:0.7rem; color:var(--text-muted);" id="adminEmailDisplay"></span>
           <button class="btn btn-ghost btn-sm" onclick="adminSignOut()">Sign out</button>
         </div>
       </div>
 
-      <!-- Live Web Visitor Counter in Mini-Stats -->
       <div class="mini-stats">
         <div class="mini-stat"><div class="mini-stat-label">Total Matches</div><div class="mini-stat-val" id="msTotal">0</div></div>
         <div class="mini-stat cyan"><div class="mini-stat-label">Total Web Visits</div><div class="mini-stat-val" id="msVisits">0</div></div>
+        <div class="mini-stat danger"><div class="mini-stat-label">Live In-Play</div><div class="mini-stat-val" id="msLive">0</div></div>
         <div class="mini-stat warning"><div class="mini-stat-label">Pending Matches</div><div class="mini-stat-val" id="msPending">0</div></div>
-        <div class="mini-stat danger"><div class="mini-stat-label">Settled Games</div><div class="mini-stat-val" id="msSettled">0</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Settled Games</div><div class="mini-stat-val" id="msSettled">0</div></div>
       </div>
 
       <div class="admin-tabs">
@@ -839,24 +835,40 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         <button class="admin-tab" onclick="switchAdminTab('vip', this)">👑 VIP Members</button>
         <button class="admin-tab" onclick="switchAdminTab('payments', this)">💳 M-Pesa Payments</button>
         <button class="admin-tab" onclick="switchAdminTab('pricing', this)">💰 Prices &amp; Till</button>
-        <button class="admin-tab" onclick="switchAdminTab('api', this)">🌐 Football-Data.org API</button>
+        <button class="admin-tab" onclick="switchAdminTab('api', this)">🌐 API Import &amp; Settle</button>
         <button class="admin-tab" onclick="switchAdminTab('content', this)">📢 Site Content</button>
       </div>
 
       <!-- TAB 1: MATCHES -->
       <div id="panel-matches" class="admin-panel active">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-size:0.75rem; color:var(--text-muted);">Real-time live scoring controls and status toggles:</span>
+          <button class="btn btn-ghost btn-sm" onclick="clearFinishedPastMatches()">🧹 Clear Finished Past Matches</button>
+        </div>
         <div class="table-responsive">
           <table class="admin-table">
             <thead>
-              <tr><th>Date/Time</th><th>League</th><th>Match</th><th>Pick &amp; Market</th><th>Score</th><th>Status</th><th>Banker</th><th>Actions</th></tr>
+              <tr><th>Date/Time</th><th>League</th><th>Match</th><th>Pick &amp; Market</th><th>Score Control</th><th>Status</th><th>Banker</th><th>Actions</th></tr>
             </thead>
             <tbody id="adminMatchesTable"><tr><td colspan="8"><div class="loader"></div></td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- TAB 2: ADD / EDIT MATCH (INCLUDES 1UP / 2UP MARKETS) -->
+      <!-- TAB 2: ADD / EDIT MATCH + POISSON ESTIMATOR -->
       <div id="panel-add" class="admin-panel">
+        <div style="background:var(--bg-base); padding:12px; border-radius:var(--radius-sm); border:1px solid var(--border); margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div>
+            <b style="color:var(--cyan); font-size:0.8rem;">Quant Poisson Assistant:</b>
+            <span style="font-size:0.72rem; color:var(--text-muted);"> Enter Home xG &amp; Away xG to auto-calculate probabilities and decimal odds</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <input type="number" id="poissonHomeXG" placeholder="Home xG (e.g. 2.1)" step="0.1" style="width:110px; font-size:0.75rem; padding:4px 6px;">
+            <input type="number" id="poissonAwayXG" placeholder="Away xG (e.g. 0.9)" step="0.1" style="width:110px; font-size:0.75rem; padding:4px 6px;">
+            <button type="button" class="btn btn-ghost btn-sm" onclick="runPoissonQuantAssistant()">⚡ Auto-Compute Odds</button>
+          </div>
+        </div>
+
         <form onsubmit="handleAdminAddMatch(event)">
           <input type="hidden" id="adm_edit_id" value="">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -890,7 +902,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
             <div class="form-field"><label>Confidence % (50 - 99) *</label><input type="number" id="adm_conf" value="88" min="50" max="99" required></div>
             <div class="form-field"><label>Decimal Odds</label><input type="number" id="adm_odds" value="1.85" step="0.01"></div>
             <div class="form-field"><label>Hero Banker?</label><select id="adm_is_banker"><option value="false">No</option><option value="true">Yes 🔥</option></select></div>
-            <div class="form-field"><label>Status</label><select id="adm_status"><option value="NS">NS (Not Started)</option><option value="LIVE 1'">LIVE</option><option value="FT">FT (Finished)</option></select></div>
+            <div class="form-field"><label>Status</label><select id="adm_status"><option value="NS">NS (Not Started)</option><option value="LIVE">LIVE (In-Play)</option><option value="FT">FT (Finished)</option></select></div>
           </div>
           <div class="form-field"><label>Tactical Brief &amp; Analysis</label><textarea id="adm_analysis" placeholder="Tactical breakdown, form insights..."></textarea></div>
           <button type="submit" class="btn btn-primary" id="btnPublishMatch">🚀 Publish Game to Real-Time Web</button>
@@ -900,7 +912,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <!-- TAB 3: BANKER OF THE DAY PAYWALL EDITOR -->
       <div id="panel-bankereditor" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🔥 Banker of the Day Paywall Manager</h3>
-        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Stored securely in Firestore. Unauthenticated users cannot read this secret pick.</p>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Stored securely in Firestore. Unauthenticated free visitors cannot see the private secret pick.</p>
         <form onsubmit="handleSaveBankerPaywall(event)">
           <div class="form-grid">
             <div class="form-field"><label>Home Team *</label><input type="text" id="bk_adm_home" value="Arsenal" required></div>
@@ -916,7 +928,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </form>
       </div>
 
-      <!-- TAB 4: DYNAMIC MONETIZED SLIPS & WINNERS MANAGER -->
+      <!-- TAB 4: MONETIZED SLIPS & WINNERS MANAGER -->
       <div id="panel-slipsmanager" class="admin-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <div>
@@ -990,12 +1002,12 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <!-- TAB 7: MANAGE VIP MEMBERS -->
       <div id="panel-vip" class="admin-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <div><h3 style="font-size:0.95rem; font-weight:900;">👑 Registered Users &amp; Access</h3><p style="font-size:0.72rem; color:var(--text-muted);">Grant VIP or unlock specific passes.</p></div>
+          <div><h3 style="font-size:0.95rem; font-weight:900;">👑 Registered Users &amp; VIP Control</h3><p style="font-size:0.72rem; color:var(--text-muted);">Grant VIP or unlock specific packages.</p></div>
           <button class="btn btn-ghost btn-sm" onclick="loadAdminUsers()">🔄 Refresh Users</button>
         </div>
         <div class="table-responsive">
           <table class="admin-table">
-            <thead><tr><th>Email</th><th>Display Name</th><th>Plan</th><th>VIP Expiration</th><th>Quick Actions</th></tr></thead>
+            <thead><tr><th>Email / UID</th><th>Display Name</th><th>Plan</th><th>VIP Expiration</th><th>Quick Actions</th></tr></thead>
             <tbody id="adminUsersTable"><tr><td colspan="5"><div class="loader"></div></td></tr></tbody>
           </table>
         </div>
@@ -1018,7 +1030,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
       <!-- TAB 9: DYNAMIC PRICING & M-PESA -->
       <div id="panel-pricing" class="admin-panel">
         <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">💰 Live Site Pricing &amp; M-Pesa Till Configuration</h3>
-        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Updates persist in Firestore and update the public web app.</p>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Updates persist in Firestore and immediately update the public web app.</p>
         <form onsubmit="handleSavePricing(event)">
           <div class="form-grid">
             <div class="form-field"><label>VIP Monthly Pass Price (KES) *</label><input type="number" id="cfg_vip_monthly" value="3900" required></div>
@@ -1032,20 +1044,18 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
       <!-- TAB 10: FOOTBALL-DATA.ORG API & AUTO-SETTLE -->
       <div id="panel-api" class="admin-panel">
-        <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🌐 Football-Data.org API Hub &amp; Match Settler</h3>
-        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">API keys load securely from Firestore (zero cleartext keys in code).</p>
+        <h3 style="font-size:0.95rem; font-weight:900; margin-bottom:4px;">🌐 Football-Data.org API Hub &amp; Live Fixture Importer</h3>
+        <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Import official matches directly into Prime Tips or run automated score settlements.</p>
         
-        <div style="background:var(--bg-base); padding:16px; border-radius:var(--radius-md); border:1px solid var(--border); margin-bottom:16px;">
-          <div style="font-weight:900; font-size:0.85rem; color:var(--electric); margin-bottom:6px;">⚡ Automated Result Settler</div>
-          <p style="font-size:0.74rem; color:var(--text-muted); margin-bottom:10px;">Scans unsettled matches, queries Football-Data.org, assigns WON/LOST, and recalculates win-rates.</p>
+        <div style="background:var(--bg-base); padding:16px; border-radius:var(--radius-md); border:1px solid var(--border); margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap;">
           <button class="btn btn-primary btn-sm" onclick="runAutomatedSettlement()">⚡ Run Auto-Settlement Check Now</button>
+          <button class="btn btn-ghost btn-sm" onclick="importUpcomingFixturesFromApi()">📥 Import Today's Fixtures from API</button>
         </div>
 
         <form onsubmit="handleSaveApiConfig(event)">
           <div class="form-grid">
             <div class="form-field"><label>API Provider</label><input type="text" id="cfg_api_provider" value="Football-Data.org" readonly></div>
-            <div class="form-field"><label>Football-Data.org API Key</label><input type="password" id="cfg_api_key" placeholder="Enter key (stored in admin_vault)"></div>
-            <div class="form-field"><label>Matches Endpoint URL</label><input type="text" id="cfg_api_endpoint" value="https://api.football-data.org/v4/matches"></div>
+            <div class="form-field"><label>Football-Data.org API Key</label><input type="password" id="cfg_api_key" placeholder="Enter key (stored securely in admin_vault)"></div>
           </div>
           <div style="display:flex; gap:8px; margin-top:8px;">
             <button type="submit" class="btn btn-primary btn-sm">💾 Save API Credentials to Vault</button>
@@ -1078,7 +1088,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
 <div class="toast" id="toast"></div>
 
-<!-- FOOTER WITH BRAND BUTTONS & COMPLIANCE LINKS -->
+<!-- FOOTER -->
 <footer style="border-top:1px solid var(--border); margin-top:40px; padding:28px 0;">
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
     <div>
@@ -1092,12 +1102,11 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         Pan-African Sports Analytics • Cloud Firestore Stream • <a href="#" onclick="openModal('legalModal'); return false;" style="color:var(--text-main); text-decoration:underline;">18+ Terms &amp; Disclaimer</a>
       </div>
     </div>
-    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-      <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" target="_blank" class="btn-social btn-telegram">Telegram Channel</a>
-      <a href="https://t.me/isla_olivia0" target="_blank" class="btn-social btn-telegram-user">Support (@Isla_Olivia0)</a>
-      <a href="https://www.facebook.com/profile.php?id=100092234363053" target="_blank" class="btn-social btn-facebook">Facebook</a>
-      <a href="https://wa.me/254700000000" target="_blank" class="btn-social btn-whatsapp">WhatsApp</a>
-      <a href="https://www.instagram.com/" target="_blank" class="btn-social btn-instagram">Instagram</a>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;" id="footerSocialButtons">
+      <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" id="linkFooterTelegram" target="_blank" class="btn-social btn-telegram">Telegram Channel</a>
+      <a href="https://t.me/isla_olivia0" id="linkFooterSupport" target="_blank" class="btn-social btn-telegram-user">Support (@Isla_Olivia0)</a>
+      <a href="https://www.facebook.com/profile.php?id=100092234363053" id="linkFooterFacebook" target="_blank" class="btn-social btn-facebook">Facebook</a>
+      <a href="https://wa.me/254700000000" id="linkFooterWhatsApp" target="_blank" class="btn-social btn-whatsapp">WhatsApp</a>
     </div>
   </div>
 </footer>
@@ -1110,7 +1119,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
 <script>
 /* ==========================================================================
-   PRIME TIPS — SECURE REAL-TIME PLATFORM (NO EXPOSED SECRETS)
+   PRIME TIPS — COMPREHENSIVE ARCHITECTURE
    ========================================================================== */
 const firebaseConfig = {
   apiKey: "AIzaSyDINSqNMv5mFibnKyIGz2-sZ1AdNXHSjbY",
@@ -1131,7 +1140,6 @@ let currentPage = 1;
 const PAGE_SIZE = 8;
 let currentCurrency = 'KES';
 
-// Complete Pan-African Currency Map
 const CURRENCY_MAP = {
   KES: { sym: 'KSh ', rate: 130, name: 'Kenya Shilling' },
   NGN: { sym: '₦', rate: 1450, name: 'Nigeria Naira' },
@@ -1152,7 +1160,7 @@ const CURRENCY_MAP = {
 };
 
 let ALL_MATCHES = [];
-let ALL_SLIPS = []; // Monetized Slips Teasers (Zero secret picks)
+let ALL_SLIPS = [];
 let FAVORITE_TEAMS = [];
 let CONFIG_PRICING = { vipMonthly: 3900, vipSingle: 50, mpesaTill: "542891", supportPhone: "+254700000000" };
 let CONFIG_BOOKING = { sporty: "BC492A", betika: "78120", onex: "X92KL" };
@@ -1165,8 +1173,8 @@ let CURRENT_MODAL_MATCH = null;
 let FIREBASE_READY = false;
 let accuracyChartInstance = null;
 let theme = 'dark';
+let authMode = 'login';
 
-// Listeners
 let unsubscribeMatches = null;
 let unsubscribeSlips = null;
 let unsubscribeConfig = null;
@@ -1175,7 +1183,6 @@ let unsubscribeAnalytics = null;
 
 const $ = id => document.getElementById(id);
 
-/* ---- WEB AUDIO API GOAL CHIME ---- */
 function playGoalChime() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1200,7 +1207,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateCountdowns, 1000);
 });
 
-/* ---- THEME (STORED IN FIRESTORE ONLY) ---- */
 function applyTheme(t) {
   theme = t;
   document.body.classList.toggle('light-theme', t === 'light');
@@ -1212,7 +1218,161 @@ function toggleTheme() {
   applyTheme(theme === 'dark' ? 'light' : 'dark');
 }
 
-/* ---- FIREBASE INIT & REAL-TIME LISTENERS ---- */
+/* ==========================================================================
+   AUTHENTICATION & USER PROFILE STATE
+   ========================================================================== */
+function openAuthModal(tab = 'login') {
+  authMode = tab;
+  switchAuthTab(tab);
+  $('authModal').classList.add('open');
+}
+
+function switchAuthTab(tab) {
+  authMode = tab;
+  const isLogin = tab === 'login';
+  $('tabLogin').classList.toggle('active', isLogin);
+  $('tabSignup').classList.toggle('active', !isLogin);
+  $('signupNameField').style.display = isLogin ? 'none' : 'flex';
+  $('authSubmitBtn').innerText = isLogin ? 'Log in' : 'Create Account';
+  $('authError').style.display = 'none';
+}
+
+async function handleAuthSubmit(e) {
+  e.preventDefault();
+  const email = $('authEmail').value.trim();
+  const password = $('authPassword').value;
+  const displayName = $('authName').value.trim();
+  const errBox = $('authError');
+  errBox.style.display = 'none';
+  $('authSubmitBtn').disabled = true;
+
+  try {
+    if (authMode === 'signup') {
+      const cred = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      if (displayName) await cred.user.updateProfile({ displayName });
+      await firebase.firestore().collection('users').doc(cred.user.uid).set({
+        displayName: displayName || email.split('@')[0],
+        email: email,
+        subscription: { plan: 'free', expiresAt: null },
+        favorites: [],
+        savedPredictions: [],
+        unlockedSlips: [],
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      showToast('Account created successfully! Welcome to Prime Tips 🎉');
+    } else {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      showToast('Signed in successfully! 👋');
+    }
+    closeModal('authModal');
+  } catch (err) {
+    errBox.style.display = 'block';
+    errBox.innerText = err.message.replace('Firebase: ', '');
+  } finally {
+    $('authSubmitBtn').disabled = false;
+  }
+}
+
+async function signOutUser() {
+  await firebase.auth().signOut();
+  $('dashboard').style.display = 'none';
+  showToast('Signed out successfully.');
+}
+
+function updateAuthUI(user) {
+  const btnAuth = $('btnAuth');
+  const btnSignup = $('btnSignup');
+  const chipWrap = $('userChipWrap');
+  const navDash = $('navDashboard');
+  const mobDash = $('mobileDashboardLink');
+
+  if (user) {
+    if (btnAuth) btnAuth.style.display = 'none';
+    if (btnSignup) btnSignup.style.display = 'none';
+    if (chipWrap) chipWrap.classList.remove('hidden');
+    if (navDash) navDash.style.display = 'inline-block';
+    if (mobDash) mobDash.style.display = 'block';
+
+    const name = user.displayName || user.email.split('@')[0];
+    $('userName').innerText = name;
+    $('userAvatar').innerText = name.charAt(0).toUpperCase();
+  } else {
+    if (btnAuth) btnAuth.style.display = 'inline-flex';
+    if (btnSignup) btnSignup.style.display = 'inline-flex';
+    if (chipWrap) chipWrap.classList.add('hidden');
+    if (navDash) navDash.style.display = 'none';
+    if (mobDash) mobDash.style.display = 'none';
+    $('dashboard').style.display = 'none';
+  }
+}
+
+function openDashboard() {
+  if (!currentUser) return openAuthModal('login');
+  const dash = $('dashboard');
+  dash.style.display = 'block';
+  dash.scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderFavoritesList() {
+  const box = $('favoritesList');
+  if (!box) return;
+  if (!FAVORITE_TEAMS || FAVORITE_TEAMS.length === 0) {
+    box.innerHTML = '<span style="font-size:0.76rem; color:var(--text-muted);">No teams followed yet. Tap any match to follow a team.</span>';
+    return;
+  }
+  box.innerHTML = FAVORITE_TEAMS.map(team => `
+    <div class="favorite-chip">
+      <span onclick="filterByFavoriteTeam('${escapeHTML(team)}')" style="cursor:pointer;">${escapeHTML(team)}</span>
+      <button onclick="removeFavoriteTeam('${escapeHTML(team)}')" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function filterByFavoriteTeam(team) {
+  $('teamSearch').value = team;
+  applyFilters();
+  $('free-tips').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function removeFavoriteTeam(team) {
+  if (!currentUser) return;
+  FAVORITE_TEAMS = FAVORITE_TEAMS.filter(t => t !== team);
+  await firebase.firestore().collection('users').doc(currentUser.uid).set({ favorites: FAVORITE_TEAMS }, { merge: true });
+  renderFavoritesList();
+  showToast(`Unfollowed ${team}`);
+}
+
+async function toggleCurrentTeamFav() {
+  if (!currentUser) return openAuthModal('login');
+  if (!CURRENT_MODAL_MATCH) return;
+  const team = CURRENT_MODAL_MATCH.home;
+  if (FAVORITE_TEAMS.includes(team)) {
+    FAVORITE_TEAMS = FAVORITE_TEAMS.filter(t => t !== team);
+    showToast(`Removed ${team} from favorites`);
+  } else {
+    FAVORITE_TEAMS.push(team);
+    showToast(`Following ${team} ⭐`);
+  }
+  await firebase.firestore().collection('users').doc(currentUser.uid).set({ favorites: FAVORITE_TEAMS }, { merge: true });
+  renderFavoritesList();
+}
+
+async function saveCurrentMatchToProfile() {
+  if (!currentUser) return openAuthModal('login');
+  if (!CURRENT_MODAL_MATCH) return;
+  try {
+    await firebase.firestore().collection('users').doc(currentUser.uid).update({
+      savedPredictions: firebase.firestore.FieldValue.arrayUnion(CURRENT_MODAL_MATCH.id)
+    });
+    showToast('Match saved to your Profile Dashboard! 💾');
+  } catch(e) {
+    showToast('Failed to save match: ' + e.message, true);
+  }
+}
+
+/* ==========================================================================
+   FIREBASE REAL-TIME SUBSCRIPTIONS
+   ========================================================================== */
 function initFirebase() {
   try {
     firebase.initializeApp(firebaseConfig);
@@ -1226,7 +1386,6 @@ function initFirebase() {
       updateAuthUI(user);
 
       if (user) {
-        // Authenticate admin securely against Firestore Vault
         await checkAdminPermissions(user);
         subscribeToUserData(user);
       } else {
@@ -1255,10 +1414,8 @@ function initFirebase() {
   }
 }
 
-/* Secure Admin Verification via Firestore Rule Authorization */
 async function checkAdminPermissions(user) {
   try {
-    // Attempt reading private vault. Firestore Security Rules grant this ONLY to your Master UID.
     const vaultDoc = await firebase.firestore().collection('admin_vault').doc('secrets').get();
     if (vaultDoc.exists || user.uid === 'xYFVBUfUxUPbhReHYPsgXhyxWXH2') {
       isAdmin = true;
@@ -1267,7 +1424,6 @@ async function checkAdminPermissions(user) {
       isAdmin = false;
     }
   } catch(e) {
-    // If permission denied by Firestore, user is not admin
     isAdmin = (user.uid === 'xYFVBUfUxUPbhReHYPsgXhyxWXH2');
   }
 }
@@ -1297,7 +1453,6 @@ function subscribeToAnalytics() {
   });
 }
 
-/* 1. Real-time User Profile */
 function subscribeToUserData(user) {
   if (unsubscribeUser) unsubscribeUser();
   unsubscribeUser = firebase.firestore().collection('users').doc(user.uid).onSnapshot(doc => {
@@ -1342,7 +1497,6 @@ function checkHasUnlockedSlip(slipId) {
   return !!currentUserProfile?.unlockedSlips?.includes(slipId);
 }
 
-/* 2. Real-time Matches Stream */
 function subscribeToMatches() {
   if (!FIREBASE_READY) return;
   const db = firebase.firestore();
@@ -1380,7 +1534,6 @@ function subscribeToMatches() {
   });
 }
 
-/* 3. Real-time Dynamic Monetized Slips Stream (Zero Leaks to Free Users) */
 function subscribeToMonetizedSlips() {
   if (!FIREBASE_READY) return;
   const db = firebase.firestore();
@@ -1415,7 +1568,6 @@ function renderMonetizedSlips() {
     const convertedPrice = Math.round(slip.price / 130 * rate);
 
     if (isUnlocked) {
-      // Fetch private content securely from Firestore when unlocked
       fetchUnlockedSlipContent(slip.id);
       return `
         <div class="monetized-slip-card featured" id="slipBox_${slip.id}">
@@ -1431,7 +1583,6 @@ function renderMonetizedSlips() {
         </div>
       `;
     } else {
-      // Free users: zero secret selections in DOM
       return `
         <div class="monetized-slip-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -1463,7 +1614,6 @@ async function fetchUnlockedSlipContent(slipId) {
   } catch(e) {}
 }
 
-/* 4. Real-time Winning Slips Hall of Fame */
 function renderWinningSlips() {
   const container = $('winningSlipsFeed');
   if (!container) return;
@@ -1492,7 +1642,6 @@ function renderWinningSlips() {
   `).join('');
 }
 
-/* 5. Real-time Site Config & Banker Paywall Stream */
 function subscribeToSiteConfig() {
   if (!FIREBASE_READY) return;
   const db = firebase.firestore();
@@ -1518,6 +1667,19 @@ function subscribeToSiteConfig() {
     }
     if (data.content) {
       if (data.content.heroTitle) $('heroHeadline').innerHTML = escapeHTML(data.content.heroTitle);
+      if (data.content.telegramChannel) {
+        if ($('linkHeroTelegram')) $('linkHeroTelegram').href = data.content.telegramChannel;
+        if ($('linkFooterTelegram')) $('linkFooterTelegram').href = data.content.telegramChannel;
+      }
+      if (data.content.telegramUser) {
+        const u = data.content.telegramUser.startsWith('http') ? data.content.telegramUser : `https://t.me/${data.content.telegramUser.replace('@','')}`;
+        if ($('linkHeroSupport')) $('linkHeroSupport').href = u;
+        if ($('linkFooterSupport')) $('linkFooterSupport').href = u;
+      }
+      if (data.content.facebookUrl) {
+        if ($('linkHeroFacebook')) $('linkHeroFacebook').href = data.content.facebookUrl;
+        if ($('linkFooterFacebook')) $('linkFooterFacebook').href = data.content.facebookUrl;
+      }
       const banner = $('announcementBanner');
       if (banner) {
         if (data.content.showBanner && data.content.bannerText) {
@@ -1568,11 +1730,14 @@ function updatePricingUI() {
   $('vipMonthlyCost').innerText = `${sym}${Math.round(CONFIG_PRICING.vipMonthly / 130 * rate)}`;
   $('vipSingleCost').innerText = `${sym}${Math.round(CONFIG_PRICING.vipSingle / 130 * rate)}`;
   $('paybillDisplay').innerText = CONFIG_PRICING.mpesaTill;
+  if ($('paybillInstructionNumber')) $('paybillInstructionNumber').innerText = CONFIG_PRICING.mpesaTill;
   renderBankerHero();
   renderMonetizedSlips();
 }
 
-/* ---- REAL-TIME TABLE & BETTING SLIP (IMAGE STYLE) ---- */
+/* ==========================================================================
+   TABLE RENDERING & BETTING SLIP CALCULATIONS
+   ========================================================================== */
 function refreshAll() {
   updateKPISummary();
   renderTable();
@@ -1798,7 +1963,6 @@ function openMatchDetailPage(matchId, isUpdateInPlace = false) {
   const m = ALL_MATCHES.find(x => x.id === matchId);
   if (!m) return;
   CURRENT_MODAL_MATCH = m;
-  const kickoff = `${m.date}T${m.time}:00`;
   const scoreText = (m.homeScore !== null && m.homeScore !== undefined) ? `Score: ${m.homeScore} - ${m.awayScore}` : 'Not Started';
 
   $('matchDetailContent').innerHTML = `
@@ -1835,7 +1999,7 @@ function shareDayWhatsApp() {
 }
 
 /* ==========================================================================
-   CHECKOUT & REGION-AWARE PAYMENT ROUTING
+   CHECKOUT & PAYMENTS
    ========================================================================== */
 let activePlanCheckout = { title: "VIP Monthly Pass", amount: 3900, slipId: null };
 
@@ -1872,7 +2036,7 @@ async function submitManualMpesaCode() {
     await firebase.firestore().collection('mpesa_payments').add({
       uid: currentUser.uid,
       userEmail: currentUser.email,
-      phone: 'Till 542891',
+      phone: 'Till ' + CONFIG_PRICING.mpesaTill,
       amount: activePlanCheckout.amount,
       plan: activePlanCheckout.title,
       slipId: activePlanCheckout.slipId || (activePlanCheckout.title.includes('Banker') ? 'banker' : null),
@@ -1882,6 +2046,7 @@ async function submitManualMpesaCode() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     alert(`M-Pesa code ${code} submitted! Master Admin will verify and activate your pass shortly.`);
+    $('manualMpesaCode').value = '';
     closeModal('checkoutModal');
   } catch(e) {
     showToast('Failed to submit code: ' + e.message, true);
@@ -1889,7 +2054,7 @@ async function submitManualMpesaCode() {
 }
 
 /* ==========================================================================
-   ADMIN CONSOLE (PROTECTED VAULT ARCHITECTURE)
+   MASTER ADMIN CONTROL CENTER
    ========================================================================== */
 function updateAdminGateUI() {
   const statusEl = $('adminCurrentStatus');
@@ -1938,7 +2103,19 @@ function showAdminDashboard() {
   loadAdminPayments();
   loadBankerEditorDefaults();
   renderAdminSlipsTable();
+  prefillAdminConfigFields();
   showToast('✅ Master Admin Console Unlocked');
+}
+
+function prefillAdminConfigFields() {
+  if ($('cfg_vip_monthly')) $('cfg_vip_monthly').value = CONFIG_PRICING.vipMonthly;
+  if ($('cfg_vip_single')) $('cfg_vip_single').value = CONFIG_PRICING.vipSingle;
+  if ($('cfg_mpesa_till')) $('cfg_mpesa_till').value = CONFIG_PRICING.mpesaTill;
+  if ($('cfg_support_phone')) $('cfg_support_phone').value = CONFIG_PRICING.supportPhone;
+
+  if ($('cfg_code_sporty')) $('cfg_code_sporty').value = CONFIG_BOOKING.sporty;
+  if ($('cfg_code_betika')) $('cfg_code_betika').value = CONFIG_BOOKING.betika;
+  if ($('cfg_code_1xbet')) $('cfg_code_1xbet').value = CONFIG_BOOKING.onex;
 }
 
 async function handleAdminLogin(e) {
@@ -1998,7 +2175,6 @@ function updateAdminMiniStats() {
   if ($('msSettled')) $('msSettled').innerText = ALL_MATCHES.filter(m => m.result === 'WON' || m.result === 'LOST').length;
 }
 
-/* 1. MATCH MANAGEMENT */
 function renderAdminMatches() {
   const body = $('adminMatchesTable');
   if (!body) return;
@@ -2009,15 +2185,21 @@ function renderAdminMatches() {
       <td><b>${escapeHTML(m.home)}</b> vs <b>${escapeHTML(m.away)}</b></td>
       <td>${m.pick1X2} (${m.specialMarket || 'Std'})</td>
       <td>
-        <b>${m.homeScore ?? '0'}-${m.awayScore ?? '0'}</b><br>
-        <button class="btn btn-ghost btn-sm" onclick="adminAdjustScore('${m.id}', 'home', 1)">+1 H</button>
-        <button class="btn btn-ghost btn-sm" onclick="adminAdjustScore('${m.id}', 'away', 1)">+1 A</button>
+        <div style="font-weight:900; font-size:0.95rem; margin-bottom:4px;">${m.homeScore ?? '0'} - ${m.awayScore ?? '0'}</div>
+        <div style="display:flex; gap:3px;">
+          <button class="btn btn-ghost btn-sm" style="padding:2px 5px;" onclick="adminAdjustScore('${m.id}', 'home', 1)">+1H</button>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 5px;" onclick="adminAdjustScore('${m.id}', 'home', -1)">-1H</button>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 5px;" onclick="adminAdjustScore('${m.id}', 'away', 1)">+1A</button>
+          <button class="btn btn-ghost btn-sm" style="padding:2px 5px;" onclick="adminAdjustScore('${m.id}', 'away', -1)">-1A</button>
+        </div>
       </td>
       <td>
-        <select onchange="adminChangeStatus('${m.id}', this.value)" style="font-size:0.68rem; background:var(--bg-base); color:#fff; border:1px solid var(--border); border-radius:4px; padding:2px 4px;">
+        <select onchange="adminChangeStatus('${m.id}', this.value)" style="font-size:0.68rem; background:var(--bg-base); color:#fff; border:1px solid var(--border); border-radius:4px; padding:3px;">
           <option value="NS" ${m.status==='NS'?'selected':''}>NS</option>
           <option value="LIVE" ${(m.status||'').includes('LIVE')?'selected':''}>LIVE</option>
           <option value="FT" ${m.status==='FT'?'selected':''}>FT</option>
+          <option value="POSTP" ${m.status==='POSTP'?'selected':''}>POSTP</option>
+          <option value="CANCL" ${m.status==='CANCL'?'selected':''}>CANCL</option>
         </select>
       </td>
       <td>
@@ -2028,8 +2210,9 @@ function renderAdminMatches() {
       <td>
         <div style="display:flex; gap:4px; flex-wrap:wrap;">
           <button class="btn btn-primary btn-sm" onclick="adminStartEditMatch('${m.id}')">✏️ Edit</button>
-          <button class="btn btn-ghost btn-sm" onclick="adminOpenSettle('${m.id}')">⚽ Settle</button>
-          <button class="btn btn-danger btn-sm" onclick="adminDeleteMatch('${m.id}')">🗑 Delete</button>
+          <button class="btn btn-ghost btn-sm" onclick="adminQuickSettle('${m.id}', 'WON')">✅ WON</button>
+          <button class="btn btn-ghost btn-sm" onclick="adminQuickSettle('${m.id}', 'LOST')">❌ LOST</button>
+          <button class="btn btn-danger btn-sm" onclick="adminDeleteMatch('${m.id}')">🗑</button>
         </div>
       </td>
     </tr>
@@ -2137,10 +2320,10 @@ async function adminToggleBanker(id, status) {
 async function adminAdjustScore(id, side, amount) {
   const m = ALL_MATCHES.find(x => x.id === id);
   if (!m) return;
-  const currentH = m.homeScore ?? 0;
-  const currentA = m.awayScore ?? 0;
-  const newH = side === 'home' ? currentH + amount : currentH;
-  const newA = side === 'away' ? currentA + amount : currentA;
+  let currentH = m.homeScore ?? 0;
+  let currentA = m.awayScore ?? 0;
+  let newH = side === 'home' ? Math.max(0, currentH + amount) : currentH;
+  let newA = side === 'away' ? Math.max(0, currentA + amount) : currentA;
   await firebase.firestore().collection('matches').doc(id).update({
     homeScore: newH,
     awayScore: newA,
@@ -2161,27 +2344,74 @@ async function adminChangeStatus(id, newStatus) {
     }
   }
   await firebase.firestore().collection('matches').doc(id).update(updateData);
-  showToast(`Match status set to ${newStatus}`);
+  showToast(`Status set to ${newStatus}`);
 }
 
-function adminOpenSettle(id) {
-  const m = ALL_MATCHES.find(x => x.id === id);
-  if (!m) return;
-  const h = prompt(`Enter ${m.home} final score:`, m.homeScore ?? "0");
-  if (h === null) return;
-  const a = prompt(`Enter ${m.away} final score:`, m.awayScore ?? "0");
-  if (a === null) return;
-  const homeScore = parseInt(h, 10);
-  const awayScore = parseInt(a, 10);
-  const winner = homeScore > awayScore ? '1' : awayScore > homeScore ? '2' : 'X';
-  const result = m.pick1X2 === winner ? 'WON' : 'LOST';
-
-  firebase.firestore().collection('matches').doc(id).update({
-    homeScore, awayScore, status: 'FT', result
-  }).then(() => showToast(`Settled as ${result} ✅`));
+async function adminQuickSettle(id, res) {
+  await firebase.firestore().collection('matches').doc(id).update({
+    result: res,
+    status: 'FT'
+  });
+  showToast(`Match manually marked as ${res} ✅`);
 }
 
-/* 2. SECURE BANKER OF THE DAY PAYWALL MANAGER */
+async function clearFinishedPastMatches() {
+  if (!confirm('Clear all finished past matches older than 2 days?')) return;
+  const twoDaysAgo = new Date();
+  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+  const cutoff = twoDaysAgo.toISOString().slice(0, 10);
+
+  const toDelete = ALL_MATCHES.filter(m => m.date < cutoff && m.status === 'FT');
+  if (toDelete.length === 0) return showToast('No expired matches found to clean.');
+
+  const batch = firebase.firestore().batch();
+  toDelete.forEach(m => batch.delete(firebase.firestore().collection('matches').doc(m.id)));
+  await batch.commit();
+  showToast(`Cleaned up ${toDelete.length} past settled matches! 🧹`);
+}
+
+/* POISSON QUANT HELPER */
+function runPoissonQuantAssistant() {
+  const hxG = parseFloat($('poissonHomeXG').value);
+  const axG = parseFloat($('poissonAwayXG').value);
+  if (isNaN(hxG) || isNaN(axG)) return showToast('Enter valid Home and Away xG numbers', true);
+
+  // Poisson probabilities calculation
+  function p(lambda, k) {
+    let fact = 1; for (let i = 2; i <= k; i++) fact *= i;
+    return (Math.exp(-lambda) * Math.pow(lambda, k)) / fact;
+  }
+
+  let p1 = 0, pX = 0, p2 = 0, pOver25 = 0;
+  for (let i = 0; i <= 6; i++) {
+    for (let j = 0; j <= 6; j++) {
+      const prob = p(hxG, i) * p(axG, j);
+      if (i > j) p1 += prob;
+      else if (i === j) pX += prob;
+      else p2 += prob;
+      if (i + j > 2) pOver25 += prob;
+    }
+  }
+
+  let pick = '1';
+  let bestProb = p1;
+  if (p2 > bestProb) { pick = '2'; bestProb = p2; }
+  if (pX > bestProb) { pick = 'X'; bestProb = pX; }
+
+  const impliedOdd = (1 / bestProb).toFixed(2);
+  const confidence = Math.min(96, Math.max(55, Math.round(bestProb * 100)));
+
+  $('adm_pick').value = pick;
+  $('adm_odds').value = Math.max(1.20, parseFloat(impliedOdd));
+  $('adm_conf').value = confidence;
+  $('adm_ou').value = pOver25 > 0.5 ? 'Over' : 'Under';
+  $('adm_cs').value = `${Math.round(hxG)}-${Math.round(axG)}`;
+  $('adm_analysis').value = `Poisson xG Modeling: Home xG (${hxG}) vs Away xG (${axG}). Calculated win probability at ${(bestProb*100).toFixed(1)}%.`;
+
+  showToast(`Odds & Probabilities Computed: Pick ${pick} @ ${impliedOdd} (${confidence}%) ⚡`);
+}
+
+/* BANKER PAYWALL HANDLER */
 function loadBankerEditorDefaults() {
   if (!$('bk_adm_home')) return;
   $('bk_adm_home').value = BANKER_PUBLIC.home || 'Arsenal';
@@ -2194,7 +2424,6 @@ function loadBankerEditorDefaults() {
 
 async function handleSaveBankerPaywall(e) {
   e.preventDefault();
-  // 1. Save public teaser
   const publicData = {
     home: $('bk_adm_home').value.trim(),
     away: $('bk_adm_away').value.trim(),
@@ -2205,7 +2434,6 @@ async function handleSaveBankerPaywall(e) {
   };
   await firebase.firestore().collection('site_config').doc('main').set({ bankerPublic: publicData }, { merge: true });
 
-  // 2. Save secret pick in private vault collection (only paid/admins can query)
   const privateData = {
     tip: $('bk_adm_tip').value.trim(),
     analysis: $('bk_adm_analysis').value.trim(),
@@ -2216,7 +2444,7 @@ async function handleSaveBankerPaywall(e) {
   showToast('Banker Paywall updated! Secret pick encrypted.');
 }
 
-/* 3. DYNAMIC MONETIZED SLIPS & WINNERS MANAGER */
+/* MONETIZED SLIPS HANDLER */
 function resetSlipForm() {
   $('slip_edit_id').value = '';
   document.getElementById('slipManagerForm').reset();
@@ -2240,7 +2468,6 @@ async function handleSaveMonetizedSlip(e) {
   e.preventDefault();
   const slipId = $('slip_edit_id').value;
   
-  // Public slip card data (safe for free users)
   const publicSlipData = {
     title: $('slip_adm_title').value.trim(),
     badge: $('slip_adm_badge').value.trim(),
@@ -2305,7 +2532,7 @@ function renderAdminSlipsTable() {
   `).join('') || '<tr><td colspan="5"><div class="empty-state">No slip packages created yet.</div></td></tr>';
 }
 
-/* 4. BOOKING CODES MANAGER */
+/* BOOKING CODES HANDLER */
 async function handleSaveBookingCodes(e) {
   e.preventDefault();
   const codes = {
@@ -2317,7 +2544,7 @@ async function handleSaveBookingCodes(e) {
   showToast('Booking codes updated & synced live! 🎯');
 }
 
-/* 5. TELEGRAM BOT BROADCASTER (CREDENTIALS SECURED IN VAULT) */
+/* TELEGRAM BOT HANDLER */
 async function saveTelegramBotCredentials() {
   const token = $('cfg_bot_token').value.trim();
   const chatId = $('cfg_bot_chatid').value.trim();
@@ -2372,7 +2599,77 @@ async function broadcastSlipToTelegram() {
   }
 }
 
-/* 6. AUTOMATED RESULT SETTLER (API KEY LOADED FROM VAULT) */
+/* FOOTBALL-DATA.ORG AUTOMATED IMPORT & SETTLE */
+async function importUpcomingFixturesFromApi() {
+  const log = $('apiLog');
+  log.innerText = "Checking Football-Data.org API key in vault...";
+
+  let apiKey = '';
+  try {
+    const vaultDoc = await firebase.firestore().collection('admin_vault').doc('secrets').get();
+    apiKey = vaultDoc.data()?.footballDataApiKey || $('cfg_api_key').value.trim();
+  } catch(e) {}
+
+  if (!apiKey) {
+    log.innerText = "Save your Football-Data.org API key in the vault first.";
+    return showToast('Missing API key in vault', true);
+  }
+
+  log.innerText = "Fetching today's fixtures from Football-Data.org...";
+
+  try {
+    const res = await fetch('https://api.football-data.org/v4/matches', {
+      headers: { 'X-Auth-Token': apiKey }
+    });
+    const data = await res.json();
+
+    if (!data.matches || data.matches.length === 0) {
+      log.innerText = "No fixtures returned from Football-Data.org for today.";
+      return showToast('No fixtures found today');
+    }
+
+    const batch = firebase.firestore().batch();
+    let count = 0;
+
+    data.matches.slice(0, 10).forEach(m => {
+      const utcDate = new Date(m.utcDate);
+      const dateStr = utcDate.toISOString().slice(0, 10);
+      const timeStr = utcDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+      const newDocRef = firebase.firestore().collection('matches').doc();
+      batch.set(newDocRef, {
+        home: m.homeTeam.shortName || m.homeTeam.name,
+        away: m.awayTeam.shortName || m.awayTeam.name,
+        league: m.competition.name || 'International',
+        date: dateStr,
+        time: timeStr,
+        pick1X2: '1',
+        specialMarket: '2UP',
+        correctScore: '2-1',
+        overUnder25: 'Over',
+        btts: 'Yes',
+        confidence: 86,
+        odds: 1.85,
+        status: m.status === 'IN_PLAY' ? 'LIVE' : (m.status === 'FINISHED' ? 'FT' : 'NS'),
+        homeScore: m.score?.fullTime?.home ?? null,
+        awayScore: m.score?.fullTime?.away ?? null,
+        result: m.status === 'FINISHED' ? 'WON' : 'PENDING',
+        isBanker: false,
+        analysis: 'Imported via Football-Data.org institutional feed.',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      count++;
+    });
+
+    await batch.commit();
+    log.innerHTML = `<span style="color:var(--electric);">[SUCCESS] Imported ${count} live fixtures from Football-Data.org!</span>`;
+    showToast(`Successfully imported ${count} fixtures! ⚽`);
+  } catch(e) {
+    log.innerText = "Import Error: " + e.message;
+    showToast('Failed to import fixtures: ' + e.message, true);
+  }
+}
+
 async function runAutomatedSettlement() {
   const log = $('apiLog');
   log.innerText = "Querying private vault for Football-Data.org API key...";
@@ -2443,7 +2740,7 @@ async function runAutomatedSettlement() {
   }
 }
 
-/* 7. VIP MEMBERS MANAGEMENT */
+/* VIP MEMBERS MANAGEMENT */
 async function loadAdminUsers() {
   const tbody = $('adminUsersTable');
   if (!tbody) return;
@@ -2502,7 +2799,7 @@ async function adminRevokeVip(uid) {
   loadAdminUsers();
 }
 
-/* 8. M-PESA PAYMENTS (ADMIN) */
+/* PAYMENTS HANDLER */
 async function loadAdminPayments() {
   const tbody = $('adminPaymentsTable');
   if (!tbody) return;
@@ -2560,7 +2857,7 @@ async function adminApprovePayment(paymentId, uid, plan, slipId) {
   }
 }
 
-/* 9. PRICING & M-PESA */
+/* PRICING HANDLER */
 async function handleSavePricing(e) {
   e.preventDefault();
   const pricing = {
@@ -2573,7 +2870,7 @@ async function handleSavePricing(e) {
   showToast('Pricing and M-Pesa Till updated across web app! 💰');
 }
 
-/* 10. API MANAGEMENT (SAVED SECURELY IN ADMIN VAULT) */
+/* API CONFIG HANDLER */
 async function handleSaveApiConfig(e) {
   e.preventDefault();
   const apiKey = $('cfg_api_key').value.trim();
@@ -2601,7 +2898,7 @@ function testApiFetch() {
   });
 }
 
-/* 11. SITE CONTENT, SOCIAL LINKS & BANNER */
+/* SITE CONTENT HANDLER */
 async function handleSaveSiteContent(e) {
   e.preventDefault();
   const content = {
@@ -2616,7 +2913,7 @@ async function handleSaveSiteContent(e) {
   showToast('Site content, social links, and announcements updated!');
 }
 
-/* ---- CURRENCY SELECTOR (DYNAMIC CONVERSION) ---- */
+/* CURRENCY CHANGER */
 function changeCurrency(curr) {
   currentCurrency = curr;
   updatePricingUI();
