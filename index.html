@@ -4,110 +4,132 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#040914">
-<meta name="description" content="Prime Tips — Free & VIP Football Predictions, Live Scores, and Pan-African Sports Analytics.">
+<meta name="description" content="Prime Tips — Free daily football predictions, live scores, Poisson xG modeling, and VIP betting insights.">
 <title>Prime Tips — Predict Smarter. Win More.</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@800;900&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg-base: #040914; --bg-surface: #0B132B; --bg-surface-elevated: #141D3B;
-  --border: rgba(255,255,255,0.08); --electric: #00FF87; --electric-glow: rgba(0,255,135,0.25);
+  --bg-base: #040914; --bg-surface: #0a1226; --bg-surface-elevated: #111e3b;
+  --border: rgba(255,255,255,0.08); --border-hover: rgba(0,255,135,0.3);
+  --electric: #00FF87; --electric-glow: rgba(0,255,135,0.28);
   --cyan: #60EFFF; --text-main: #F8FAFC; --text-muted: #94A3B8; --text-dim: #64748B;
-  --danger: #FF3366; --danger-bg: rgba(255,51,102,0.15); --success: #00FF87;
-  --success-bg: rgba(0,255,135,0.15); --warning: #FFBB00; --warning-bg: rgba(255,187,0,0.15);
-  --pink: #FF2D95; --font-main: 'Inter', system-ui, sans-serif; --font-display: 'Montserrat', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace; --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 26px;
-  --slip-green: #116938;
+  --danger: #FF3366; --danger-bg: rgba(255,51,102,0.14);
+  --success: #00FF87; --success-bg: rgba(0,255,135,0.14);
+  --warning: #FFB800; --warning-bg: rgba(255,184,0,0.14);
+  --pink: #FF2D95; --slip-green: #116938; --slip-green-hover: #0e562e;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Montserrat', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 26px;
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.65);
 }
 body.light-theme {
-  --bg-base: #f0f3f8; --bg-surface: #ffffff; --bg-surface-elevated: #e2e8f0;
-  --border: rgba(0,0,0,0.12); --text-main: #0a0612; --text-muted: #475569; --text-dim: #64748B;
+  --bg-base: #f1f5f9; --bg-surface: #ffffff; --bg-surface-elevated: #e2e8f0;
+  --border: rgba(0,0,0,0.08); --border-hover: rgba(17,105,56,0.35);
+  --text-main: #090e17; --text-muted: #475569; --text-dim: #64748B;
 }
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { scroll-behavior:smooth; }
 body { font-family:var(--font-main); background:var(--bg-base); color:var(--text-main); line-height:1.5; overflow-x:hidden; min-height:100vh; transition:background 0.3s,color 0.3s; }
-body::before { content:''; position:fixed; top:-160px; left:50%; transform:translateX(-50%); width:min(1100px,150vw); height:600px; background:radial-gradient(circle,rgba(0,255,135,0.08) 0%,transparent 70%); pointer-events:none; z-index:0; }
+body::before { content:''; position:fixed; top:-160px; left:50%; transform:translateX(-50%); width:min(1100px,150vw); height:600px; background:radial-gradient(circle,rgba(0,255,135,0.07) 0%,transparent 70%); pointer-events:none; z-index:0; }
 a { color:inherit; text-decoration:none; }
 button { font-family:inherit; cursor:pointer; border:none; background:none; }
 input,select,textarea { font-family:inherit; }
 .container { width:min(1340px,94%); margin-inline:auto; position:relative; z-index:1; }
 
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 18px; border-radius:var(--radius-md); font-weight:700; font-size:0.8rem; transition:all 0.2s; white-space:nowrap; }
-.btn-primary { background:var(--electric); color:#000; box-shadow:0 4px 15px var(--electric-glow); }
-.btn-primary:hover { background:#38EF7D; transform:translateY(-2px); }
+/* ============ BUTTONS & BADGES ============ */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:var(--radius-md); font-weight:700; font-size:0.82rem; transition:all 0.2s cubic-bezier(0.16,1,0.3,1); white-space:nowrap; }
+.btn-primary { background:var(--electric); color:#000; box-shadow:0 4px 16px var(--electric-glow); }
+.btn-primary:hover { background:#38EF7D; transform:translateY(-2px); box-shadow:0 6px 22px var(--electric-glow); }
 .btn-ghost { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:inherit; }
-.btn-ghost:hover { background:rgba(255,255,255,0.1); border-color:var(--cyan); }
+.btn-ghost:hover { background:rgba(255,255,255,0.1); border-color:var(--cyan); transform:translateY(-1px); }
 .btn-danger { background:var(--danger-bg); border:1px solid var(--danger); color:var(--danger); }
+.btn-danger:hover { background:var(--danger); color:#fff; }
 .btn-sm { padding:6px 12px; font-size:0.72rem; border-radius:var(--radius-sm); }
 .btn-block { width:100%; }
 
-/* Social Brand Buttons */
-.btn-social { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--radius-md); font-size:0.75rem; font-weight:700; color:#fff !important; transition:transform 0.2s; }
-.btn-social:hover { transform:translateY(-2px); }
+/* Social Brand Badges */
+.btn-social { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--radius-md); font-size:0.75rem; font-weight:700; color:#fff !important; transition:all 0.2s; box-shadow:0 4px 12px rgba(0,0,0,0.35); }
+.btn-social:hover { transform:translateY(-2px); filter:brightness(1.1); }
 .btn-telegram { background:#229ED9; }
 .btn-telegram-user { background:#0088cc; }
 .btn-facebook { background:#1877F2; }
-.btn-whatsapp { background:#25D366; }
-.btn-instagram { background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.btn-whatsapp { background:#25D366; color:#000 !important; font-weight:800; }
+.btn-instagram { background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
 
 .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:100px; font-size:0.68rem; font-weight:800; text-transform:uppercase; font-family:var(--font-mono); }
 .badge-electric { background:rgba(0,255,135,0.12); border:1px solid rgba(0,255,135,0.3); color:var(--electric); }
-.badge-warning { background:rgba(255,187,0,0.15); border:1px solid rgba(255,187,0,0.3); color:var(--warning); }
+.badge-warning { background:rgba(255,184,0,0.15); border:1px solid rgba(255,184,0,0.3); color:var(--warning); }
 .badge-premium { background:linear-gradient(135deg,var(--pink),#7B2FF7); color:#fff; }
 
-.announcement-banner { background:linear-gradient(90deg,#FF2D95,#7B2FF7); color:#fff; font-size:0.76rem; font-weight:800; padding:8px 0; text-align:center; display:none; }
+/* ============ TICKERS ============ */
+.announcement-banner { background:linear-gradient(90deg,#FF2D95,#7B2FF7); color:#fff; font-size:0.78rem; font-weight:800; padding:8px 0; text-align:center; display:none; }
 .top-ticker { background:var(--bg-surface); border-bottom:1px solid var(--border); padding:8px 0; font-size:0.72rem; }
 .ticker-inner { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
 .pulse-dot { width:8px; height:8px; border-radius:50%; background:var(--electric); box-shadow:0 0 10px var(--electric); animation:pulse 1.2s infinite; }
 @keyframes pulse { 0%,100%{transform:scale(0.95);opacity:0.8} 50%{transform:scale(1.3);opacity:1} }
 
-.live-ticker { background:rgba(255,51,102,0.08); border-bottom:1px solid rgba(255,51,102,0.2); padding:8px 0; overflow:hidden; }
+.live-ticker { background:rgba(255,51,102,0.07); border-bottom:1px solid rgba(255,51,102,0.18); padding:8px 0; overflow:hidden; }
 .live-ticker-track { display:flex; gap:30px; animation:scroll-live 30s linear infinite; white-space:nowrap; }
 @keyframes scroll-live { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 .live-item { display:inline-flex; align-items:center; gap:8px; font-size:0.72rem; font-family:var(--font-mono); }
 .live-item .score { color:var(--electric); font-weight:800; font-size:0.85rem; }
 .live-badge { background:var(--danger); color:#fff; padding:2px 6px; border-radius:4px; font-size:0.6rem; font-weight:900; animation:pulse 1s infinite; }
 
-header { position:sticky; top:0; z-index:50; background:rgba(4,9,20,0.85); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
-body.light-theme header { background:rgba(240,243,248,0.9); }
-.header-inner { display:flex; align-items:center; justify-content:space-between; height:64px; gap:12px; }
-.logo { display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none; }
-.logo-mark { width:36px; height:36px; border-radius:var(--radius-md); background:linear-gradient(135deg,var(--electric),var(--cyan)); display:grid; place-items:center; box-shadow:0 0 20px var(--electric-glow); }
-.logo-text { font-family:var(--font-display); font-weight:900; font-size:1.25rem; letter-spacing:-0.02em; }
+/* ============ HEADER & MAIN LOGO (LARGER & PROMINENT) ============ */
+header { position:sticky; top:0; z-index:50; background:rgba(4,9,20,0.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--border); }
+body.light-theme header { background:rgba(241,245,249,0.92); }
+.header-inner { display:flex; align-items:center; justify-content:space-between; height:70px; gap:12px; }
+
+/* High-impact Main Logo */
+.logo { display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; }
+.logo-mark {
+  width:46px; height:46px; border-radius:14px;
+  background:linear-gradient(135deg,var(--electric) 0%,var(--cyan) 100%);
+  display:grid; place-items:center;
+  box-shadow:0 0 24px var(--electric-glow), inset 0 1px 1px rgba(255,255,255,0.4);
+  transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.logo-mark svg { width:26px; height:26px; }
+.logo:hover .logo-mark { transform:scale(1.08) rotate(-3deg); }
+.logo-text { font-family:var(--font-display); font-weight:900; font-size:1.45rem; letter-spacing:-0.03em; line-height:1; }
 .logo-text span { color:var(--electric); }
-nav.nav-links { display:flex; align-items:center; gap:16px; }
-.nav-link { font-size:0.82rem; font-weight:600; color:var(--text-muted); transition:color 0.2s; }
+
+nav.nav-links { display:flex; align-items:center; gap:18px; }
+.nav-link { font-size:0.84rem; font-weight:600; color:var(--text-muted); transition:color 0.2s; }
 .nav-link:hover,.nav-link.active { color:var(--electric); }
-.nav-controls { display:flex; align-items:center; gap:6px; }
-.select-ctrl { background:var(--bg-surface); border:1px solid var(--border); color:var(--cyan); padding:5px 8px; border-radius:var(--radius-sm); font-size:0.74rem; font-weight:800; }
-.hamburger { display:none; border:1px solid var(--border); color:var(--text-main); width:38px; height:38px; border-radius:var(--radius-sm); }
-.mobile-menu { display:none; flex-direction:column; gap:2px; padding:10px 0; border-top:1px solid var(--border); }
+.nav-controls { display:flex; align-items:center; gap:8px; }
+.select-ctrl { background:var(--bg-surface); border:1px solid var(--border); color:var(--cyan); padding:6px 9px; border-radius:var(--radius-sm); font-size:0.75rem; font-weight:800; }
+.hamburger { display:none; border:1px solid var(--border); color:var(--text-main); width:40px; height:40px; border-radius:var(--radius-sm); }
+.mobile-menu { display:none; flex-direction:column; gap:4px; padding:12px 0; border-top:1px solid var(--border); }
 .mobile-menu.open { display:flex; }
 .mobile-menu a { padding:10px 16px; font-weight:600; color:var(--text-muted); font-size:0.85rem; }
 
-.hero { padding:clamp(20px,3vw,36px) 0 20px; }
-.hero-card { position:relative; background:linear-gradient(135deg,var(--bg-surface) 0%,rgba(20,29,59,0.85) 60%,var(--bg-base) 100%); border:1px solid var(--border); border-radius:var(--radius-xl); padding:clamp(20px,4vw,50px); overflow:hidden; }
-.hero-inner { display:grid; grid-template-columns:1.2fr 0.8fr; gap:clamp(20px,4vw,36px); align-items:center; }
-.hero h1 { font-family:var(--font-display); font-size:clamp(1.8rem,4.5vw,3.4rem); font-weight:900; line-height:1.05; margin:12px 0 16px; }
+/* ============ HERO SECTION ============ */
+.hero { padding:clamp(24px,3.5vw,40px) 0 24px; }
+.hero-card { position:relative; background:linear-gradient(135deg,var(--bg-surface) 0%,rgba(17,30,59,0.85) 60%,var(--bg-base) 100%); border:1px solid var(--border); border-radius:var(--radius-xl); padding:clamp(22px,4vw,52px); overflow:hidden; box-shadow:var(--shadow-card); }
+.hero-inner { display:grid; grid-template-columns:1.2fr 0.8fr; gap:clamp(22px,4vw,38px); align-items:center; }
+.hero h1 { font-family:var(--font-display); font-size:clamp(1.9rem,4.5vw,3.5rem); font-weight:900; line-height:1.05; margin:12px 0 16px; letter-spacing:-0.03em; }
 .hero h1 span.gradient { background:linear-gradient(90deg,var(--electric),var(--cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-.hero p { color:var(--text-muted); font-size:0.92rem; margin-bottom:22px; max-width:50ch; }
-.hero-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.hero p { color:var(--text-muted); font-size:0.94rem; margin-bottom:22px; max-width:52ch; }
+.hero-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
 
-.banker-card { background:linear-gradient(135deg,rgba(255,45,149,0.12),rgba(123,47,247,0.18) 50%,rgba(0,229,255,0.12)); border:1.5px solid var(--pink); border-radius:var(--radius-lg); padding:20px; box-shadow:0 14px 40px rgba(255,45,149,0.2); }
+.banker-card { background:linear-gradient(135deg,rgba(255,45,149,0.12),rgba(123,47,247,0.18) 50%,rgba(0,229,255,0.12)); border:1.5px solid var(--pink); border-radius:var(--radius-lg); padding:20px; box-shadow:0 14px 40px rgba(255,45,149,0.22); }
 .banker-head { display:flex; justify-content:space-between; align-items:center; font-size:0.72rem; font-weight:900; margin-bottom:12px; }
 .banker-tag { background:var(--pink); color:#fff; padding:4px 10px; border-radius:100px; font-family:var(--font-mono); }
-.banker-match { font-size:clamp(1.05rem,2.5vw,1.25rem); font-weight:900; margin-bottom:4px; }
+.banker-match { font-size:clamp(1.1rem,2.5vw,1.3rem); font-weight:900; margin-bottom:4px; }
 .banker-tip-row { display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.15); }
 .odds-pill { font-family:var(--font-mono); font-size:1.2rem; font-weight:900; color:var(--electric); background:rgba(0,255,135,0.1); padding:4px 12px; border-radius:var(--radius-sm); border:1px solid rgba(0,255,135,0.3); }
 
-/* ============ BETTING SLIP CARD DESIGN ============ */
+/* ============ AUTHENTIC BETTING SLIP CARD DESIGN (IMAGE STYLE) ============ */
 .slip-card-wrapper { max-width: 680px; margin: 0 auto; }
 .slip-card-box {
   background: #ffffff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.15);
   color: #111827;
 }
 .slip-top-banner {
@@ -118,24 +140,24 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
 }
 .slip-brand-title {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 900;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 .slip-brand-sub {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #d1fae5;
   margin-top: 6px;
 }
 .slip-content-body {
-  padding: 18px 24px 10px;
+  padding: 16px 24px 8px;
   background: #ffffff;
 }
 .slip-col-headers {
@@ -153,7 +175,7 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding: 14px 0;
   border-bottom: 1px solid #f3f4f6;
   font-size: 0.96rem;
   color: #111827;
@@ -166,8 +188,14 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: #111827;
+  min-width: 0;
+}
+.slip-match-name span.team-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .slip-tip-val {
   flex: 0.8;
@@ -185,12 +213,11 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
   font-size: 0.98rem;
 }
 .slip-total-bar {
-  padding: 20px 24px;
+  padding: 18px 24px;
   background: #ffffff;
   font-size: 1.25rem;
   font-weight: 900;
   color: #111827;
-  letter-spacing: 0.02em;
   border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
@@ -207,6 +234,7 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
   text-transform: uppercase;
 }
 
+/* ============ VIP SLIPS & STATS ============ */
 .vip-slips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px; margin-top:16px; }
 .vip-slip-card { background:linear-gradient(135deg,rgba(255,45,149,0.06),rgba(123,47,247,0.12)); border:1.5px solid var(--pink); border-radius:var(--radius-lg); padding:18px; position:relative; overflow:hidden; }
 .vip-slip-locked-overlay { position:absolute; inset:0; background:rgba(4,9,20,0.88); backdrop-filter:blur(8px); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:18px; text-align:center; z-index:2; }
@@ -235,7 +263,7 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
 .league-acc-pct { width:44px; text-align:right; font-weight:800; font-family:var(--font-mono); }
 
 .table-section { margin-bottom:60px; }
-.table-container { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; padding:20px; }
+.table-container { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; padding:20px; box-shadow:var(--shadow-card); }
 .table-controls { padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid var(--border); display:flex; flex-direction:column; gap:14px; }
 .controls-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 .category-pills,.date-pills { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
@@ -260,7 +288,7 @@ nav.nav-links { display:flex; align-items:center; gap:16px; }
 .toast { position:fixed; bottom:20px; left:50%; transform:translate(-50%,20px); background:var(--electric); color:#000; font-weight:800; padding:12px 24px; border-radius:var(--radius-md); opacity:0; transition:0.3s; z-index:120; pointer-events:none; }
 .toast.show { opacity:1; transform:translate(-50%,0); }
 .toast.error { background:var(--danger); color:#fff; }
-.toast.goal { background:#FF2D95; color:#fff; font-size:0.95rem; border:2px solid #fff; box-shadow: 0 0 25px rgba(255,45,149,0.8); }
+.toast.goal { background:#FF2D95; color:#fff; font-size:0.95rem; border:2px solid #fff; box-shadow:0 0 25px rgba(255,45,149,0.8); }
 .hidden { display:none !important; }
 .loader { width:32px; height:32px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--electric); border-radius:50%; animation:spin 0.8s linear infinite; margin:20px auto; }
 @keyframes spin { to{transform:rotate(360deg)} }
@@ -309,7 +337,9 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   .stats-strip { grid-template-columns:repeat(2,1fr); }
 }
 @media (max-width:640px) {
-  .header-inner { height:56px; }
+  .header-inner { height:60px; }
+  .logo-mark { width:38px; height:38px; }
+  .logo-text { font-size:1.25rem; }
   .nav-controls .select-ctrl { display:none; }
   .stats-strip { grid-template-columns:1fr 1fr; gap:10px; }
   .slip-brand-title { font-size: 1.4rem; }
@@ -346,15 +376,16 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
 <header>
   <div class="container header-inner">
+    <!-- Click prominent logo to open Admin Console -->
     <div class="logo" onclick="openAdminPanel()" title="Click logo to open Admin Console">
       <div class="logo-mark">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       </div>
       <div class="logo-text">PRIME<span>TIPS</span></div>
     </div>
 
     <nav class="nav-links">
-      <a href="#free-tips" class="nav-link active">Free Tips</a>
+      <a href="#free-tips" class="nav-link active">Predictions</a>
       <a href="#banker-section" class="nav-link">Top Banker</a>
       <a href="#vip-slips-section" class="nav-link">VIP Slips</a>
       <a href="#stats" class="nav-link">Accuracy</a>
@@ -397,7 +428,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   </div>
   <div class="container">
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#free-tips" onclick="toggleMobileMenu()">Free Tips</a>
+      <a href="#free-tips" onclick="toggleMobileMenu()">Predictions</a>
       <a href="#banker-section" onclick="toggleMobileMenu()">Top Banker</a>
       <a href="#vip-slips-section" onclick="toggleMobileMenu()">VIP Slips</a>
       <a href="#stats" onclick="toggleMobileMenu()">Accuracy</a>
@@ -722,7 +753,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   </div>
 </div>
 
-<!-- COMPREHENSIVE ADMIN CONSOLE -->
+<!-- COMPREHENSIVE ADMIN CONSOLE (EDIT / MANAGE MATCHES, VIP, SLIPS, CONFIG) -->
 <div class="modal-overlay" id="adminPanelModal">
   <div class="modal-card" style="max-width:1100px; width:98%;">
     <button class="modal-close" onclick="closeModal('adminPanelModal')">✕</button>
@@ -766,7 +797,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
 
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="switchAdminTab('matches', this)">⚽ Matches &amp; Scores</button>
-        <button class="admin-tab" onclick="switchAdminTab('add', this)">➕ Add Match</button>
+        <button class="admin-tab" onclick="switchAdminTab('add', this)">➕ Add / Edit Match</button>
         <button class="admin-tab" onclick="switchAdminTab('vip', this)">👑 Manage VIP Members</button>
         <button class="admin-tab" onclick="switchAdminTab('payments', this)">💳 M-Pesa Payments</button>
         <button class="admin-tab" onclick="switchAdminTab('vipslips', this)">🔒 Post VIP Slips</button>
@@ -787,9 +818,14 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
         </div>
       </div>
 
-      <!-- TAB 2: ADD MATCH -->
+      <!-- TAB 2: ADD / EDIT MATCH -->
       <div id="panel-add" class="admin-panel">
         <form onsubmit="handleAdminAddMatch(event)">
+          <input type="hidden" id="adm_edit_id" value="">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span id="adm_form_title" style="font-weight:900; font-size:0.9rem; color:var(--electric);">➕ Add New Fixture</span>
+            <button type="button" class="btn btn-ghost btn-sm" id="btnCancelEdit" style="display:none;" onclick="cancelAdminEdit()">Cancel Edit</button>
+          </div>
           <div class="form-grid">
             <div class="form-field"><label>Date *</label><input type="date" id="adm_date" required></div>
             <div class="form-field"><label>Kickoff Time *</label><input type="text" id="adm_time" placeholder="20:00" required></div>
@@ -807,7 +843,7 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
             <div class="form-field"><label>Initial Status</label><select id="adm_status"><option value="NS">NS (Not Started)</option><option value="LIVE 1'">LIVE</option><option value="FT">FT (Finished)</option></select></div>
           </div>
           <div class="form-field"><label>Match Tactical Brief &amp; Analysis</label><textarea id="adm_analysis" placeholder="Tactical breakdown, form insights..."></textarea></div>
-          <button type="submit" class="btn btn-primary">🚀 Publish Game to Real-Time Web</button>
+          <button type="submit" class="btn btn-primary" id="btnPublishMatch">🚀 Publish Game to Real-Time Web</button>
         </form>
       </div>
 
@@ -921,9 +957,12 @@ table.admin-table td { padding:9px 10px; border-bottom:1px solid rgba(255,255,25
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
     <div>
       <div class="logo" onclick="openAdminPanel()">
-        <div class="logo-text" style="font-size:1.1rem;">PRIME<span>TIPS</span></div>
+        <div class="logo-mark" style="width:36px; height:36px; border-radius:10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="logo-text" style="font-size:1.15rem;">PRIME<span>TIPS</span></div>
       </div>
-      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Pan-African Sports Analytics • Cloud Firestore Stream • Zero Local Storage</div>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">Pan-African Sports Analytics • Cloud Firestore Stream • Zero Local Storage</div>
     </div>
     <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
       <a href="https://t.me/+UiJ1Y_HpV_oxMjA0" target="_blank" class="btn-social btn-telegram">
@@ -1553,12 +1592,12 @@ function renderTable() {
 
     const isLive = (m.status || '').includes('LIVE');
     const isFinished = m.status === 'FT';
-    const statusPill = isLive ? `<span style="color:#ef4444; font-size:0.75rem; margin-left:4px;">● LIVE</span>` : (isFinished ? `<span style="color:#10b981; font-size:0.75rem; margin-left:4px;">(${m.homeScore}-${m.awayScore})</span>` : '');
+    const statusPill = isLive ? `<span style="color:#ef4444; font-size:0.72rem; margin-left:4px;">● LIVE</span>` : (isFinished ? `<span style="color:#10b981; font-size:0.72rem; margin-left:4px;">(${m.homeScore}-${m.awayScore})</span>` : '');
 
     return `
       <div class="slip-item-row" onclick="openMatchDetailPage('${m.id}')" title="Click for match xG &amp; analytics">
         <div class="slip-match-name">
-          <span>${escapeHTML(m.home)} – ${escapeHTML(m.away)}</span>
+          <span class="team-label">${escapeHTML(m.home)} – ${escapeHTML(m.away)}</span>
           ${statusPill}
         </div>
         <div class="slip-tip-val">
@@ -1876,7 +1915,7 @@ function updateAdminMiniStats() {
   if ($('msSettled')) $('msSettled').innerText = ALL_MATCHES.filter(m => m.result === 'WON' || m.result === 'LOST').length;
 }
 
-/* 1. MATCH MANAGEMENT */
+/* 1. MATCH MANAGEMENT (ADD, EDIT, DELETE, SCORE, SETTLE) */
 function renderAdminMatches() {
   const body = $('adminMatchesTable');
   if (!body) return;
@@ -1904,7 +1943,8 @@ function renderAdminMatches() {
         </button>
       </td>
       <td>
-        <div style="display:flex; gap:4px;">
+        <div style="display:flex; gap:4px; flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="adminStartEditMatch('${m.id}')">✏️ Edit</button>
           <button class="btn btn-ghost btn-sm" onclick="adminOpenSettle('${m.id}')">⚽ Settle</button>
           <button class="btn btn-danger btn-sm" onclick="adminDeleteMatch('${m.id}')">🗑 Delete</button>
         </div>
@@ -1913,9 +1953,46 @@ function renderAdminMatches() {
   `).join('') || '<tr><td colspan="8"><div class="empty-state">No games in database. Add one below!</div></td></tr>';
 }
 
+function adminStartEditMatch(id) {
+  const m = ALL_MATCHES.find(x => x.id === id);
+  if (!m) return;
+  $('adm_edit_id').value = m.id;
+  $('adm_form_title').innerText = `✏️ Edit Match: ${m.home} vs ${m.away}`;
+  $('btnCancelEdit').style.display = 'inline-block';
+  $('btnPublishMatch').innerText = '💾 Save Match Changes';
+
+  $('adm_date').value = m.date || '';
+  $('adm_time').value = m.time || '';
+  $('adm_league').value = m.league || '';
+  $('adm_home').value = m.home || '';
+  $('adm_away').value = m.away || '';
+  $('adm_pick').value = m.pick1X2 || '1';
+  $('adm_cs').value = m.correctScore || '';
+  $('adm_ou').value = m.overUnder25 || 'Over';
+  $('adm_btts').value = m.btts || 'Yes';
+  $('adm_dc').value = m.doubleChance || '1X';
+  $('adm_conf').value = m.confidence || 85;
+  $('adm_odds').value = m.odds || 1.85;
+  $('adm_is_banker').value = m.isBanker ? 'true' : 'false';
+  $('adm_status').value = m.status || 'NS';
+  $('adm_analysis').value = m.analysis || '';
+
+  switchAdminTab('add', document.querySelectorAll('#adminConsole .admin-tab')[1]);
+}
+
+function cancelAdminEdit() {
+  $('adm_edit_id').value = '';
+  $('adm_form_title').innerText = '➕ Add New Fixture';
+  $('btnCancelEdit').style.display = 'none';
+  $('btnPublishMatch').innerText = '🚀 Publish Game to Real-Time Web';
+  document.getElementById('panel-add').querySelector('form').reset();
+}
+
 async function handleAdminAddMatch(e) {
   e.preventDefault();
-  const match = {
+  const editId = $('adm_edit_id').value;
+
+  const matchData = {
     date: $('adm_date').value,
     time: $('adm_time').value.trim(),
     league: $('adm_league').value.trim(),
@@ -1930,14 +2007,23 @@ async function handleAdminAddMatch(e) {
     odds: parseFloat($('adm_odds').value) || 1.85,
     isBanker: $('adm_is_banker').value === 'true',
     status: $('adm_status').value,
-    homeScore: $('adm_status').value.includes('LIVE') ? 0 : null,
-    awayScore: $('adm_status').value.includes('LIVE') ? 0 : null,
-    analysis: $('adm_analysis').value.trim() || 'Calculated via institutional Poisson model.',
-    result: 'PENDING',
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    analysis: $('adm_analysis').value.trim() || 'Calculated via institutional Poisson model.'
   };
-  await firebase.firestore().collection('matches').add(match);
-  showToast('Game published in real-time to the website!');
+
+  if (editId) {
+    await firebase.firestore().collection('matches').doc(editId).update(matchData);
+    showToast('Match updated successfully! 💾');
+    cancelAdminEdit();
+  } else {
+    matchData.homeScore = $('adm_status').value.includes('LIVE') ? 0 : null;
+    matchData.awayScore = $('adm_status').value.includes('LIVE') ? 0 : null;
+    matchData.result = 'PENDING';
+    matchData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    await firebase.firestore().collection('matches').add(matchData);
+    showToast('Game published in real-time to the website!');
+    document.getElementById('panel-add').querySelector('form').reset();
+  }
+
   switchAdminTab('matches', document.querySelectorAll('#adminConsole .admin-tab')[0]);
 }
 
@@ -2094,7 +2180,7 @@ async function loadAdminPayments() {
           <td style="font-family:var(--font-mono); font-size:0.68rem;">${date}</td>
           <td><b>${escapeHTML(p.phone || '—')}</b></td>
           <td>${escapeHTML(p.userEmail || '—')}</td>
-          <td>KES ${p.amount} (${escapeHTML(p.plan || 'VIP')})</td>
+          <td>${p.currency || 'KES'} ${p.amount} (${escapeHTML(p.plan || 'VIP')})</td>
           <td><code style="color:var(--electric); font-weight:800;">${p.mpesaCode || '—'}</code></td>
           <td><span class="badge ${isCompleted?'badge-electric':'badge-warning'}">${p.status}</span></td>
           <td>
