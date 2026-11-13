@@ -1885,7 +1885,7 @@ function renderWinnerShots() {
   const allGrid = $('allWinnerShots');
   if (!grid) return;
   if (ALL_WINNER_SHOTS.length === 0) {
-    grid.innerHTML = '<div class="empty-state">No winners yet. Add some in admin!</div>';
+    grid.innerHTML = '<div class="empty-state">No winners yet</div>';
     if (allGrid) allGrid.innerHTML = '<div class="empty-state">No winners yet.</div>';
     return;
   }
